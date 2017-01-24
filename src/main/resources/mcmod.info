@@ -1,16 +1,18 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "",
+  "modid": "stupidthings",
+  "name": "Stupid Things",
+  "description": "Adds a bunch of random, stupid items. Enjoy!",
+  "version": "1.0",
+  "mcversion": "1.10.2",
+  "url": "https://github.com/Furgl/Stupid-Things",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
-  "logoFile": "",
+  "authorList": ["Furgl"],
+  "credits": "2piradians - Testing & Ideas",
+  "logoFile": "logo.png",
   "screenshots": [],
+  "requiredMods": ["Forge"],
   "dependencies": []
 }
 ]
+
