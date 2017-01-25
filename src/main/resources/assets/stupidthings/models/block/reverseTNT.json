@@ -1,0 +1,8 @@
+{
+    "parent": "block/cube_bottom_top",
+    "textures": {
+        "bottom": "stupidthings:blocks/reverse_tnt_bottom",
+        "top": "stupidthings:blocks/reverse_tnt_top",
+        "side": "stupidthings:blocks/reverse_tnt_side"
+    }
+}

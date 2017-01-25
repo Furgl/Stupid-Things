@@ -11,9 +11,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
 	public static ArrayList<Item> allItems;
+	public static Item anvilChestplate;
 
-	public static void postInit() {
+	public static void preInit() {
 		allItems = new ArrayList<Item>();
+		anvilChestplate = registerItem(new ItemAnvilChestplate(), true);
 	}
 
 	public static void registerRenders() {
@@ -21,7 +23,9 @@ public class ModItems {
 			registerRender(item);
 	}
 
-	private static Item registerItem(Item item, String unlocalizedName, boolean addToTab, boolean isFromModdedBlock) {
+	private static Item registerItem(Item item, boolean addToTab) {
+		String unlocalizedName = item.getClass().getSimpleName().replace("Item", "");   
+    	unlocalizedName = unlocalizedName.substring(0, 1).toLowerCase()+unlocalizedName.substring(1);
 		item.setUnlocalizedName(unlocalizedName);
 		item.setRegistryName(StupidThings.MODID, unlocalizedName);
 		if (addToTab) {
@@ -29,6 +33,7 @@ public class ModItems {
 			item.setCreativeTab(StupidThings.tab);
 		}
 		GameRegistry.register(item);
+		allItems.add(item);
 		return item;
 	}
 

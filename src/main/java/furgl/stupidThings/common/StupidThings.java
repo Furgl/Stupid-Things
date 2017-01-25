@@ -22,6 +22,8 @@ public class StupidThings {
 	public static StupidThingsCreativeTab tab = new StupidThingsCreativeTab("tabStupidThings");
 	@SidedProxy(clientSide = "furgl.stupidThings.client.ClientProxy", serverSide = "furgl.stupidThings.common.CommonProxy")
 	public static CommonProxy proxy;
+	@Mod.Instance(MODID)
+	public static StupidThings instance;
 	public static Logger logger;
 	public static SimpleNetworkWrapper network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 	protected static File configFile;

@@ -1,1 +1,5 @@
 itemGroup.tabStupidThings=Stupid Things
+
+item.anvilChestplate.name=Anvil Chestplate
+
+tile.reverseTNT.name=Reverse TNT
