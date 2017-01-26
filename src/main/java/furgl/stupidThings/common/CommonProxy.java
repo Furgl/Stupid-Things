@@ -51,7 +51,7 @@ public class CommonProxy {
 		GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.reverseTnt), new ItemStack(Blocks.TNT), new ItemStack(Items.ENDER_PEARL));
 		GameRegistry.addRecipe(new ItemStack(ModItems.anvilChestplate), "ABA", 'A', new ItemStack(Items.STRING), 'B', new ItemStack(Blocks.ANVIL, 1, OreDictionary.WILDCARD_VALUE));
 		GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.explosiveRail), new ItemStack(Blocks.TNT), new ItemStack(Blocks.RAIL));
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.deflatedBalloon), new ItemStack(Items.LEATHER), new ItemStack(Items.STRING), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage()));
+		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.deflatedBalloon, 16), new ItemStack(Items.LEATHER), new ItemStack(Items.STRING), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage()));
 	}
 
 	public Object getArmorModel(Item item) {
