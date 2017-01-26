@@ -1,0 +1,6 @@
+{
+    "parent": "block/rail_raised_ne",
+    "textures": {
+        "rail": "stupidthings:blocks/rail_explosive_powered"
+    }
+}

@@ -16,11 +16,13 @@ public class ModBlocks {
 	public static ArrayList<Block> allBlocks;
 	
 	public static Block reverseTnt;
+	public static Block explosiveRail;
 
 	public static void preInit() {
 		allBlocks = new ArrayList<Block>();
 
 		reverseTnt = registerBlock(new BlockReverseTNT(), true, true);
+		explosiveRail = registerBlock(new BlockRailExplosive(), true, true);
 	}
 
 	public static void registerRenders() {
