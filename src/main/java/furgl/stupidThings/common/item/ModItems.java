@@ -11,11 +11,16 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModItems {
 	public static ArrayList<Item> allItems;
+	
 	public static Item anvilChestplate;
+	public static Item deflatedBalloon;
+	public static Item balloon;
 
 	public static void preInit() {
 		allItems = new ArrayList<Item>();
 		anvilChestplate = registerItem(new ItemAnvilChestplate(), true);
+		deflatedBalloon = registerItem(new ItemDeflatedBalloon(), true);
+		balloon = registerItem(new ItemBalloon(), true);
 	}
 
 	public static void registerRenders() {

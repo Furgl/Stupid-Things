@@ -1,0 +1,10 @@
+{
+    "balloon_inflate":
+    {
+        "category": "player",
+        "sounds":
+        [
+            "stupidthings:balloon_inflate"
+        ]
+    }
+}

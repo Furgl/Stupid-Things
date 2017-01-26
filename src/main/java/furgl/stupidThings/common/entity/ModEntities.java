@@ -1,5 +1,6 @@
 package furgl.stupidThings.common.entity;
 
+import furgl.stupidThings.client.renderer.entity.RenderBalloon;
 import furgl.stupidThings.client.renderer.entity.RenderReverseTNTPrimed;
 import furgl.stupidThings.common.StupidThings;
 import net.minecraft.client.Minecraft;
@@ -13,12 +14,14 @@ public class ModEntities
 
 	public static void preInit() {
 		registerEntity(EntityReverseTNTPrimed.class);
+		registerEntity(EntityBalloon.class);
 	}
 
 	@SuppressWarnings("deprecation")
 	public static void registerRenders() {
 		RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
 		RenderingRegistry.registerEntityRenderingHandler(EntityReverseTNTPrimed.class, new RenderReverseTNTPrimed(renderManager));
+		RenderingRegistry.registerEntityRenderingHandler(EntityBalloon.class, new RenderBalloon(renderManager));
 	}
 
 	/**Registers entity to unlocalizedName based on entity class (i.e. EntityZombieRunt = zombieRunt)*/

@@ -4,9 +4,11 @@ import furgl.stupidThings.common.block.ModBlocks;
 import furgl.stupidThings.common.config.Config;
 import furgl.stupidThings.common.entity.ModEntities;
 import furgl.stupidThings.common.item.ModItems;
+import furgl.stupidThings.common.sound.ModSoundEvents;
 import furgl.stupidThings.common.tileentity.ModTileEntities;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -25,6 +27,7 @@ public class CommonProxy {
 		ModBlocks.preInit();
 		ModItems.preInit();
 		ModEntities.preInit();
+		ModSoundEvents.preInit();
 		ModTileEntities.preInit();
 	}
 
@@ -48,6 +51,7 @@ public class CommonProxy {
 		GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.reverseTnt), new ItemStack(Blocks.TNT), new ItemStack(Items.ENDER_PEARL));
 		GameRegistry.addRecipe(new ItemStack(ModItems.anvilChestplate), "ABA", 'A', new ItemStack(Items.STRING), 'B', new ItemStack(Blocks.ANVIL, 1, OreDictionary.WILDCARD_VALUE));
 		GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.explosiveRail), new ItemStack(Blocks.TNT), new ItemStack(Blocks.RAIL));
+		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.deflatedBalloon), new ItemStack(Items.LEATHER), new ItemStack(Items.STRING), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage()));
 	}
 
 	public Object getArmorModel(Item item) {

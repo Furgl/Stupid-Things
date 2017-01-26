@@ -1,6 +1,11 @@
 itemGroup.tabStupidThings=Stupid Things
 
 item.anvilChestplate.name=Anvil Chestplate
+item.deflatedBalloon.name=Deflated Balloon
+item.balloon.name=Balloon
 
 tile.reverseTNT.name=Reverse TNT
 tile.railExplosive.name=Explosive Rail
+
+entity.stupidthings.reverseTNTPrimed.name=Reverse TNT
+entity.stupidthings.balloon.name=Balloon
