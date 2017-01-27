@@ -6,7 +6,6 @@ import java.util.UUID;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
-import furgl.stupidThings.client.model.ModelAnvilChestplate;
 import furgl.stupidThings.common.StupidThings;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.model.ModelBiped;
@@ -52,7 +51,7 @@ public class ItemAnvilChestplate extends ItemArmor {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped defaultModel) {
-		return new ModelAnvilChestplate();//StupidThings.proxy.getArmorModel(this);
+		return (ModelBiped) StupidThings.proxy.getArmorModel(this);
 	}
 
 	@Override

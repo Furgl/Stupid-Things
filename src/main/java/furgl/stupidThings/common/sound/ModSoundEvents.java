@@ -8,9 +8,11 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ModSoundEvents {
 
 	public static SoundEvent balloonInflate;
+	public static SoundEvent balloonPop;
 
 	public static void preInit() {
 		balloonInflate = registerSound("balloon_inflate");
+		balloonPop = registerSound("balloon_pop");
 	}
 	
 	private static SoundEvent registerSound(String soundName) {

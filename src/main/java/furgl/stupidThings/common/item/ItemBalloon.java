@@ -26,8 +26,16 @@ public class ItemBalloon extends Item {
 		if (player.worldObj.isRemote)
 			if (!GuiScreen.isShiftKeyDown())
 				tooltip.add(TextFormatting.DARK_GRAY+"Hold shift for more info");
-			else 
+			else {
 				tooltip.add(TextFormatting.DARK_RED+"Right click to throw a balloon");
+				tooltip.add(TextFormatting.DARK_RED+"Right click the balloon with a lead to attach it");
+				tooltip.add("");
+				tooltip.add(TextFormatting.DARK_RED+"While the balloon is attached to a lead:");
+				tooltip.add(TextFormatting.DARK_RED+"- holding it will pull you up");
+				tooltip.add(TextFormatting.DARK_RED+"- sneak to slowly float down again");
+				tooltip.add(TextFormatting.DARK_RED+"- right click a fence to attach the balloon to it");
+				tooltip.add(TextFormatting.DARK_RED+"- right click the balloon to detach the lead");
+			}
 	}
 	
 	@Override

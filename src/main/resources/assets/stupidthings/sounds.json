@@ -6,5 +6,13 @@
         [
             "stupidthings:balloon_inflate"
         ]
+    },
+        "balloon_pop":
+    {
+        "category": "entity",
+        "sounds":
+        [
+            "stupidthings:balloon_pop"
+        ]
     }
 }

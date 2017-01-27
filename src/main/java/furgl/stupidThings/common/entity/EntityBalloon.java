@@ -1,19 +1,30 @@
 package furgl.stupidThings.common.entity;
 
+import java.util.List;
+
+import furgl.stupidThings.common.item.ModItems;
+import furgl.stupidThings.common.sound.ModSoundEvents;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntitySelectors;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 
-public class EntityBalloon extends Entity implements IProjectile {
+public class EntityBalloon extends EntityLiving implements IProjectile {
+
+	protected double gravity;
 
 	public EntityBalloon(World world) {
 		super(world);
-		this.setSize(0.25F, 0.25F);
+		this.gravity = 0.005D;
+		this.setSize(0.7F, 1.3F);
 	}
 
 	public EntityBalloon(World world, EntityLivingBase thrower) {
@@ -22,8 +33,49 @@ public class EntityBalloon extends Entity implements IProjectile {
 	}
 
 	@Override
-	public boolean canBeCollidedWith() {
+	public boolean attackEntityFrom(DamageSource source, float amount) {
+		if (!this.worldObj.isRemote && !source.equals(DamageSource.fall)) {
+			this.worldObj.playSound(null, this.getPosition(), ModSoundEvents.balloonPop, SoundCategory.NEUTRAL, 
+					0.8f, this.worldObj.rand.nextFloat()+0.3f);
+			this.entityDropItem(new ItemStack(ModItems.deflatedBalloon), 0);
+			this.setDead();
+		}
+
 		return true;
+	}
+
+	@Override
+	protected void updateLeashedState() {
+		super.updateLeashedState();
+
+		if (this.getLeashed() && this.getLeashedToEntity() != null && this.getLeashedToEntity().worldObj == this.worldObj) {
+			Entity entity = this.getLeashedToEntity();
+			float f = this.getDistanceToEntity(entity);
+
+			if (f > 2.0F)
+				this.getNavigator().tryMoveToEntityLiving(entity, 1.0D);
+
+			if (f > 4.0F) {
+				double d0 = (entity.posX - this.posX) / (double)f;
+				double d1 = (entity.posY - this.posY) / (double)f;
+				double d2 = (entity.posZ - this.posZ) / (double)f;
+				this.motionX += d0 * Math.abs(d0) * 0.4D;
+				this.motionY += d1 * Math.abs(d1) * 0.03D;
+				this.motionZ += d2 * Math.abs(d2) * 0.4D;
+
+				if (this.getLeashedToEntity() != null && this.posY > this.getLeashedToEntity().posY+3 &&
+						!(this.getLeashedToEntity() instanceof EntityPlayer && ((EntityPlayer)this.getLeashedToEntity()).capabilities.isFlying)) {
+					if (this.getLeashedToEntity().isSneaking() && this.getLeashedToEntity().motionY < 0d && !this.getLeashedToEntity().onGround) 
+						this.getLeashedToEntity().motionY += 0.01d;
+					else if (!this.getLeashedToEntity().isSneaking())
+						this.getLeashedToEntity().motionY += 0.05d;
+					this.getLeashedToEntity().fallDistance = 0;
+				}
+			}
+
+			if (f > 40.0F)
+				this.clearLeashed(true, true);
+		}
 	}
 
 	@Override
@@ -32,9 +84,8 @@ public class EntityBalloon extends Entity implements IProjectile {
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
 
-		if (!this.hasNoGravity()) {
-			this.motionY -= 0.005D;
-		}
+		if (!this.hasNoGravity())
+			this.motionY -= this.getLeashed() ? -0.01d : gravity;
 
 		this.moveEntity(this.motionX, this.motionY, this.motionZ);
 		this.motionX *= 0.98D;
@@ -48,6 +99,17 @@ public class EntityBalloon extends Entity implements IProjectile {
 		}
 
 		this.handleWaterMovement();
+
+		List<Entity> list = this.worldObj.getEntitiesInAABBexcluding(this, this.getEntityBoundingBox(), EntitySelectors.<Entity>getTeamCollisionPredicate(this));
+
+		if (!list.isEmpty()) {
+			for (int i = 0; i < list.size(); ++i) {
+				Entity entity = (Entity)list.get(i);
+				this.applyEntityCollision(entity);
+			}
+		}
+
+		this.updateLeashedState();
 	}
 
 	public void setHeadingFromThrower(Entity entityThrower, float rotationPitchIn, float rotationYawIn, float pitchOffset, float velocity, float inaccuracy) {
@@ -83,35 +145,30 @@ public class EntityBalloon extends Entity implements IProjectile {
 		this.prevRotationYaw = this.rotationYaw;
 		this.prevRotationPitch = this.rotationPitch;
 	}
-
+	
 	@Override
-	public void onEntityUpdate() {
-		super.onEntityUpdate();
+	public void applyEntityCollision(Entity entityIn) {
+        if (!this.isRidingSameEntity(entityIn) && !entityIn.noClip && !this.noClip) {
+        	this.motionY += 0.02d;
+        	this.rotationYaw += (entityIn.worldObj.rand.nextFloat()-0.5f)*100f;
+        	this.prevRotationYaw = this.rotationYaw;
+        }
+		
+		super.applyEntityCollision(entityIn);
 	}
 
 	@Override
-	public void applyEntityCollision(Entity entity) {
-		super.applyEntityCollision(entity);
+	protected SoundEvent getHurtSound() {
+		return null;
 	}
 
 	@Override
-	public void onCollideWithPlayer(EntityPlayer entity) {
-
-	}
-
-	protected void onImpact(RayTraceResult result) {
-		//if (!this.) {
-		System.out.println("impact "+this.getPosition());
-		//this.setVelocity(0, 0, 0);
-		//}
+	protected SoundEvent getDeathSound() {
+		return null;
 	}
 
 	@Override
-	protected void entityInit() {}
-
-	@Override
-	protected void readEntityFromNBT(NBTTagCompound compound) {}
-
-	@Override
-	protected void writeEntityToNBT(NBTTagCompound compound) {}
+	protected SoundEvent getFallSound(int heightIn) {
+		return null;
+	}
 }
