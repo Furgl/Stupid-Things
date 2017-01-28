@@ -53,39 +53,20 @@ public class EntityBalloonLiquid extends EntityBalloon {
 	public void onUpdate() {
 		super.onUpdate();
 
-		if (this.prevRotationPitch == 0.0F && this.prevRotationYaw == 0.0F) {
-			float f = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
-			this.rotationYaw = (float)(MathHelper.atan2(this.motionX, this.motionZ) * (180D / Math.PI));
-			this.rotationPitch = (float)(MathHelper.atan2(this.motionY, (double)f) * (180D / Math.PI));
-			this.prevRotationYaw = this.rotationYaw;
-			this.prevRotationPitch = this.rotationPitch;
-		}
-
-		float f4 = MathHelper.sqrt_double(this.motionX * this.motionX + this.motionZ * this.motionZ);
-		this.rotationYaw = (float)(MathHelper.atan2(this.motionX, this.motionZ) * (180D / Math.PI));
-
-		for (this.rotationPitch = (float)(MathHelper.atan2(this.motionY, (double)f4) * (180D / Math.PI)); this.rotationPitch - this.prevRotationPitch < -180.0F; this.prevRotationPitch -= 360.0F)
-		{
-			;
-		}
-
-		while (this.rotationPitch - this.prevRotationPitch >= 180.0F)
-		{
-			this.prevRotationPitch += 360.0F;
-		}
-
-		while (this.rotationYaw - this.prevRotationYaw < -180.0F)
-		{
-			this.prevRotationYaw -= 360.0F;
-		}
-
-		while (this.rotationYaw - this.prevRotationYaw >= 180.0F)
-		{
-			this.prevRotationYaw += 360.0F;
-		}
-
-		this.rotationPitch = this.prevRotationPitch + (this.rotationPitch - this.prevRotationPitch) * 0.2F;
-		this.rotationYaw = this.prevRotationYaw + (this.rotationYaw - this.prevRotationYaw) * 0.2F;
+		//angle down over time
+		this.prevRotationYaw = this.rotationYaw;
+		if (MathHelper.abs_max(motionX, motionZ)+motionY < 0.5D) 
+			if (Math.abs(180-this.rotationYaw) <= Math.abs(-180-this.rotationYaw)) { //closer to 180
+				if (this.rotationYaw > 180) 
+					this.rotationYaw = Math.max(this.rotationYaw-10, 180);
+				else if (this.rotationYaw < 180)
+					this.rotationYaw = Math.min(this.rotationYaw+10, 180);
+			}
+			else //closer to -180
+				if (this.rotationYaw > -180) 
+					this.rotationYaw = Math.max(this.rotationYaw-10, -180);
+				else if (this.rotationYaw < -180)
+					this.rotationYaw = Math.min(this.rotationYaw+10, -180);
 
 		//set liquid if null
 		if (liquid == null) {

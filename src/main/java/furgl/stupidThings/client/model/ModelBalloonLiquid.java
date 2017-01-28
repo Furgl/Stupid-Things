@@ -27,9 +27,8 @@ public class ModelBalloonLiquid extends ModelBase {
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(-0.0d, 1.2d, 0.00d);/*System.out.println(entity.rotationYaw);*/
+		GlStateManager.translate(0, 1.2d, 0);/*System.out.println(entity.rotationYaw);*/
         GlStateManager.rotate(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * 1 + 180f, 0.0F, 0.0F, 1.0F);//angle
-        GlStateManager.rotate(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * 1, 0.0F, 1.0F, 0.0F);//direction
 		balloon.rotateAngleY = (float) (entity.rotationYaw + Math.sin(Math.abs(entity.motionX)+
 				Math.abs(entity.motionY*2f)+Math.abs(entity.motionZ))*10f);
 		balloon.render(scale);

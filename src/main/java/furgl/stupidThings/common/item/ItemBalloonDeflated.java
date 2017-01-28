@@ -33,10 +33,10 @@ public class ItemBalloonDeflated extends Item {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
-		player.setActiveHand(hand);
-		
-		if (!world.isRemote)
+		if (!world.isRemote) {
 			world.playSound(null, player.getPosition(), ModSoundEvents.balloonInflate, SoundCategory.PLAYERS, 0.5f, 1.0f);
+			player.setActiveHand(hand);
+		}
 		
 		return new ActionResult(EnumActionResult.SUCCESS, stack);
 	}
