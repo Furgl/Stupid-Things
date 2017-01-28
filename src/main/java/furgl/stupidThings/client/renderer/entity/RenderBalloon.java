@@ -1,8 +1,8 @@
 package furgl.stupidThings.client.renderer.entity;
 
-import furgl.stupidThings.client.model.ModelBalloon;
 import furgl.stupidThings.common.StupidThings;
 import furgl.stupidThings.common.entity.EntityBalloon;
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
@@ -17,16 +17,9 @@ public class RenderBalloon extends RenderLiving<EntityBalloon> {
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation(StupidThings.MODID, "textures/entity/balloon.png");
 
-	public RenderBalloon(RenderManager renderManagerIn) {
-		super(renderManagerIn, new ModelBalloon(), 0.3f);
+	public RenderBalloon(RenderManager renderManagerIn, ModelBase model) {
+		super(renderManagerIn, model, 0.3f);
 	}
-	
-	@Override
-	protected void preRenderCallback(EntityBalloon entity, float partialTickTime) {
-		//GlStateManager.translate(0, -1.6d+Math.sin(entity.ticksExisted/10d)/10d, 0);
-		//GlStateManager.translate(-0.35d, -1.6d+Math.sin(entity.ticksExisted/10d)/10d, -0.35d);
-		//GlStateManager.rotate(180, 1, 0, 1);
-    }
 	
 	private double interpolateValue(double start, double end, double pct) {
         return start + (end - start) * pct;
@@ -38,10 +31,10 @@ public class RenderBalloon extends RenderLiving<EntityBalloon> {
 		y -= 1.1d;
 		z -= 0.3d;
 		//TODO remove
-		//this.mainModel = new ModelBalloon();
+		//if (entityLivingIn instanceof EntityBalloonLiquid)
+		//this.mainModel = new ModelBalloonLiquid();
 		Entity entity = entityLivingIn.getLeashedToEntity();
-        if (entity != null && !entity.isDead)
-        {
+        if (entity != null && !entity.isDead) {
             y = y - (1.6D - (double)entityLivingIn.height) * 0.5D;
             Tessellator tessellator = Tessellator.getInstance();
             VertexBuffer vertexbuffer = tessellator.getBuffer();
@@ -51,8 +44,7 @@ public class RenderBalloon extends RenderLiving<EntityBalloon> {
             double d3 = Math.sin(d0);
             double d4 = Math.sin(d1);
 
-            if (entity instanceof EntityHanging)
-            {
+            if (entity instanceof EntityHanging) {
                 d2 = 0.0D;
                 d3 = 0.0D;
                 d4 = -1.0D;
@@ -66,8 +58,8 @@ public class RenderBalloon extends RenderLiving<EntityBalloon> {
             d2 = Math.cos(d9) * (double)entityLivingIn.width * 0.4D;
             d3 = Math.sin(d9) * (double)entityLivingIn.width * 0.4D;
             double d10 = this.interpolateValue(entityLivingIn.prevPosX, entityLivingIn.posX, (double)partialTicks) + d2;
-            double d11 = this.interpolateValue(entityLivingIn.prevPosY, entityLivingIn.posY, (double)partialTicks)-1; //added -1
-            double d12 = this.interpolateValue(entityLivingIn.prevPosZ, entityLivingIn.posZ, (double)partialTicks) + d3-0.3d; //added -0.3d
+            double d11 = this.interpolateValue(entityLivingIn.prevPosY, entityLivingIn.posY, (double)partialTicks)-1d; //added -1
+            double d12 = this.interpolateValue(entityLivingIn.prevPosZ, entityLivingIn.posZ, (double)partialTicks) + d3-0.5d; //added -0.3d
             x = x + d2;
             z = z + d3;
             double d13 = (double)((float)(d6 - d10));

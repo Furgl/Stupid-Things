@@ -27,7 +27,7 @@ public class ItemBalloon extends Item {
 			if (!GuiScreen.isShiftKeyDown())
 				tooltip.add(TextFormatting.DARK_GRAY+"Hold shift for more info");
 			else {
-				tooltip.add(TextFormatting.DARK_RED+"Right click to throw a balloon");
+				tooltip.add(TextFormatting.DARK_RED+"Right click to throw");
 				tooltip.add(TextFormatting.DARK_RED+"Right click the balloon with a lead to attach it");
 				tooltip.add("");
 				tooltip.add(TextFormatting.DARK_RED+"While the balloon is attached to a lead:");
@@ -46,12 +46,15 @@ public class ItemBalloon extends Item {
         world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 
         		0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
-        if (!world.isRemote) {
-            EntityBalloon balloon = new EntityBalloon(world, player);
-            balloon.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 0.3F, 1.0F);
-            world.spawnEntityInWorld(balloon);
-        }
+        if (!world.isRemote) 
+            this.throwBalloon(world, player);
 
         return new ActionResult(EnumActionResult.SUCCESS, stack);
     }
+	
+	protected void throwBalloon(World world, EntityPlayer player) {
+		EntityBalloon balloon = new EntityBalloon(world, player);
+        balloon.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 0.3F, 1.0F);
+        world.spawnEntityInWorld(balloon);
+	}
 }

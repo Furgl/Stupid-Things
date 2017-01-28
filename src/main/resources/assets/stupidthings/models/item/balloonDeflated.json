@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "stupidthings:items/deflated_balloon"
+        "layer0": "stupidthings:items/balloon_deflated"
     }
 }

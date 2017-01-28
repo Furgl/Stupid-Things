@@ -13,14 +13,18 @@ public class ModItems {
 	public static ArrayList<Item> allItems;
 	
 	public static Item anvilChestplate;
-	public static Item deflatedBalloon;
+	public static Item balloonDeflated;
 	public static Item balloon;
+	public static Item balloonWater;
+	public static Item balloonLava;
 
 	public static void preInit() {
 		allItems = new ArrayList<Item>();
 		anvilChestplate = registerItem(new ItemAnvilChestplate(), true);
-		deflatedBalloon = registerItem(new ItemDeflatedBalloon(), true);
+		balloonDeflated = registerItem(new ItemBalloonDeflated(), true);
 		balloon = registerItem(new ItemBalloon(), true);
+		balloonWater = registerItem(new ItemBalloonLiquid.ItemBalloonWater(), true);
+		balloonLava = registerItem(new ItemBalloonLiquid.ItemBalloonLava(), true);
 	}
 
 	public static void registerRenders() {
@@ -31,6 +35,10 @@ public class ModItems {
 	private static Item registerItem(Item item, boolean addToTab) {
 		String unlocalizedName = item.getClass().getSimpleName().replace("Item", "");   
     	unlocalizedName = unlocalizedName.substring(0, 1).toLowerCase()+unlocalizedName.substring(1);
+    	return registerItem(item, unlocalizedName, addToTab);
+	}
+	
+	private static Item registerItem(Item item, String unlocalizedName, boolean addToTab) {
 		item.setUnlocalizedName(unlocalizedName);
 		item.setRegistryName(StupidThings.MODID, unlocalizedName);
 		if (addToTab) {

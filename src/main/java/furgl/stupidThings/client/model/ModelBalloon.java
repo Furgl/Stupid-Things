@@ -34,8 +34,9 @@ public class ModelBalloon extends ModelBase {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(-0.35d, 1.35d+Math.sin(entity.ticksExisted/20d)/15f, 0.35d);
 		balloon.rotateAngleX = (float) Math.PI;
-		float modifier = (entity instanceof EntityBalloon && ((EntityBalloon)entity).getLeashed()) ? 1f : 10f;
-		balloon.rotateAngleY = (float) (entity.rotationYaw + Math.sin(entity.motionX+entity.motionY+entity.motionZ)*modifier);
+		float modifier = (entity instanceof EntityBalloon && ((EntityBalloon)entity).getLeashed()) ? 2f : 10f;
+		balloon.rotateAngleY = (float) (entity.rotationYaw + Math.sin(entity.rotationYaw + Math.sin(Math.abs(entity.motionX)+
+				Math.abs(entity.motionY*2f)+Math.abs(entity.motionZ)))*modifier);
 		balloon.render(scale);
 		GlStateManager.popMatrix();
 	}

@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -31,13 +32,19 @@ public class EntityBalloon extends EntityLiving implements IProjectile {
 		this(world);
 		this.setPosition(thrower.posX, thrower.posY + (double)thrower.getEyeHeight() - 0.1D, thrower.posZ);
 	}
+	
+	@Override
+    protected void applyEntityAttributes() {
+		super.applyEntityAttributes();
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(2.0D);
+	}
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (!this.worldObj.isRemote && !source.equals(DamageSource.fall)) {
 			this.worldObj.playSound(null, this.getPosition(), ModSoundEvents.balloonPop, SoundCategory.NEUTRAL, 
 					0.8f, this.worldObj.rand.nextFloat()+0.3f);
-			this.entityDropItem(new ItemStack(ModItems.deflatedBalloon), 0);
+			this.entityDropItem(new ItemStack(ModItems.balloonDeflated), 0);
 			this.setDead();
 		}
 
@@ -119,7 +126,7 @@ public class EntityBalloon extends EntityLiving implements IProjectile {
 		this.setThrowableHeading((double)f, (double)f1, (double)f2, velocity, inaccuracy);
 		this.motionX += entityThrower.motionX;
 		this.motionZ += entityThrower.motionZ;
-
+		
 		if (!entityThrower.onGround)
 			this.motionY += entityThrower.motionY;
 	}

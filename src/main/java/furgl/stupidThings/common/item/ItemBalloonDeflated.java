@@ -16,9 +16,9 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
-public class ItemDeflatedBalloon extends Item {
+public class ItemBalloonDeflated extends Item {
 
-	public ItemDeflatedBalloon() {
+	public ItemBalloonDeflated() {
 		super();
 	}
 
