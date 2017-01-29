@@ -1,0 +1,6 @@
+{
+    "variants": {
+        "explode=false": { "model": "stupidthings:reverse_tnt" },
+        "explode=true": { "model": "stupidthings:reverse_tnt" }
+    }
+}

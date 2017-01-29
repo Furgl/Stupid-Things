@@ -3,7 +3,7 @@ package furgl.stupidThings.common.entity;
 import furgl.stupidThings.client.model.ModelBalloon;
 import furgl.stupidThings.client.model.ModelBalloonLiquid;
 import furgl.stupidThings.client.renderer.entity.RenderBalloon;
-import furgl.stupidThings.client.renderer.entity.RenderReverseTNTPrimed;
+import furgl.stupidThings.client.renderer.entity.RenderReverseTntPrimed;
 import furgl.stupidThings.common.StupidThings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -15,7 +15,7 @@ public class ModEntities
 	private static int id;
 
 	public static void preInit() {
-		registerEntity(EntityReverseTNTPrimed.class);
+		registerEntity(EntityReverseTntPrimed.class);
 		registerEntity(EntityBalloon.class);
 		registerEntity(EntityBalloonLiquid.class);
 	}
@@ -23,7 +23,7 @@ public class ModEntities
 	@SuppressWarnings("deprecation")
 	public static void registerRenders() {
 		RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
-		RenderingRegistry.registerEntityRenderingHandler(EntityReverseTNTPrimed.class, new RenderReverseTNTPrimed(renderManager));
+		RenderingRegistry.registerEntityRenderingHandler(EntityReverseTntPrimed.class, new RenderReverseTntPrimed(renderManager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBalloon.class, new RenderBalloon(renderManager, new ModelBalloon()));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBalloonLiquid.class, new RenderBalloon(renderManager, new ModelBalloonLiquid()));
 	}

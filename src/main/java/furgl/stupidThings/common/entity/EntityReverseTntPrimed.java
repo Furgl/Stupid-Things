@@ -29,13 +29,13 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
-public class EntityReverseTNTPrimed extends EntityTNTPrimed {
+public class EntityReverseTntPrimed extends EntityTNTPrimed {
 
-	public EntityReverseTNTPrimed(World worldIn) {
+	public EntityReverseTntPrimed(World worldIn) {
 		super(worldIn);
 	}
 
-	public EntityReverseTNTPrimed(World worldIn, double x, double y, double z, EntityLivingBase igniter) {
+	public EntityReverseTntPrimed(World worldIn, double x, double y, double z, EntityLivingBase igniter) {
 		super(worldIn, x, y, z, igniter);
 	}
 
@@ -43,7 +43,6 @@ public class EntityReverseTNTPrimed extends EntityTNTPrimed {
 	public void onUpdate() {
 		if (this.getFuse()-1 <= 0) {
 			this.setDead();
-			//if (!this.worldObj.isRemote)
 			this.explode();
 		}
 		else

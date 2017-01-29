@@ -11,6 +11,10 @@ import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.SoundCategory;
@@ -20,6 +24,7 @@ import net.minecraft.world.World;
 
 public class EntityBalloon extends EntityLiving implements IProjectile {
 
+	private static final DataParameter<Integer> COLOR = EntityDataManager.<Integer>createKey(EntityBalloon.class, DataSerializers.VARINT);
 	protected double gravity;
 
 	public EntityBalloon(World world) {
@@ -28,9 +33,16 @@ public class EntityBalloon extends EntityLiving implements IProjectile {
 		this.setSize(0.7F, 1.3F);
 	}
 
-	public EntityBalloon(World world, EntityLivingBase thrower) {
+	public EntityBalloon(World world, EntityLivingBase thrower, int color) {
 		this(world);
 		this.setPosition(thrower.posX, thrower.posY + (double)thrower.getEyeHeight() - 0.1D, thrower.posZ);
+		this.dataManager.set(COLOR, color);
+	}
+	
+	@Override
+	protected void entityInit() {
+		super.entityInit();
+		this.dataManager.register(COLOR, 0);
 	}
 	
 	@Override
@@ -38,13 +50,29 @@ public class EntityBalloon extends EntityLiving implements IProjectile {
 		super.applyEntityAttributes();
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(2.0D);
 	}
+	
+	@Override
+	public void writeEntityToNBT(NBTTagCompound nbt) {
+        super.writeEntityToNBT(nbt);
+        nbt.setInteger("color", this.getColor());
+    }
+
+	@Override
+    public void readEntityFromNBT(NBTTagCompound nbt) {
+		super.readEntityFromNBT(nbt);
+		this.dataManager.set(COLOR, nbt.getInteger("color"));
+	}
+	
+	public int getColor() {
+		return this.dataManager.get(COLOR).intValue();
+	}
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (!this.worldObj.isRemote && !source.equals(DamageSource.fall)) {
 			this.worldObj.playSound(null, this.getPosition(), ModSoundEvents.balloonPop, SoundCategory.NEUTRAL, 
 					0.8f, this.worldObj.rand.nextFloat()+0.3f);
-			this.entityDropItem(new ItemStack(ModItems.balloonDeflated), 0);
+			this.entityDropItem(new ItemStack(ModItems.balloonDeflated, 1, this.getColor()), 0);
 			this.setDead();
 		}
 

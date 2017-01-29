@@ -1,14 +1,18 @@
 package furgl.stupidThings.client.model;
 
+import java.awt.Color;
+
+import furgl.stupidThings.common.entity.EntityBalloon;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.EnumDyeColor;
 
 public class ModelBalloonLiquid extends ModelBase {
 
 	public ModelRenderer balloon;
-	
+
 	public ModelBalloonLiquid() {
 		this.textureHeight = 32;
 		this.textureWidth = 32;
@@ -23,12 +27,16 @@ public class ModelBalloonLiquid extends ModelBase {
 		this.balloon.addBox(-0.5f, -5.5f, -0.5f, 1, 1, 1);
 		this.balloon.addBox(-1, -6.5f, -1, 2, 1, 2);
 	}
-	
+
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		GlStateManager.pushMatrix();
+		if (entity instanceof EntityBalloon) {
+			Color color = new Color(EnumDyeColor.byMetadata(((EntityBalloon)entity).getColor()).getMapColor().colorValue);
+			GlStateManager.color(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f);
+		}
 		GlStateManager.translate(0, 1.2d, 0);/*System.out.println(entity.rotationYaw);*/
-        GlStateManager.rotate(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * 1 + 180f, 0.0F, 0.0F, 1.0F);//angle
+		GlStateManager.rotate(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * 1 + 180f, 0.0F, 0.0F, 1.0F);//angle
 		balloon.rotateAngleY = (float) (entity.rotationYaw + Math.sin(Math.abs(entity.motionX)+
 				Math.abs(entity.motionY*2f)+Math.abs(entity.motionZ))*10f);
 		balloon.render(scale);

@@ -15,7 +15,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderBalloon extends RenderLiving<EntityBalloon> {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(StupidThings.MODID, "textures/entity/balloon.png");
+	private static final ResourceLocation TEXTURE = new ResourceLocation(StupidThings.MODID+":textures/entity/balloon.png");
 
 	public RenderBalloon(RenderManager renderManagerIn, ModelBase model) {
 		super(renderManagerIn, model, 0.3f);
@@ -30,9 +30,7 @@ public class RenderBalloon extends RenderLiving<EntityBalloon> {
 	protected void renderLeash(EntityBalloon entityLivingIn, double x, double y, double z, float entityYaw, float partialTicks) {
 		y -= 1.1d;
 		z -= 0.3d;
-		//TODO remove
-		//if (entityLivingIn instanceof EntityBalloonLiquid)
-		//this.mainModel = new ModelBalloonLiquid();
+		
 		Entity entity = entityLivingIn.getLeashedToEntity();
         if (entity != null && !entity.isDead) {
             y = y - (1.6D - (double)entityLivingIn.height) * 0.5D;

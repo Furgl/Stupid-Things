@@ -27,14 +27,14 @@ public class ItemBalloonLiquid extends ItemBalloon {
 			if (!GuiScreen.isShiftKeyDown())
 				tooltip.add(TextFormatting.DARK_GRAY+"Hold shift for more info");
 			else {
-				tooltip.add(TextFormatting.DARK_RED+"Right click to throw");
-				tooltip.add(TextFormatting.DARK_RED+"Spawns "+liquid.getLocalizedName().toLowerCase()+" on impact");
+				tooltip.add(COLORS[stack.getMetadata()]+"Right click to throw");
+				tooltip.add(COLORS[stack.getMetadata()]+"Spawns "+liquid.getLocalizedName().toLowerCase()+" on impact");
 			}
 	}
 	
 	@Override
-	protected void throwBalloon(World world, EntityPlayer player) {
-		EntityBalloon balloon = new EntityBalloonLiquid(liquid, world, player);
+	protected void throwBalloon(World world, EntityPlayer player, int meta) {
+		EntityBalloon balloon = new EntityBalloonLiquid(liquid, world, player, meta);
         balloon.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 2F, 1.0F);
         world.spawnEntityInWorld(balloon);
 	}

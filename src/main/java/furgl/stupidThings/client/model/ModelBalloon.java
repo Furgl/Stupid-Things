@@ -1,10 +1,13 @@
 package furgl.stupidThings.client.model;
 
+import java.awt.Color;
+
 import furgl.stupidThings.common.entity.EntityBalloon;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.EnumDyeColor;
 
 public class ModelBalloon extends ModelBase {
 
@@ -32,6 +35,10 @@ public class ModelBalloon extends ModelBase {
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		GlStateManager.pushMatrix();
+		if (entity instanceof EntityBalloon) {
+			Color color = new Color(EnumDyeColor.byMetadata(((EntityBalloon)entity).getColor()).getMapColor().colorValue);
+			GlStateManager.color(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f);
+		}
 		GlStateManager.translate(-0.35d, 1.35d+Math.sin(entity.ticksExisted/20d)/15f, 0.35d);
 		balloon.rotateAngleX = (float) Math.PI;
 		float modifier = (entity instanceof EntityBalloon && ((EntityBalloon)entity).getLeashed()) ? 2f : 10f;

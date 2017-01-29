@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class CommonProxy {
-	
+
 	public void preInit(FMLPreInitializationEvent event) {
 		StupidThings.configFile = event.getSuggestedConfigurationFile();
 		StupidThings.logger = event.getModLog();
@@ -51,9 +51,11 @@ public class CommonProxy {
 		GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.reverseTnt), new ItemStack(Blocks.TNT), new ItemStack(Items.ENDER_PEARL));
 		GameRegistry.addRecipe(new ItemStack(ModItems.anvilChestplate), "ABA", 'A', new ItemStack(Items.STRING), 'B', new ItemStack(Blocks.ANVIL, 1, OreDictionary.WILDCARD_VALUE));
 		GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.explosiveRail), new ItemStack(Blocks.TNT), new ItemStack(Blocks.RAIL));
-		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.balloonDeflated, 16), new ItemStack(Items.LEATHER), new ItemStack(Items.STRING), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage()));
-		GameRegistry.addRecipe(new ItemStack(ModItems.balloonWater, 8), "AAA", "ABA", "AAA", 'A', new ItemStack(ModItems.balloonDeflated), 'B', new ItemStack(Items.WATER_BUCKET));
-		GameRegistry.addRecipe(new ItemStack(ModItems.balloonLava, 8), "AAA", "ABA", "AAA", 'A', new ItemStack(ModItems.balloonDeflated), 'B', new ItemStack(Items.LAVA_BUCKET));
+		for (EnumDyeColor color : EnumDyeColor.values()) {
+			GameRegistry.addShapelessRecipe(new ItemStack(ModItems.balloonDeflated, 16, color.getMetadata()), new ItemStack(Items.LEATHER), new ItemStack(Items.STRING), new ItemStack(Items.DYE, 1, color.getDyeDamage()));
+			GameRegistry.addRecipe(new ItemStack(ModItems.balloonWater, 8, color.getMetadata()), "AAA", "ABA", "AAA", 'A', new ItemStack(ModItems.balloonDeflated, 1, color.getMetadata()), 'B', new ItemStack(Items.WATER_BUCKET));
+			GameRegistry.addRecipe(new ItemStack(ModItems.balloonLava, 8, color.getMetadata()), "AAA", "ABA", "AAA", 'A', new ItemStack(ModItems.balloonDeflated, 1, color.getMetadata()), 'B', new ItemStack(Items.LAVA_BUCKET));
+		}
 	}
 
 	public Object getArmorModel(Item item) {

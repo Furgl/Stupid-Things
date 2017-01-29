@@ -32,8 +32,8 @@ public class EntityBalloonLiquid extends EntityBalloon {
 		this.setSize(0.6F, 0.6F);
 	}
 
-	public EntityBalloonLiquid(BlockLiquid liquid, World world, EntityPlayer player) {
-		super(world, player);
+	public EntityBalloonLiquid(BlockLiquid liquid, World world, EntityPlayer player, int color) {
+		super(world, player, color);
 		this.liquid = liquid;
 		this.dataManager.set(LIQUID, Block.getIdFromBlock(liquid));
 		this.gravity = 0.05d;

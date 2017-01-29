@@ -7,7 +7,6 @@ import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -16,7 +15,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 
-public class ItemBalloonDeflated extends Item {
+public class ItemBalloonDeflated extends ItemBalloon {
 
 	public ItemBalloonDeflated() {
 		super();
@@ -28,7 +27,7 @@ public class ItemBalloonDeflated extends Item {
 			if (!GuiScreen.isShiftKeyDown())
 				tooltip.add(TextFormatting.DARK_GRAY+"Hold shift for more info");
 			else 
-				tooltip.add(TextFormatting.DARK_RED+"Hold right click to blow up");
+				tooltip.add(COLORS[stack.getMetadata()]+"Hold right click to blow up");
 	}
 
 	@Override
@@ -46,7 +45,7 @@ public class ItemBalloonDeflated extends Item {
 		if (!world.isRemote) {
 			--stack.stackSize;
 			
-			ItemStack balloon = new ItemStack(ModItems.balloon);
+			ItemStack balloon = new ItemStack(ModItems.balloon, 1, stack.getMetadata());
 			if (!(entity instanceof EntityPlayer) || !((EntityPlayer)entity).inventory.addItemStackToInventory(balloon))
 				entity.entityDropItem(balloon, 0);
 		}

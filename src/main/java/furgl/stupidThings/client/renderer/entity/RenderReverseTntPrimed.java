@@ -9,9 +9,9 @@ import net.minecraft.client.renderer.entity.RenderTNTPrimed;
 import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.util.math.MathHelper;
 
-public class RenderReverseTNTPrimed extends RenderTNTPrimed {
+public class RenderReverseTntPrimed extends RenderTNTPrimed {
 
-	public RenderReverseTNTPrimed(RenderManager renderManager) {
+	public RenderReverseTntPrimed(RenderManager renderManager) {
 		super(renderManager);
 	}
 
@@ -67,6 +67,5 @@ public class RenderReverseTNTPrimed extends RenderTNTPrimed {
         }
 
         GlStateManager.popMatrix();
-        //super.doRender(entity, x, y, z, entityYaw, partialTicks);
     }
 }

@@ -1,14 +1,14 @@
 itemGroup.tabStupidThings=Stupid Things
 
-item.anvilChestplate.name=Anvil Chestplate
-item.balloonDeflated.name=Deflated Balloon
+item.anvil_chestplate.name=Anvil Chestplate
+item.balloon_deflated.name=Deflated Balloon
 item.balloon.name=Balloon
-item.balloonWater.name=Water Balloon
-item.balloonLava.name=Lava Balloon
+item.balloon_water.name=Water Balloon
+item.balloon_lava.name=Lava Balloon
 
-tile.reverseTNT.name=Reverse TNT
-tile.railExplosive.name=Explosive Rail
+tile.reverse_tnt.name=Reverse TNT
+tile.rail_explosive.name=Explosive Rail
 
-entity.stupidthings.reverseTNTPrimed.name=Reverse TNT
+entity.stupidthings.reverseTntPrimed.name=Reverse TNT
 entity.stupidthings.balloon.name=Balloon
 entity.stupidthings.balloonLiquid.name=Balloon
