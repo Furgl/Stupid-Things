@@ -49,13 +49,14 @@ public class CommonProxy {
 
 	private void registerRecipes() {
 		GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.reverseTnt), new ItemStack(Blocks.TNT), new ItemStack(Items.ENDER_PEARL));
-		GameRegistry.addRecipe(new ItemStack(ModItems.anvilChestplate), "ABA", 'A', new ItemStack(Items.STRING), 'B', new ItemStack(Blocks.ANVIL, 1, OreDictionary.WILDCARD_VALUE));
+		GameRegistry.addRecipe(new ItemStack(ModItems.anvilBackpack), "ABA", 'A', new ItemStack(Items.STRING), 'B', new ItemStack(Blocks.ANVIL, 1, OreDictionary.WILDCARD_VALUE));
 		GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.explosiveRail), new ItemStack(Blocks.TNT), new ItemStack(Blocks.RAIL));
 		for (EnumDyeColor color : EnumDyeColor.values()) {
 			GameRegistry.addShapelessRecipe(new ItemStack(ModItems.balloonDeflated, 16, color.getMetadata()), new ItemStack(Items.LEATHER), new ItemStack(Items.STRING), new ItemStack(Items.DYE, 1, color.getDyeDamage()));
 			GameRegistry.addRecipe(new ItemStack(ModItems.balloonWater, 8, color.getMetadata()), "AAA", "ABA", "AAA", 'A', new ItemStack(ModItems.balloonDeflated, 1, color.getMetadata()), 'B', new ItemStack(Items.WATER_BUCKET));
 			GameRegistry.addRecipe(new ItemStack(ModItems.balloonLava, 8, color.getMetadata()), "AAA", "ABA", "AAA", 'A', new ItemStack(ModItems.balloonDeflated, 1, color.getMetadata()), 'B', new ItemStack(Items.LAVA_BUCKET));
 		}
+		GameRegistry.addRecipe(new ItemStack(ModItems.paperBagHat), "AAA", "A A", 'A', new ItemStack(Items.PAPER));
 	}
 
 	public Object getArmorModel(Item item) {

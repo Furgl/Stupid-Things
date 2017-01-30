@@ -14,15 +14,19 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ModItems {
 	public static ArrayList<Item> allItems;
 
-	public static Item anvilChestplate;
+	public static Item anvilBackpack;
 	public static Item balloonDeflated;
 	public static Item balloon;
 	public static Item balloonWater;
 	public static Item balloonLava;
+	public static Item paperBagHat;
 
 	public static void preInit() {
 		allItems = new ArrayList<Item>();
-		anvilChestplate = registerItem(new ItemAnvilChestplate(), true);
+		
+		anvilBackpack = registerItem(new ItemAnvilBackpack(), true);
+		paperBagHat = registerItem(new ItemPaperBagHat(), true);
+
 		balloon = registerItem(new ItemBalloon(), true);
 		balloonDeflated = registerItem(new ItemBalloonDeflated(), true);
 		balloonWater = registerItem(new ItemBalloonLiquid.ItemBalloonWater(), true);

@@ -3,9 +3,9 @@ package furgl.stupidThings.client.model;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 
-public class ModelAnvilChestplate extends ModelBiped {
+public class ModelAnvilBackpack extends ModelBiped {
 
-	public ModelAnvilChestplate() {
+	public ModelAnvilBackpack() {
 		super();
 		this.textureHeight = 32;
 		this.textureWidth = 32;

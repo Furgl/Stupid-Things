@@ -1,6 +1,7 @@
 package furgl.stupidThings.client;
 
-import furgl.stupidThings.client.model.ModelAnvilChestplate;
+import furgl.stupidThings.client.model.ModelAnvilBackpack;
+import furgl.stupidThings.client.model.ModelPaperBagHat;
 import furgl.stupidThings.common.CommonProxy;
 import furgl.stupidThings.common.block.ModBlocks;
 import furgl.stupidThings.common.entity.ModEntities;
@@ -12,7 +13,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class ClientProxy extends CommonProxy
 {
-	private static final ModelAnvilChestplate anvilChestplateModel = new ModelAnvilChestplate();
+	private static final ModelAnvilBackpack MODEL_ANVIL_BACKPACK = new ModelAnvilBackpack();
+	private static final ModelPaperBagHat MODEL_PAPER_BAG_HAT = new ModelPaperBagHat();
 	
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
@@ -34,8 +36,10 @@ public class ClientProxy extends CommonProxy
 	
 	@Override
 	public Object getArmorModel(Item item) {
-		if (item == ModItems.anvilChestplate)
-			return anvilChestplateModel;
+		if (item == ModItems.anvilBackpack)
+			return MODEL_ANVIL_BACKPACK;
+		else if (item == ModItems.paperBagHat)
+			return MODEL_PAPER_BAG_HAT;
 
 		return null;
 	}

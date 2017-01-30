@@ -28,11 +28,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemAnvilChestplate extends ItemArmor {
+public class ItemAnvilBackpack extends ItemArmor {
 
 	private static final UUID MOVEMENT_SPEED_UUID = UUID.fromString("308e4fee-a300-48b6-9b56-05e53e35eb8f");
 
-	public ItemAnvilChestplate() {
+	public ItemAnvilBackpack() {
 		super(ArmorMaterial.IRON, 0, EntityEquipmentSlot.CHEST);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
@@ -56,7 +56,7 @@ public class ItemAnvilChestplate extends ItemArmor {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-		return StupidThings.MODID+":/textures/models/armor/anvil_chestplate.png";
+		return StupidThings.MODID+":/textures/models/armor/anvil_backpack.png";
 	}
 
 	@Override
