@@ -7,15 +7,19 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
 import furgl.stupidThings.common.StupidThings;
-import net.minecraft.client.gui.GuiScreen;
+import furgl.stupidThings.util.ICustomTooltip;
+import furgl.stupidThings.util.Utilities;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -28,7 +32,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemAnvilBackpack extends ItemArmor {
+public class ItemAnvilBackpack extends ItemArmor implements ICustomTooltip {
 
 	private static final UUID MOVEMENT_SPEED_UUID = UUID.fromString("308e4fee-a300-48b6-9b56-05e53e35eb8f");
 
@@ -36,16 +40,20 @@ public class ItemAnvilBackpack extends ItemArmor {
 		super(ArmorMaterial.IRON, 0, EntityEquipmentSlot.CHEST);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
-
+	
+	@Override
+	public ItemStack[] getTooltipRecipe(ItemStack stack) {
+		return new ItemStack[] {null, null, null, 
+				new ItemStack(Items.STRING), new ItemStack(Item.getItemFromBlock(Blocks.ANVIL)), new ItemStack(Items.STRING), 
+				null, null, null};
+	}
+	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
 		if (player.worldObj.isRemote)
-			if (!GuiScreen.isShiftKeyDown())
-				tooltip.add(TextFormatting.DARK_GRAY+"Hold shift for more info");
-			else { 
-				tooltip.add(TextFormatting.GRAY+"Weighs down the wearer and");
-				tooltip.add(TextFormatting.GRAY+"damages entities that are fallen on");
-			}
+			Utilities.addTooltipText(tooltip, 
+					new String[] {TextFormatting.GRAY+"Weighs down the wearer and",
+							TextFormatting.GRAY+"damages entities that are fallen on"}, null);
 	}
 
 	@Override

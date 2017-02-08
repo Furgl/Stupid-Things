@@ -12,16 +12,16 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ModBlocks {
 
-	public static ArrayList<Block> allBlocks;
+	public static ArrayList<Block> allBlocks = new ArrayList<Block>();
 	
 	public static Block reverseTnt;
 	public static Block explosiveRail;
 
 	public static void preInit() {
 		allBlocks = new ArrayList<Block>();
-
-		reverseTnt = registerBlock(new BlockReverseTnt(), true, true);
-		explosiveRail = registerBlock(new BlockRailExplosive(), true, true);
+		
+		reverseTnt = registerBlock(new BlockReverseTnt(), "reverse_tnt", true, true);
+		explosiveRail = registerBlock(new BlockRailExplosive(), "rail_explosive", true, true);
 	}
 
 	public static void registerRenders() {
@@ -29,8 +29,7 @@ public class ModBlocks {
 			registerRender(block);
 	}
 
-	private static Block registerBlock(Block block, boolean isItemBlock, boolean addToTab) {
-		String unlocalizedName = getUnlocalizedName(block);
+	public static Block registerBlock(Block block, String unlocalizedName, boolean isItemBlock, boolean addToTab) {
 		block.setUnlocalizedName(unlocalizedName);
 		GameRegistry.register(block.setRegistryName(unlocalizedName));
 		if (isItemBlock) {
@@ -44,21 +43,8 @@ public class ModBlocks {
 		allBlocks.add(block);
 		return block;
 	}
-	
-	/**Derives unlocalized name from class (ex: BlockReverseTNT -> reverse_tnt)*/
-	private static String getUnlocalizedName(Block block) {
-		String unlocalizedName = "";
-		String tmp = block.getClass().getSimpleName().replace("Block", ""); 
-		tmp = tmp.substring(0, 1).toLowerCase()+tmp.substring(1);
-		for (int i=0; i<tmp.length(); i++) 
-			if (Character.isUpperCase(tmp.charAt(i)))
-				unlocalizedName += "_"+Character.toLowerCase(tmp.charAt(i));
-			else
-				unlocalizedName += tmp.charAt(i);
-		return unlocalizedName;
-	}
 
-	private static void registerRender(Block block) {	
+	public static void registerRender(Block block) {	
 		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, 
 				new ModelResourceLocation(StupidThings.MODID + ":" + block.getUnlocalizedName().substring(5), "inventory"));
 	}

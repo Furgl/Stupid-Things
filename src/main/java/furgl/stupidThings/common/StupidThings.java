@@ -5,6 +5,8 @@ import java.io.File;
 import org.apache.logging.log4j.Logger;
 
 import furgl.stupidThings.creativetab.StupidThingsCreativeTab;
+import furgl.stupidThings.util.Utilities;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -27,7 +29,12 @@ public class StupidThings {
 	public static Logger logger;
 	public static SimpleNetworkWrapper network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 	protected static File configFile;
+	public static Utilities util;
 
+	static {
+		FluidRegistry.enableUniversalBucket();
+	}
+	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		proxy.preInit(event);

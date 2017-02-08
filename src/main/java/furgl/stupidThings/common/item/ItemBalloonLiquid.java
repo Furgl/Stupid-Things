@@ -4,13 +4,15 @@ import java.util.List;
 
 import furgl.stupidThings.common.entity.EntityBalloon;
 import furgl.stupidThings.common.entity.EntityBalloonLiquid;
+import furgl.stupidThings.util.Utilities;
 import net.minecraft.block.BlockLiquid;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemBalloonLiquid extends ItemBalloon {
 
@@ -22,14 +24,20 @@ public class ItemBalloonLiquid extends ItemBalloon {
 	}
 	
 	@Override
+	public ItemStack[] getTooltipRecipe(ItemStack stack) {
+		ItemStack deflatedBalloon = new ItemStack(ModItems.balloonDeflated, 1, stack.getMetadata());
+		ItemStack liquidBucket = new ItemStack(liquid == Blocks.WATER ? Items.WATER_BUCKET : Items.LAVA_BUCKET);
+		return new ItemStack[] {deflatedBalloon, deflatedBalloon, deflatedBalloon, 
+				deflatedBalloon, liquidBucket, deflatedBalloon, 
+				deflatedBalloon, deflatedBalloon, deflatedBalloon};
+	}
+	
+	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
 		if (player.worldObj.isRemote)
-			if (!GuiScreen.isShiftKeyDown())
-				tooltip.add(TextFormatting.DARK_GRAY+"Hold shift for more info");
-			else {
-				tooltip.add(COLORS[stack.getMetadata()]+"Right click to throw");
-				tooltip.add(COLORS[stack.getMetadata()]+"Spawns "+liquid.getLocalizedName().toLowerCase()+" on impact");
-			}
+			Utilities.addTooltipText(tooltip, 
+					new String[] {COLORS[stack.getMetadata()]+"Right click to throw",
+							COLORS[stack.getMetadata()]+"Spawns "+liquid.getLocalizedName().toLowerCase()+" on impact"}, null);
 	}
 	
 	@Override

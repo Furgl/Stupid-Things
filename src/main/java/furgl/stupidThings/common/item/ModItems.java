@@ -21,16 +21,16 @@ public class ModItems {
 	public static Item balloonLava;
 	public static Item paperBagHat;
 
-	public static void preInit() {
+	public static void preInit() {		
 		allItems = new ArrayList<Item>();
 		
-		anvilBackpack = registerItem(new ItemAnvilBackpack(), true);
-		paperBagHat = registerItem(new ItemPaperBagHat(), true);
+		anvilBackpack = registerItem(new ItemAnvilBackpack(), "anvil_backpack", true);
+		paperBagHat = registerItem(new ItemPaperBagHat(), "paper_bag_hat", true);
 
-		balloon = registerItem(new ItemBalloon(), true);
-		balloonDeflated = registerItem(new ItemBalloonDeflated(), true);
-		balloonWater = registerItem(new ItemBalloonLiquid.ItemBalloonWater(), true);
-		balloonLava = registerItem(new ItemBalloonLiquid.ItemBalloonLava(), true);
+		balloon = registerItem(new ItemBalloon(), "balloon", true);
+		balloonDeflated = registerItem(new ItemBalloonDeflated(), "balloon_deflated", true);
+		balloonWater = registerItem(new ItemBalloonLiquid.ItemBalloonWater(), "balloon_water", true);
+		balloonLava = registerItem(new ItemBalloonLiquid.ItemBalloonLava(), "balloon_lava", true);
 	}
 
 	public static void registerRenders() {
@@ -47,14 +47,12 @@ public class ModItems {
 		Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
 			@Override
 			public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-				//System.out.println(EnumDyeColor.byMetadata(stack.getMetadata()).getMapColor().colorValue);
 				return EnumDyeColor.byMetadata(stack.getMetadata()).getMapColor().colorValue;
 			}
 		}, balloon, balloonDeflated, balloonWater, balloonLava);
 	}
 
-	private static Item registerItem(Item item, boolean addToTab) {
-		String unlocalizedName = getUnlocalizedName(item);
+	public static Item registerItem(Item item, String unlocalizedName, boolean addToTab) {
 		item.setUnlocalizedName(unlocalizedName);
 		item.setRegistryName(StupidThings.MODID, unlocalizedName);
 		if (addToTab) {
@@ -64,19 +62,6 @@ public class ModItems {
 		GameRegistry.register(item);
 		allItems.add(item);
 		return item;
-	}
-
-	/**Derives unlocalized name from class (ex: ItemAnvilChestplate -> anvil_chestplate)*/
-	private static String getUnlocalizedName(Item item) {
-		String unlocalizedName = "";
-		String tmp = item.getClass().getSimpleName().replace("Item", "");   
-		tmp = tmp.substring(0, 1).toLowerCase()+tmp.substring(1);
-		for (int i=0; i<tmp.length(); i++) 
-			if (Character.isUpperCase(tmp.charAt(i)))
-				unlocalizedName += "_"+Character.toLowerCase(tmp.charAt(i));
-			else
-				unlocalizedName += tmp.charAt(i);
-		return unlocalizedName;
 	}
 
 	private static void registerRender(Item item, int meta) {		

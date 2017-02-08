@@ -3,7 +3,8 @@ package furgl.stupidThings.common.item;
 import java.util.List;
 
 import furgl.stupidThings.common.entity.EntityBalloon;
-import net.minecraft.client.gui.GuiScreen;
+import furgl.stupidThings.util.ICustomTooltip;
+import furgl.stupidThings.util.Utilities;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -18,32 +19,34 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemBalloon extends Item {
+public class ItemBalloon extends Item implements ICustomTooltip {
 
 	protected final String[] NAMES = new String[] {"White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Black"};
 	protected final TextFormatting[] COLORS = new TextFormatting[] {TextFormatting.WHITE, TextFormatting.GOLD, TextFormatting.LIGHT_PURPLE, TextFormatting.BLUE, TextFormatting.YELLOW, TextFormatting.GREEN, TextFormatting.LIGHT_PURPLE, TextFormatting.DARK_GRAY, TextFormatting.GRAY, TextFormatting.AQUA, TextFormatting.DARK_PURPLE, TextFormatting.BLUE, TextFormatting.GOLD, TextFormatting.DARK_GREEN, TextFormatting.DARK_RED, TextFormatting.WHITE};
-	
+
 	public ItemBalloon() {
 		super();
 		this.setHasSubtypes(true);
 	}
 
 	@Override
+	public ItemStack[] getTooltipRecipe(ItemStack stack) {
+		return null;
+	}
+
+	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote) {
-			if (!GuiScreen.isShiftKeyDown())
-				tooltip.add(TextFormatting.DARK_GRAY+"Hold shift for more info");
-			else {
-				tooltip.add(COLORS[stack.getMetadata()]+"Right click to throw");
-				tooltip.add(COLORS[stack.getMetadata()]+"Right click the balloon with a lead to attach it");
-				tooltip.add("");
-				tooltip.add(COLORS[stack.getMetadata()]+"While the balloon is attached to a lead:");
-				tooltip.add(COLORS[stack.getMetadata()]+"- holding it will pull you up");
-				tooltip.add(COLORS[stack.getMetadata()]+"- sneak to slowly float down again");
-				tooltip.add(COLORS[stack.getMetadata()]+"- right click a fence to attach the balloon to it");
-				tooltip.add(COLORS[stack.getMetadata()]+"- right click the balloon to detach the lead");
-			}
-		}
+		if (player.worldObj.isRemote)
+			Utilities.addTooltipText(tooltip, 
+					new String[] {COLORS[stack.getMetadata()]+"Right click to throw",
+							COLORS[stack.getMetadata()]+"Right click the balloon with a lead to attach it",
+							"",
+							COLORS[stack.getMetadata()]+"While the balloon is attached to a lead:",
+							COLORS[stack.getMetadata()]+"- holding it will pull you up",
+							COLORS[stack.getMetadata()]+"- sneak to slowly float down again",
+							COLORS[stack.getMetadata()]+"- right click a fence to attach the balloon to it",
+							COLORS[stack.getMetadata()]+"- right click the balloon to detach the lead"}, 
+					new String[] {COLORS[stack.getMetadata()]+"Hold right click with a deflated balloon to blow it up"});
 	}
 
 	@Override

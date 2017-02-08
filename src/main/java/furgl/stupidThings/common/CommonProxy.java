@@ -3,9 +3,11 @@ package furgl.stupidThings.common;
 import furgl.stupidThings.common.block.ModBlocks;
 import furgl.stupidThings.common.config.Config;
 import furgl.stupidThings.common.entity.ModEntities;
+import furgl.stupidThings.common.fluid.ModFluids;
 import furgl.stupidThings.common.item.ModItems;
 import furgl.stupidThings.common.sound.ModSoundEvents;
 import furgl.stupidThings.common.tileentity.ModTileEntities;
+import furgl.stupidThings.util.Utilities;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -23,9 +25,11 @@ public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		StupidThings.configFile = event.getSuggestedConfigurationFile();
 		StupidThings.logger = event.getModLog();
+		StupidThings.util = Utilities.INSTANCE;
 		registerPackets();
 		ModBlocks.preInit();
 		ModItems.preInit();
+		ModFluids.preInit();
 		ModEntities.preInit();
 		ModSoundEvents.preInit();
 		ModTileEntities.preInit();
