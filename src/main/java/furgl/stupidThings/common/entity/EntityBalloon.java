@@ -38,31 +38,31 @@ public class EntityBalloon extends EntityLiving implements IProjectile {
 		this.setPosition(thrower.posX, thrower.posY + (double)thrower.getEyeHeight() - 0.1D, thrower.posZ);
 		this.dataManager.set(COLOR, color);
 	}
-	
+
 	@Override
 	protected void entityInit() {
 		super.entityInit();
 		this.dataManager.register(COLOR, 0);
 	}
-	
+
 	@Override
-    protected void applyEntityAttributes() {
+	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
 		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(2.0D);
 	}
-	
-	@Override
-	public void writeEntityToNBT(NBTTagCompound nbt) {
-        super.writeEntityToNBT(nbt);
-        nbt.setInteger("color", this.getColor());
-    }
 
 	@Override
-    public void readEntityFromNBT(NBTTagCompound nbt) {
+	public void writeEntityToNBT(NBTTagCompound nbt) {
+		super.writeEntityToNBT(nbt);
+		nbt.setInteger("color", this.getColor());
+	}
+
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbt) {
 		super.readEntityFromNBT(nbt);
 		this.dataManager.set(COLOR, nbt.getInteger("color"));
 	}
-	
+
 	public int getColor() {
 		return this.dataManager.get(COLOR).intValue();
 	}
@@ -72,7 +72,8 @@ public class EntityBalloon extends EntityLiving implements IProjectile {
 		if (!this.worldObj.isRemote && !source.equals(DamageSource.fall)) {
 			this.worldObj.playSound(null, this.getPosition(), ModSoundEvents.balloonPop, SoundCategory.NEUTRAL, 
 					0.8f, this.worldObj.rand.nextFloat()+0.3f);
-			this.entityDropItem(new ItemStack(ModItems.balloonDeflated, 1, this.getColor()), 0);
+			if (ModItems.balloonDeflated != null)
+				this.entityDropItem(new ItemStack(ModItems.balloonDeflated, 1, this.getColor()), 0);
 			this.setDead();
 		}
 
@@ -115,6 +116,9 @@ public class EntityBalloon extends EntityLiving implements IProjectile {
 
 	@Override
 	public void onUpdate() {
+		if (ModItems.balloon == null)
+			this.setDead();
+
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
@@ -154,7 +158,7 @@ public class EntityBalloon extends EntityLiving implements IProjectile {
 		this.setThrowableHeading((double)f, (double)f1, (double)f2, velocity, inaccuracy);
 		this.motionX += entityThrower.motionX;
 		this.motionZ += entityThrower.motionZ;
-		
+
 		if (!entityThrower.onGround)
 			this.motionY += entityThrower.motionY;
 	}
@@ -180,15 +184,15 @@ public class EntityBalloon extends EntityLiving implements IProjectile {
 		this.prevRotationYaw = this.rotationYaw;
 		this.prevRotationPitch = this.rotationPitch;
 	}
-	
+
 	@Override
 	public void applyEntityCollision(Entity entityIn) {
-        if (!this.isRidingSameEntity(entityIn) && !entityIn.noClip && !this.noClip) {
-        	this.motionY += 0.02d;
-        	this.rotationYaw += (entityIn.worldObj.rand.nextFloat()-0.5f)*100f;
-        	this.prevRotationYaw = this.rotationYaw;
-        }
-		
+		if (!this.isRidingSameEntity(entityIn) && !entityIn.noClip && !this.noClip) {
+			this.motionY += 0.02d;
+			this.rotationYaw += (entityIn.worldObj.rand.nextFloat()-0.5f)*100f;
+			this.prevRotationYaw = this.rotationYaw;
+		}
+
 		super.applyEntityCollision(entityIn);
 	}
 

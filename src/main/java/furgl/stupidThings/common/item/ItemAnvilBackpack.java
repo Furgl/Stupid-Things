@@ -8,7 +8,7 @@ import com.google.common.collect.Multimap;
 
 import furgl.stupidThings.common.StupidThings;
 import furgl.stupidThings.util.ICustomTooltip;
-import furgl.stupidThings.util.Utilities;
+import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -51,9 +51,9 @@ public class ItemAnvilBackpack extends ItemArmor implements ICustomTooltip {
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
 		if (player.worldObj.isRemote)
-			Utilities.addTooltipText(tooltip, 
+			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.GRAY+"Weighs down the wearer and",
-							TextFormatting.GRAY+"damages entities that are fallen on"}, null);
+							TextFormatting.GRAY+"damages entities that are fallen on"}, new String[0]);
 	}
 
 	@Override

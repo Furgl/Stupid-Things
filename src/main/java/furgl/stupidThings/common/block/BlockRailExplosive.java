@@ -3,11 +3,14 @@ package furgl.stupidThings.common.block;
 import java.util.List;
 import java.util.Random;
 
+import furgl.stupidThings.util.ICustomTooltip;
+import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.block.BlockRailPowered;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.BlockPos;
@@ -16,21 +19,27 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockRailExplosive extends BlockRailPowered {
+public class BlockRailExplosive extends BlockRailPowered implements ICustomTooltip {
 
 	protected BlockRailExplosive() {
 		super();
+		this.setHardness(0.7F);
+		this.setSoundType(SoundType.METAL);
 	}
 	
 	@Override
+	public ItemStack[] getTooltipRecipe(ItemStack stack) {
+		return new ItemStack[] {null, null, null, 
+				new ItemStack(Blocks.TNT), new ItemStack(Blocks.RAIL), null,
+				null, null, null};
+	}
+
+	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
 		if (player.worldObj.isRemote)
-			if (!GuiScreen.isShiftKeyDown())
-				tooltip.add(TextFormatting.DARK_GRAY+"Hold shift for more info");
-			else {
-				tooltip.add(TextFormatting.DARK_RED+"Explodes when a minecart passes");
-				tooltip.add(TextFormatting.DARK_RED+"over while this is powered");
-			}
+			TooltipHelper.addTooltipText(tooltip, 
+					new String[] {TextFormatting.DARK_RED+"Explodes when a minecart passes",
+							TextFormatting.DARK_RED+"over while this is powered"}, new String[0]);
 	}
 	
 	@Override

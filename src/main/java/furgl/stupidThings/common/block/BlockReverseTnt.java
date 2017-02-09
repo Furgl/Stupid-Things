@@ -3,13 +3,16 @@ package furgl.stupidThings.common.block;
 import java.util.List;
 
 import furgl.stupidThings.common.entity.EntityReverseTntPrimed;
+import furgl.stupidThings.util.ICustomTooltip;
+import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
@@ -18,7 +21,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
-public class BlockReverseTnt extends BlockTNT {
+public class BlockReverseTnt extends BlockTNT implements ICustomTooltip {
 
 	public BlockReverseTnt() {
 		super();
@@ -27,14 +30,19 @@ public class BlockReverseTnt extends BlockTNT {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote)
-			if (!GuiScreen.isShiftKeyDown())
-				tooltip.add(TextFormatting.DARK_GRAY+"Hold shift for more info");
-			else 
-				tooltip.add(TextFormatting.AQUA+"Pulls in nearby blocks and entities");
+	public ItemStack[] getTooltipRecipe(ItemStack stack) {
+		return new ItemStack[] {null, null, null, 
+				new ItemStack(Blocks.TNT), new ItemStack(Items.ENDER_PEARL), null,
+				null, null, null};
 	}
 
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+		if (player.worldObj.isRemote)
+			TooltipHelper.addTooltipText(tooltip, 
+					new String[] {TextFormatting.AQUA+"Pulls in nearby blocks and entities"}, new String[0]);
+	}
+	
 	@Override
 	/**Copied from BlockTNT with EntityTNTPrimed replaced by EntityReverseTNTPrimed*/
 	public void onBlockDestroyedByExplosion(World worldIn, BlockPos pos, Explosion explosionIn) {

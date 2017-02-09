@@ -5,18 +5,15 @@ import java.util.Random;
 
 import furgl.stupidThings.common.fluid.ModFluids;
 import furgl.stupidThings.util.ICustomTooltip;
-import furgl.stupidThings.util.Utilities;
+import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
@@ -48,17 +45,17 @@ public class BlockFluidAcid extends BlockFluidClassic implements ICustomTooltip 
 
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
-		return new ItemStack[] {null, null, null, 
-				new ItemStack(Items.STRING), new ItemStack(Item.getItemFromBlock(Blocks.ANVIL)), new ItemStack(Items.STRING), 
+		return new ItemStack[] {null, new ItemStack(Items.ROTTEN_FLESH), null,
+				new ItemStack(Items.GUNPOWDER), new ItemStack(Items.WATER_BUCKET),new ItemStack(Items.SPIDER_EYE),
 				null, null, null};
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
 		if (player.worldObj.isRemote)
-			Utilities.addTooltipText(tooltip, 
+			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.DARK_GREEN+""+TextFormatting.BOLD+"Warning: Extremely corrosive",
-							TextFormatting.GREEN+"Rapidly dissolves soft blocks on contact"}, null);
+							TextFormatting.GREEN+"Rapidly dissolves soft blocks on contact"}, new String[0]);
 	}
 
 	@SubscribeEvent(receiveCanceled=true)
@@ -66,9 +63,9 @@ public class BlockFluidAcid extends BlockFluidClassic implements ICustomTooltip 
 		if (event.getEntity().worldObj.isRemote && event.getItemStack() != null && 
 				event.getItemStack().getItem() instanceof UniversalBucket && 
 				((UniversalBucket)event.getItemStack().getItem()).getFluid(event.getItemStack()).getFluid() == ModFluids.acid) 
-			Utilities.addTooltipText(event.getToolTip(), 
+			TooltipHelper.addTooltipText(event.getToolTip(), 
 					new String[] {TextFormatting.DARK_GREEN+""+TextFormatting.BOLD+"Warning: Extremely corrosive",
-							TextFormatting.GREEN+"Rapidly dissolves soft blocks on contact"}, null);
+							TextFormatting.GREEN+"Rapidly dissolves soft blocks on contact"}, new String[0]);
 	}
 
 	@Override

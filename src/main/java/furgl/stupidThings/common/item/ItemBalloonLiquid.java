@@ -4,15 +4,13 @@ import java.util.List;
 
 import furgl.stupidThings.common.entity.EntityBalloon;
 import furgl.stupidThings.common.entity.EntityBalloonLiquid;
-import furgl.stupidThings.util.Utilities;
+import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 
 public class ItemBalloonLiquid extends ItemBalloon {
 
@@ -35,9 +33,10 @@ public class ItemBalloonLiquid extends ItemBalloon {
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
 		if (player.worldObj.isRemote)
-			Utilities.addTooltipText(tooltip, 
+			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {COLORS[stack.getMetadata()]+"Right click to throw",
-							COLORS[stack.getMetadata()]+"Spawns "+liquid.getLocalizedName().toLowerCase()+" on impact"}, null);
+							COLORS[stack.getMetadata()]+"Spawns "+liquid.getLocalizedName().toLowerCase()+" on impact"}, 
+					new String[0]);
 	}
 	
 	@Override

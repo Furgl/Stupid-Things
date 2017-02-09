@@ -19,6 +19,9 @@ public class RenderReverseTntPrimed extends RenderTNTPrimed {
 	/**Copied from RenderTNTPrimed to change  to ModBlocks.reverseTnt*/
 	public void doRender(EntityTNTPrimed entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
+		if (ModBlocks.reverseTnt == null)
+			return;
+		
         BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)x, (float)y + 0.5F, (float)z);

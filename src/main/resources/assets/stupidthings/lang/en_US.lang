@@ -10,6 +10,8 @@ item.paper_bag_hat.name=Paper Bag Hat
 tile.reverse_tnt.name=Reverse TNT
 tile.rail_explosive.name=Explosive Rail
 tile.acid.name=Acid
+tile.radiator.name=Radiator
+tile.cooler.name=Cooler
 
 entity.stupidthings.reverseTntPrimed.name=Reverse TNT
 entity.stupidthings.balloon.name=Balloon

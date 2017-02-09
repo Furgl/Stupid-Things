@@ -18,30 +18,32 @@ import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class Utilities {
+public class TooltipHelper {
 
-	public static final Utilities INSTANCE = new Utilities();
+	public static final TooltipHelper INSTANCE = new TooltipHelper();
 
 	private static final ResourceLocation TOOLTIP_RECIPE_BACKGROUND = 
 			new ResourceLocation(StupidThings.MODID+":textures/gui/tooltip_recipe_background.png");
 
-	private Utilities() {
+	private TooltipHelper() {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
+	/**Adds shiftText/ctrlText to tooltip appropriately;
+	 * displays prompt to hold keys for more info/recipe if shiftText/ctrlText are not null*/
 	public static void addTooltipText(List<String> tooltip, String[] shiftText, String[] ctrlText) {
 		if (GuiScreen.isShiftKeyDown())
 			for (String string : shiftText == null ? new String[0] : shiftText)
 				tooltip.add(string);
-		else
+		else if (shiftText != null)
 			tooltip.add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+"Hold shift for more info");
 		if (GuiScreen.isCtrlKeyDown()) {
-			if (GuiScreen.isShiftKeyDown() && ctrlText != null)
+			if (GuiScreen.isShiftKeyDown() && ctrlText != null && ctrlText.length > 0)
 				tooltip.add("");
 			for (String string : ctrlText == null ? new String[0] : ctrlText) 
 				tooltip.add(string);
 		}
-		else 
+		else if (ctrlText != null)
 			tooltip.add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+"Hold ctrl for recipe");
 	}
 
@@ -54,7 +56,7 @@ public class Utilities {
 				recipe = ((ICustomTooltip) event.getStack().getItem()).getTooltipRecipe(event.getStack());
 			else if (event.getStack().getItem() instanceof ItemBlock && ((ItemBlock) event.getStack().getItem()).getBlock() instanceof ICustomTooltip)
 				recipe = ((ICustomTooltip) ((ItemBlock) event.getStack().getItem()).getBlock()).getTooltipRecipe(event.getStack());
-			else if (event.getStack().getItem() instanceof UniversalBucket &&
+			else if (event.getStack().getItem() instanceof UniversalBucket && ModFluids.acid != null && 
 					((UniversalBucket)event.getStack().getItem()).getFluid(event.getStack()).getFluid() == ModFluids.acid) 
 				recipe = ((ICustomTooltip) ModFluids.acidBlock).getTooltipRecipe(event.getStack());
 

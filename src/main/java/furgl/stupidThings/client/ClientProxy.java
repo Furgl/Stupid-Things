@@ -36,7 +36,9 @@ public class ClientProxy extends CommonProxy
 	
 	@Override
 	public Object getArmorModel(Item item) {
-		if (item == ModItems.anvilBackpack)
+		if (item == null)
+			return null;
+		else if (item == ModItems.anvilBackpack)
 			return MODEL_ANVIL_BACKPACK;
 		else if (item == ModItems.paperBagHat)
 			return MODEL_PAPER_BAG_HAT;
