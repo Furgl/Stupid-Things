@@ -2,8 +2,10 @@ package furgl.stupidThings.common.entity;
 
 import furgl.stupidThings.client.model.ModelBalloon;
 import furgl.stupidThings.client.model.ModelBalloonLiquid;
+import furgl.stupidThings.client.model.ModelSmokeBomb;
 import furgl.stupidThings.client.renderer.entity.RenderBalloon;
 import furgl.stupidThings.client.renderer.entity.RenderReverseTntPrimed;
+import furgl.stupidThings.client.renderer.entity.RenderSmokeBomb;
 import furgl.stupidThings.common.StupidThings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -18,6 +20,7 @@ public class ModEntities
 		registerEntity(EntityReverseTntPrimed.class);
 		registerEntity(EntityBalloon.class);
 		registerEntity(EntityBalloonLiquid.class);
+		registerEntity(EntitySmokeBomb.class);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -26,6 +29,7 @@ public class ModEntities
 		RenderingRegistry.registerEntityRenderingHandler(EntityReverseTntPrimed.class, new RenderReverseTntPrimed(renderManager));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBalloon.class, new RenderBalloon(renderManager, new ModelBalloon()));
 		RenderingRegistry.registerEntityRenderingHandler(EntityBalloonLiquid.class, new RenderBalloon(renderManager, new ModelBalloonLiquid()));
+		RenderingRegistry.registerEntityRenderingHandler(EntitySmokeBomb.class, new RenderSmokeBomb(renderManager, new ModelSmokeBomb()));
 	}
 
 	/**Registers entity to unlocalizedName based on entity class (i.e. EntityZombieRunt = zombieRunt)*/

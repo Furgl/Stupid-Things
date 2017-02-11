@@ -20,16 +20,18 @@ public class ModBlocks {
 	
 	public static Block reverseTnt;
 	public static Block explosiveRail;
-	public static Block radiator;
+	public static Block heater;
 	public static Block cooler;
+	public static Block petRock;
 
 	public static void preInit() {
 		allBlocks = new ArrayList<Block>();
 		
 		reverseTnt = registerBlock(new BlockReverseTnt(), "reverse_tnt", true, true, true);
 		explosiveRail = registerBlock(new BlockRailExplosive(), "rail_explosive", true, true, true);
-		radiator = registerBlock(new BlockRadiator(), "radiator", true, true, true);
+		heater = registerBlock(new BlockHeater(), "heater", true, true, true);
 		cooler = registerBlock(new BlockCooler(), "cooler", true, true, true);
+		petRock = registerBlock(new BlockPetRock(), "pet_rock", true, true, true);
 	}
 
 	public static void registerRenders() {

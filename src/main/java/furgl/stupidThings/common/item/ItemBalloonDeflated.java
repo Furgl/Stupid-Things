@@ -15,6 +15,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemBalloonDeflated extends ItemBalloon {
 
@@ -24,10 +25,13 @@ public class ItemBalloonDeflated extends ItemBalloon {
 
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
-		return new ItemStack[] {null, null, null,
-				new ItemStack(Items.LEATHER), new ItemStack(Items.STRING), 
-				new ItemStack(Items.DYE, 1, EnumDyeColor.byMetadata(stack.getMetadata()).getDyeDamage()),
-				null, null, null};
+		if (!OreDictionary.getOres("itemRubber").isEmpty())
+			return new ItemStack[] {null, null, null,
+					OreDictionary.getOres("itemRubber").get(0), new ItemStack(Items.STRING), 
+					new ItemStack(Items.DYE, 1, EnumDyeColor.byMetadata(stack.getMetadata()).getDyeDamage()),
+					null, null, null};
+		else 
+			return null;
 	}
 
 	@Override
@@ -35,7 +39,7 @@ public class ItemBalloonDeflated extends ItemBalloon {
 		if (player.worldObj.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {COLORS[stack.getMetadata()]+"Hold right click to blow up"}, 
-					new String[0]);
+					OreDictionary.getOres("itemRubber").isEmpty() ? null : new String[0]);
 	}
 
 	@Override

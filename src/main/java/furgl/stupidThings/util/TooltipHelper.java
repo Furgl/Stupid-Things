@@ -17,6 +17,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.client.config.GuiUtils;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class TooltipHelper {
 
@@ -31,6 +33,7 @@ public class TooltipHelper {
 
 	/**Adds shiftText/ctrlText to tooltip appropriately;
 	 * displays prompt to hold keys for more info/recipe if shiftText/ctrlText are not null*/
+	@SideOnly(Side.CLIENT)
 	public static void addTooltipText(List<String> tooltip, String[] shiftText, String[] ctrlText) {
 		if (GuiScreen.isShiftKeyDown())
 			for (String string : shiftText == null ? new String[0] : shiftText)

@@ -8,11 +8,13 @@ import furgl.stupidThings.common.item.ModItems;
 import furgl.stupidThings.common.sound.ModSoundEvents;
 import furgl.stupidThings.common.tileentity.ModTileEntities;
 import furgl.stupidThings.util.TooltipHelper;
+import net.minecraft.block.BlockTallGrass.EnumType;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.UniversalBucket;
@@ -49,7 +51,7 @@ public class CommonProxy {
 
 	private void registerPackets() {}
 
-	private void registerEventListeners() {
+	protected void registerEventListeners() {
 		MinecraftForge.EVENT_BUS.register(new Config());
 	}
 
@@ -58,11 +60,21 @@ public class CommonProxy {
 			GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.reverseTnt), new ItemStack(Blocks.TNT), new ItemStack(Items.ENDER_PEARL));
 		if (ModItems.anvilBackpack != null)
 			GameRegistry.addRecipe(new ItemStack(ModItems.anvilBackpack), "ABA", 'A', new ItemStack(Items.STRING), 'B', new ItemStack(Blocks.ANVIL, 1, OreDictionary.WILDCARD_VALUE));
+		if (ModItems.rubber != null) {
+			OreDictionary.registerOre("itemRubber", ModItems.rubber);
+			OreDictionary.registerOre("itemRawRubber", ModItems.rawRubber);
+			for (ItemStack sapling : OreDictionary.getOres("treeSapling"))
+				GameRegistry.addRecipe(new ItemStack(ModItems.rawRubber), "AAA", "AAA", "AAA", 'A', sapling);
+			GameRegistry.addRecipe(new ItemStack(ModItems.rawRubber), "AAA", "AAA", "AAA", 'A', new ItemStack(Blocks.TALLGRASS, 1, EnumType.GRASS.getMeta()));
+			for (ItemStack rawRubber : OreDictionary.getOres("itemRawRubber"))
+				GameRegistry.addSmelting(rawRubber, new ItemStack(ModItems.rubber), 0.2f);
+		}
 		if (ModBlocks.explosiveRail != null)
 			GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.explosiveRail), new ItemStack(Blocks.TNT), new ItemStack(Blocks.RAIL));
 		for (EnumDyeColor color : EnumDyeColor.values()) {
 			if (ModItems.balloonDeflated != null)
-				GameRegistry.addShapelessRecipe(new ItemStack(ModItems.balloonDeflated, 16, color.getMetadata()), new ItemStack(Items.LEATHER), new ItemStack(Items.STRING), new ItemStack(Items.DYE, 1, color.getDyeDamage()));
+				for (ItemStack rubber : OreDictionary.getOres("itemRubber")) 
+					GameRegistry.addShapelessRecipe(new ItemStack(ModItems.balloonDeflated, 16, color.getMetadata()), rubber, new ItemStack(Items.STRING), new ItemStack(Items.DYE, 1, color.getDyeDamage()));
 			if (ModItems.balloonWater != null)
 				GameRegistry.addRecipe(new ItemStack(ModItems.balloonWater, 8, color.getMetadata()), "AAA", "ABA", "AAA", 'A', new ItemStack(ModItems.balloonDeflated, 1, color.getMetadata()), 'B', new ItemStack(Items.WATER_BUCKET.setContainerItem(Items.BUCKET)));
 			if (ModItems.balloonLava != null)
@@ -72,9 +84,20 @@ public class CommonProxy {
 			GameRegistry.addRecipe(new ItemStack(ModItems.paperBagHat), "AAA", "A A", 'A', new ItemStack(Items.PAPER));
 		if (ModFluids.acid != null)
 			GameRegistry.addShapelessRecipe(UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, ModFluids.acid), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.GUNPOWDER), new ItemStack(Items.SPIDER_EYE), new ItemStack(Items.WATER_BUCKET.setContainerItem(Items.BUCKET)));
+		if (ModBlocks.heater != null)
+			GameRegistry.addRecipe(new ItemStack(ModBlocks.heater), "ABA", "BCB", "ADA", 'A', new ItemStack(Items.IRON_INGOT),'B', new ItemStack(Blocks.RED_NETHER_BRICK), 'C', new ItemStack(Items.LAVA_BUCKET), 'D', new ItemStack(Blocks.IRON_BARS));
+		if (ModBlocks.cooler != null)
+			GameRegistry.addRecipe(new ItemStack(ModBlocks.cooler), "ABA", "BCB", "ADA", 'A', new ItemStack(Items.IRON_INGOT),'B', new ItemStack(Blocks.SNOW), 'C', new ItemStack(Blocks.ICE), 'D', new ItemStack(Blocks.IRON_BARS));
+		if (ModItems.smokeBomb != null)
+			for (ItemStack rubber : OreDictionary.getOres("itemRubber"))
+				GameRegistry.addShapelessRecipe(new ItemStack(ModItems.smokeBomb), new ItemStack(Items.GUNPOWDER), new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage()), rubber);
+		if (ModBlocks.petRock != null)
+			GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.petRock), new ItemStack(Blocks.STONE), new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage()));
 	}
 
 	public Object getArmorModel(Item item) {
 		return null;
 	}
+	
+	public void spawnParticlesSmokeCloud(World worldIn, double x, double y, double z, double motionX, double motionY, double motionZ, float scale) {}
 }

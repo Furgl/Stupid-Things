@@ -23,13 +23,20 @@ public class ModItems {
 	public static Item balloonWater;
 	public static Item balloonLava;
 	public static Item paperBagHat;
+	public static Item rawRubber;
+	public static Item rubber;
+	public static Item smokeBomb;
 
 	public static void preInit() {		
 		allItems = new ArrayList<Item>();
 
 		anvilBackpack = registerItem(new ItemAnvilBackpack(), "anvil_backpack", true, true);
 		paperBagHat = registerItem(new ItemPaperBagHat(), "paper_bag_hat", true, true);
-
+		rubber = registerItem(new ItemRubber(), "rubber", true, true);
+		if (rubber != null)
+			rawRubber = registerItem(new ItemRubberRaw(), "rubber_raw", true, false);
+		smokeBomb = registerItem(new ItemSmokeBomb(), "smoke_bomb", true, true);
+		
 		balloon = registerItem(new ItemBalloon(), "balloon", true, true);
 		balloonDeflated = registerItem(new ItemBalloonDeflated(), "balloon_deflated", true, true);
 		balloonWater = registerItem(new ItemBalloonLiquid.ItemBalloonWater(), "balloon_water", true, true);

@@ -1,0 +1,8 @@
+{
+    "parent": "block/cube_bottom_top",
+    "textures": {
+        "bottom": "stupidthings:blocks/heater_bottom",
+        "top": "stupidthings:blocks/heater_top",
+        "side": "stupidthings:blocks/heater_side"
+    }
+}

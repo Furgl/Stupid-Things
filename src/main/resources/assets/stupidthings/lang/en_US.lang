@@ -6,15 +6,20 @@ item.balloon.name=Balloon
 item.balloon_water.name=Water Balloon
 item.balloon_lava.name=Lava Balloon
 item.paper_bag_hat.name=Paper Bag Hat
+item.rubber.name=Rubber
+item.rubber_raw.name=Raw Rubber
+item.smoke_bomb.name=Smoke Bomb
 
 tile.reverse_tnt.name=Reverse TNT
 tile.rail_explosive.name=Explosive Rail
 tile.acid.name=Acid
-tile.radiator.name=Radiator
+tile.heater.name=Heater
 tile.cooler.name=Cooler
+tile.pet_rock.name=Pet Rock
 
 entity.stupidthings.reverseTntPrimed.name=Reverse TNT
 entity.stupidthings.balloon.name=Balloon
 entity.stupidthings.balloonLiquid.name=Balloon
+entity.stupidthings.smokeBomb.name=Smoke Bomb
 
 fluid.acid=Acid

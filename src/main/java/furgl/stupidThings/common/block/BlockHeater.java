@@ -10,8 +10,10 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
@@ -22,11 +24,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockRadiator extends Block implements ICustomTooltip {
+public class BlockHeater extends Block implements ICustomTooltip {
 
 	private static final int RADIUS = 10;
 	
-	protected BlockRadiator() {
+	protected BlockHeater() {
 		super(Material.IRON);
 		this.setHardness(3.5F);
 		this.setSoundType(SoundType.STONE);
@@ -36,9 +38,11 @@ public class BlockRadiator extends Block implements ICustomTooltip {
 	
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
-		return new ItemStack[] {null, null, null, 
-				new ItemStack(Blocks.TNT), new ItemStack(Blocks.RAIL), null,
-				null, null, null};
+		ItemStack iron = new ItemStack(Items.IRON_INGOT);
+		ItemStack brick = new ItemStack(Blocks.RED_NETHER_BRICK);
+		return new ItemStack[] {iron, brick, iron, 
+				brick, new ItemStack(Items.LAVA_BUCKET), brick,
+				iron, new ItemStack(Blocks.IRON_BARS), iron};
 	}
 
 	@Override
@@ -46,6 +50,12 @@ public class BlockRadiator extends Block implements ICustomTooltip {
 		if (player.worldObj.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.RED+"Melts nearby snow and ice"}, new String[0]);
+	}
+	
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		if (!worldIn.isRemote)
+			worldIn.scheduleUpdate(pos, this, 100);
 	}
 	
 	@Override

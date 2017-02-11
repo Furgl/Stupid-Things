@@ -11,8 +11,10 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
@@ -36,9 +38,11 @@ public class BlockCooler extends Block implements ICustomTooltip {
 
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
-		return new ItemStack[] {null, null, null, 
-				new ItemStack(Blocks.TNT), new ItemStack(Blocks.RAIL), null,
-				null, null, null};
+		ItemStack iron = new ItemStack(Items.IRON_INGOT);
+		ItemStack snow = new ItemStack(Blocks.SNOW);
+		return new ItemStack[] {iron, snow, iron, 
+				snow, new ItemStack(Blocks.ICE), snow,
+				iron, new ItemStack(Blocks.IRON_BARS), iron};
 	}
 
 	@Override
@@ -46,6 +50,12 @@ public class BlockCooler extends Block implements ICustomTooltip {
 		if (player.worldObj.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.AQUA+"Freezes nearby water and spawns snow"}, new String[0]);
+	}
+
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
+		if (!worldIn.isRemote)
+			worldIn.scheduleUpdate(pos, this, 100);
 	}
 
 	@Override
