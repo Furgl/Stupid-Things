@@ -74,11 +74,14 @@ public class CommonProxy {
 		for (EnumDyeColor color : EnumDyeColor.values()) {
 			if (ModItems.balloonDeflated != null)
 				for (ItemStack rubber : OreDictionary.getOres("itemRubber")) 
-					GameRegistry.addShapelessRecipe(new ItemStack(ModItems.balloonDeflated, 16, color.getMetadata()), rubber, new ItemStack(Items.STRING), new ItemStack(Items.DYE, 1, color.getDyeDamage()));
+					GameRegistry.addShapelessRecipe(new ItemStack(ModItems.balloonDeflated, 8, color.getMetadata()), rubber, new ItemStack(Items.STRING), new ItemStack(Items.DYE, 1, color.getDyeDamage()));
 			if (ModItems.balloonWater != null)
 				GameRegistry.addRecipe(new ItemStack(ModItems.balloonWater, 8, color.getMetadata()), "AAA", "ABA", "AAA", 'A', new ItemStack(ModItems.balloonDeflated, 1, color.getMetadata()), 'B', new ItemStack(Items.WATER_BUCKET.setContainerItem(Items.BUCKET)));
 			if (ModItems.balloonLava != null)
 				GameRegistry.addRecipe(new ItemStack(ModItems.balloonLava, 8, color.getMetadata()), "AAA", "ABA", "AAA", 'A', new ItemStack(ModItems.balloonDeflated, 1, color.getMetadata()), 'B', new ItemStack(Items.LAVA_BUCKET.setContainerItem(Items.BUCKET)));
+			if (ModItems.smokeBomb != null)
+				for (ItemStack rubber : OreDictionary.getOres("itemRubber"))
+					GameRegistry.addShapelessRecipe(new ItemStack(ModItems.smokeBomb, 1, color.getMetadata()), new ItemStack(Items.GUNPOWDER), new ItemStack(Items.DYE, 1, EnumDyeColor.byMetadata(color.getMetadata()).getDyeDamage()), rubber);
 		}
 		if (ModItems.paperBagHat != null)
 			GameRegistry.addRecipe(new ItemStack(ModItems.paperBagHat), "AAA", "A A", 'A', new ItemStack(Items.PAPER));
@@ -88,16 +91,18 @@ public class CommonProxy {
 			GameRegistry.addRecipe(new ItemStack(ModBlocks.heater), "ABA", "BCB", "ADA", 'A', new ItemStack(Items.IRON_INGOT),'B', new ItemStack(Blocks.RED_NETHER_BRICK), 'C', new ItemStack(Items.LAVA_BUCKET), 'D', new ItemStack(Blocks.IRON_BARS));
 		if (ModBlocks.cooler != null)
 			GameRegistry.addRecipe(new ItemStack(ModBlocks.cooler), "ABA", "BCB", "ADA", 'A', new ItemStack(Items.IRON_INGOT),'B', new ItemStack(Blocks.SNOW), 'C', new ItemStack(Blocks.ICE), 'D', new ItemStack(Blocks.IRON_BARS));
-		if (ModItems.smokeBomb != null)
-			for (ItemStack rubber : OreDictionary.getOres("itemRubber"))
-				GameRegistry.addShapelessRecipe(new ItemStack(ModItems.smokeBomb), new ItemStack(Items.GUNPOWDER), new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage()), rubber);
 		if (ModBlocks.petRock != null)
 			GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.petRock), new ItemStack(Blocks.STONE), new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage()));
+		if (ModItems.targetChestplate != null)
+			GameRegistry.addShapelessRecipe(new ItemStack(ModItems.targetChestplate), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage()), new ItemStack(Items.LEATHER_CHESTPLATE), new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage()));
+		if (ModItems.rubberChicken != null)
+			for (ItemStack rubber : OreDictionary.getOres("itemRubber")) 
+				GameRegistry.addRecipe(new ItemStack(ModItems.rubberChicken), " A ", "ABA", " A ", 'A', rubber, 'B', new ItemStack(Items.CHICKEN));
 	}
 
 	public Object getArmorModel(Item item) {
 		return null;
 	}
-	
-	public void spawnParticlesSmokeCloud(World worldIn, double x, double y, double z, double motionX, double motionY, double motionZ, float scale) {}
+
+	public void spawnParticlesSmokeCloud(World worldIn, int color, double x, double y, double z, double motionX, double motionY, double motionZ, float scale) {}
 }

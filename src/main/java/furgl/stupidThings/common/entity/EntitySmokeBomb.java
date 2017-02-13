@@ -10,6 +10,10 @@ import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntitySelectors;
@@ -21,6 +25,7 @@ import net.minecraft.world.World;
 
 public class EntitySmokeBomb extends EntityLiving implements IProjectile {
 
+	private static final DataParameter<Integer> COLOR = EntityDataManager.<Integer>createKey(EntityBalloon.class, DataSerializers.VARINT);
 	private float bounce;
 
 	public EntitySmokeBomb(World world) {
@@ -28,9 +33,32 @@ public class EntitySmokeBomb extends EntityLiving implements IProjectile {
 		this.setSize(0.3F, 0.3F);
 	}
 
-	public EntitySmokeBomb(World world, EntityLivingBase thrower) {
+	public EntitySmokeBomb(World world, EntityLivingBase thrower, int color) {
 		this(world);
 		this.setPosition(thrower.posX, thrower.posY + (double)thrower.getEyeHeight() - 0.1D, thrower.posZ);
+		this.dataManager.set(COLOR, color);
+	}
+	
+	@Override
+	protected void entityInit() {
+		super.entityInit();
+		this.dataManager.register(COLOR, 0);
+	}
+	
+	@Override
+	public void writeEntityToNBT(NBTTagCompound nbt) {
+		super.writeEntityToNBT(nbt);
+		nbt.setInteger("color", this.getColor());
+	}
+
+	@Override
+	public void readEntityFromNBT(NBTTagCompound nbt) {
+		super.readEntityFromNBT(nbt);
+		this.dataManager.set(COLOR, nbt.getInteger("color"));
+	}
+
+	public int getColor() {
+		return this.dataManager.get(COLOR).intValue();
 	}
 
 	@Override
@@ -64,7 +92,7 @@ public class EntitySmokeBomb extends EntityLiving implements IProjectile {
 		if (this.worldObj.isRemote) {
 			double speedModifier = Math.min(this.ticksExisted/90f, 1.5d);
 			for (int i=0; i<2; i++)
-				StupidThings.proxy.spawnParticlesSmokeCloud(worldObj, posX, posY, posZ, 
+				StupidThings.proxy.spawnParticlesSmokeCloud(worldObj, this.getColor(), posX, posY, posZ, 
 						(this.worldObj.rand.nextDouble()-0.5d)*speedModifier, (this.worldObj.rand.nextDouble()-0.5d)*speedModifier, 
 						(this.worldObj.rand.nextDouble()-0.5d)*speedModifier, (float) Math.min(this.ticksExisted/100f, 1d));
 			if (this.ticksExisted < 40)

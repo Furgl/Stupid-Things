@@ -64,8 +64,8 @@ public class ClientProxy extends CommonProxy
 	}
 	
 	@Override
-	public void spawnParticlesSmokeCloud(World worldIn, double x, double y, double z, double motionX, double motionY, double motionZ, float scale) {
-		ParticleSmokeCloud particle = new ParticleSmokeCloud(worldIn, x, y, z, motionX, motionY, motionZ, scale);
+	public void spawnParticlesSmokeCloud(World worldIn, int color, double x, double y, double z, double motionX, double motionY, double motionZ, float scale) {
+		ParticleSmokeCloud particle = new ParticleSmokeCloud(worldIn, color, x, y, z, motionX, motionY, motionZ, scale);
 		Minecraft.getMinecraft().effectRenderer.addEffect(particle);
 	}
 }

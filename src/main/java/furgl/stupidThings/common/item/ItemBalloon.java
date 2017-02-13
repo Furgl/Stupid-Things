@@ -21,8 +21,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemBalloon extends Item implements ICustomTooltip {
 
-	protected final String[] NAMES = new String[] {"White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Black"};
-	protected final TextFormatting[] COLORS = new TextFormatting[] {TextFormatting.WHITE, TextFormatting.GOLD, TextFormatting.LIGHT_PURPLE, TextFormatting.BLUE, TextFormatting.YELLOW, TextFormatting.GREEN, TextFormatting.LIGHT_PURPLE, TextFormatting.DARK_GRAY, TextFormatting.GRAY, TextFormatting.AQUA, TextFormatting.DARK_PURPLE, TextFormatting.BLUE, TextFormatting.GOLD, TextFormatting.DARK_GREEN, TextFormatting.DARK_RED, TextFormatting.WHITE};
+	public final static String[] NAMES = new String[] {"White", "Orange", "Magenta", "Light Blue", "Yellow", "Lime", "Pink", "Gray", "Light Gray", "Cyan", "Purple", "Blue", "Brown", "Green", "Red", "Black"};
+	public final static TextFormatting[] COLORS = new TextFormatting[] {TextFormatting.WHITE, TextFormatting.GOLD, TextFormatting.LIGHT_PURPLE, TextFormatting.BLUE, TextFormatting.YELLOW, TextFormatting.GREEN, TextFormatting.LIGHT_PURPLE, TextFormatting.DARK_GRAY, TextFormatting.GRAY, TextFormatting.AQUA, TextFormatting.DARK_PURPLE, TextFormatting.BLUE, TextFormatting.GOLD, TextFormatting.DARK_GREEN, TextFormatting.DARK_RED, TextFormatting.WHITE};
 
 	public ItemBalloon() {
 		super();

@@ -9,6 +9,8 @@ item.paper_bag_hat.name=Paper Bag Hat
 item.rubber.name=Rubber
 item.rubber_raw.name=Raw Rubber
 item.smoke_bomb.name=Smoke Bomb
+item.target_chestplate.name=Target Chestplate
+item.rubber_chicken.name=Rubber Chicken
 
 tile.reverse_tnt.name=Reverse TNT
 tile.rail_explosive.name=Explosive Rail

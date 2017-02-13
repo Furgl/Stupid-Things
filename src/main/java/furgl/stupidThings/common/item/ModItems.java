@@ -26,6 +26,8 @@ public class ModItems {
 	public static Item rawRubber;
 	public static Item rubber;
 	public static Item smokeBomb;
+	public static Item targetChestplate;
+	public static Item rubberChicken;
 
 	public static void preInit() {		
 		allItems = new ArrayList<Item>();
@@ -35,8 +37,10 @@ public class ModItems {
 		rubber = registerItem(new ItemRubber(), "rubber", true, true);
 		if (rubber != null)
 			rawRubber = registerItem(new ItemRubberRaw(), "rubber_raw", true, false);
-		smokeBomb = registerItem(new ItemSmokeBomb(), "smoke_bomb", true, true);
+		targetChestplate = registerItem(new ItemTargetChestplate(), "target_chestplate", true, true);
+		rubberChicken = registerItem(new ItemRubberChicken(), "rubber_chicken", true, true);
 		
+		smokeBomb = registerItem(new ItemSmokeBomb(), "smoke_bomb", true, true);
 		balloon = registerItem(new ItemBalloon(), "balloon", true, true);
 		balloonDeflated = registerItem(new ItemBalloonDeflated(), "balloon_deflated", true, true);
 		balloonWater = registerItem(new ItemBalloonLiquid.ItemBalloonWater(), "balloon_water", true, true);
@@ -47,9 +51,9 @@ public class ModItems {
 		for (Item item : allItems)
 			registerRender(item, 0);
 
-		Item[] items = new Item[] {balloon, balloonDeflated, balloonWater, balloonLava};
+		Item[] coloredItems = new Item[] {balloon, balloonDeflated, balloonWater, balloonLava, smokeBomb};
 
-		for (Item item : items) {
+		for (Item item : coloredItems) {
 			if (item != null) {			
 				for (int i=1; i<16; i++) 
 					registerRender(item, i);

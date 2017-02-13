@@ -64,7 +64,7 @@ public class BlockCooler extends Block implements ICustomTooltip {
 			Iterable<BlockPos> positionsToCheck = BlockPos.getAllInBox(pos.add(-RADIUS, -RADIUS/2, -RADIUS), pos.add(RADIUS, RADIUS/2, RADIUS));
 			for (BlockPos pos2 : positionsToCheck) {
 				Block block = worldIn.getBlockState(pos2).getBlock();
-				if ((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && rand.nextInt(3) == 0 &&
+				if ((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && rand.nextInt(3) == 0 && worldIn.isAirBlock(pos2.up()) &&
 						((Integer)worldIn.getBlockState(pos2).getValue(BlockLiquid.LEVEL)).intValue() == 0) 
 					worldIn.setBlockState(pos2, Blocks.ICE.getDefaultState());
 				else if (worldIn.isAirBlock(pos2) && Blocks.SNOW_LAYER.canPlaceBlockAt(worldIn, pos2) && rand.nextInt(5) == 0)

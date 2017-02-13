@@ -14,5 +14,13 @@
         [
             "stupidthings:balloon_pop"
         ]
+    },
+        "rubber_chicken":
+    {
+        "category": "entity",
+        "sounds":
+        [
+            "stupidthings:rubber_chicken"
+        ]
     }
 }

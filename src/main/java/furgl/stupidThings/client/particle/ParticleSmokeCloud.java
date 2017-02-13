@@ -4,6 +4,7 @@ import furgl.stupidThings.common.StupidThings;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleSimpleAnimated;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -14,7 +15,7 @@ public class ParticleSmokeCloud extends ParticleSimpleAnimated {
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(StupidThings.MODID, "entity/particle/smoke_cloud");
 
-	public ParticleSmokeCloud(World worldIn, double x, double y, double z, double motionX, double motionY, double motionZ, float scale) {
+	public ParticleSmokeCloud(World worldIn, int color, double x, double y, double z, double motionX, double motionY, double motionZ, float scale) {
 		super(worldIn, x, y, z, 0, 0, 0);
 		this.motionX = motionX;
 		this.motionY = motionY;
@@ -23,7 +24,8 @@ public class ParticleSmokeCloud extends ParticleSimpleAnimated {
 		this.particleMaxAge = rand.nextInt(100)+50;
 		this.particleScale = scale;
 		this.particleAlpha = 0.7f;
-		this.setColorFade(0x404040);
+		this.setColorFade(0x666666);
+		this.setColor(EnumDyeColor.byMetadata(color).getMapColor().colorValue);
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(TEXTURE.toString());
 		this.setParticleTexture(sprite);  
 	}

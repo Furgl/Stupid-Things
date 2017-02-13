@@ -72,7 +72,7 @@ public class EntityBalloon extends EntityLiving implements IProjectile {
 		if (!this.worldObj.isRemote && !source.equals(DamageSource.fall)) {
 			this.worldObj.playSound(null, this.getPosition(), ModSoundEvents.balloonPop, SoundCategory.NEUTRAL, 
 					0.8f, this.worldObj.rand.nextFloat()+0.3f);
-			if (ModItems.balloonDeflated != null)
+			if (ModItems.balloonDeflated != null && !this.isDead)
 				this.entityDropItem(new ItemStack(ModItems.balloonDeflated, 1, this.getColor()), 0);
 			this.setDead();
 		}

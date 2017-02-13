@@ -1,9 +1,13 @@
 package furgl.stupidThings.client.model;
 
+import java.awt.Color;
+
+import furgl.stupidThings.common.entity.EntitySmokeBomb;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.EnumDyeColor;
 
 public class ModelSmokeBomb extends ModelBase {
 
@@ -17,6 +21,10 @@ public class ModelSmokeBomb extends ModelBase {
 	@Override
 	public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		GlStateManager.pushMatrix();
+		if (entityIn instanceof EntitySmokeBomb) {
+			Color color = new Color(EnumDyeColor.byMetadata(((EntitySmokeBomb)entityIn).getColor()).getMapColor().colorValue);
+			GlStateManager.color(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f);
+		}
 		GlStateManager.translate(0, 1.35d, 0);
 		float motion = (float) (Math.abs(entityIn.motionX)+Math.abs(entityIn.motionY)+Math.abs(entityIn.motionZ)) * 10f;
 		bomb.rotateAngleX += motion + Math.sin(ageInTicks/50f)/3f;

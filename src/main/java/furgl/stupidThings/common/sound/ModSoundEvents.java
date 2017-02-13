@@ -9,10 +9,12 @@ public class ModSoundEvents {
 
 	public static SoundEvent balloonInflate;
 	public static SoundEvent balloonPop;
+	public static SoundEvent rubberChicken;
 
 	public static void preInit() {
 		balloonInflate = registerSound("balloon_inflate");
 		balloonPop = registerSound("balloon_pop");
+		rubberChicken = registerSound("rubber_chicken");
 	}
 	
 	private static SoundEvent registerSound(String soundName) {

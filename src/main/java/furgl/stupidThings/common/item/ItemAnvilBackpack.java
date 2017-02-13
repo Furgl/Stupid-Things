@@ -64,7 +64,7 @@ public class ItemAnvilBackpack extends ItemArmor implements ICustomTooltip {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-		return StupidThings.MODID+":/textures/models/armor/anvil_backpack.png";
+		return StupidThings.MODID+":textures/models/armor/anvil_backpack.png";
 	}
 
 	@Override
