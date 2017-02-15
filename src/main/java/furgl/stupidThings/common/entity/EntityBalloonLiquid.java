@@ -30,14 +30,16 @@ public class EntityBalloonLiquid extends EntityBalloon {
 		super(world);
 		this.gravity = 0.05d;
 		this.setSize(0.6F, 0.6F);
+		this.bounceMultiplier = 0;
 	}
 
 	public EntityBalloonLiquid(BlockLiquid liquid, World world, EntityPlayer player, int color) {
 		super(world, player, color);
-		this.liquid = liquid;
-		this.dataManager.set(LIQUID, Block.getIdFromBlock(liquid));
 		this.gravity = 0.05d;
 		this.setSize(0.6F, 0.6F);
+		this.bounceMultiplier = 0;
+		this.liquid = liquid;
+		this.dataManager.set(LIQUID, Block.getIdFromBlock(liquid));
 	}
 
 	@Override

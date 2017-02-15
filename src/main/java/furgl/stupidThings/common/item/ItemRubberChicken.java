@@ -22,6 +22,7 @@ public class ItemRubberChicken extends Item implements ICustomTooltip {
 
 	public ItemRubberChicken() {
 		super();
+		this.maxStackSize = 1;
 	}
 
 	@Override

@@ -28,6 +28,7 @@ public class ModItems {
 	public static Item smokeBomb;
 	public static Item targetChestplate;
 	public static Item rubberChicken;
+	public static Item ball;
 
 	public static void preInit() {		
 		allItems = new ArrayList<Item>();
