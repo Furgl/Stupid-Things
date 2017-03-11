@@ -7,7 +7,6 @@ import furgl.stupidThings.common.fluid.ModFluids;
 import furgl.stupidThings.common.item.ModItems;
 import furgl.stupidThings.common.sound.ModSoundEvents;
 import furgl.stupidThings.common.tileentity.ModTileEntities;
-import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.block.BlockTallGrass.EnumType;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -29,7 +28,6 @@ public class CommonProxy {
 	public void preInit(FMLPreInitializationEvent event) {
 		StupidThings.configFile = event.getSuggestedConfigurationFile();
 		StupidThings.logger = event.getModLog();
-		StupidThings.util = TooltipHelper.INSTANCE;
 		registerPackets();
 		Config.preInit(StupidThings.configFile);
 		ModBlocks.preInit();

@@ -40,10 +40,10 @@ public class ModFluids {
 			acidBlock = registerFluidBlock(acid, new BlockFluidAcid(acid, Material.WATER), "acid");
 		}
 
-		registerModels();
+		/*registerModels();*/
 	}
 
-	private static void registerModels() {
+	/*private static void registerModels() { FIXME
 		for (IFluidBlock fluidBlock : allFluidBlocks) {
 			Item item = Item.getItemFromBlock((Block) fluidBlock);
 
@@ -61,7 +61,7 @@ public class ModFluids {
 				}
 			});
 		}
-	}
+	}*/ 
 
 	private static Fluid registerFluid(Fluid fluid, String unlocalizedName, boolean checkIfDisabled) {
 		fluid.setUnlocalizedName(unlocalizedName);

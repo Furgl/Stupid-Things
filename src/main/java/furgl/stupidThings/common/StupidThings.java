@@ -15,6 +15,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod(modid = StupidThings.MODID, version = StupidThings.VERSION, name = StupidThings.MODNAME, guiFactory = "furgl.stupidThings.client.gui.config.StupidThingsGuiFactory", updateJSON = "https://raw.githubusercontent.com/Furgl/Stupid-Things/1.10.2/update.json")
 public class StupidThings {
@@ -29,6 +31,7 @@ public class StupidThings {
 	public static Logger logger;
 	public static SimpleNetworkWrapper network = NetworkRegistry.INSTANCE.newSimpleChannel(MODID);
 	protected static File configFile;
+	@SideOnly(Side.CLIENT)
 	public static TooltipHelper util;
 
 	static {

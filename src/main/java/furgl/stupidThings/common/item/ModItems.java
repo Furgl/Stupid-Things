@@ -6,10 +6,7 @@ import furgl.stupidThings.common.StupidThings;
 import furgl.stupidThings.common.config.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -48,7 +45,7 @@ public class ModItems {
 		balloonLava = registerItem(new ItemBalloonLiquid.ItemBalloonLava(), "balloon_lava", true, true);
 	}
 
-	public static void registerRenders() {
+/*	public static void registerRenders() { FIXME ItemColors is clientside only
 		for (Item item : allItems)
 			registerRender(item, 0);
 
@@ -67,7 +64,7 @@ public class ModItems {
 				}, item);
 			}
 		}
-	}
+	}*/
 
 	public static Item registerItem(Item item, String unlocalizedName, boolean addToTab, boolean checkIfDisabled) {
 		item.setUnlocalizedName(unlocalizedName);
@@ -75,7 +72,7 @@ public class ModItems {
 			return null;
 		item.setRegistryName(StupidThings.MODID, unlocalizedName);
 		if (addToTab) {
-			item.getSubItems(item, StupidThings.tab, StupidThings.tab.orderedStacks);
+			//item.getSubItems(item, StupidThings.tab, StupidThings.tab.orderedStacks); FIXME
 			item.setCreativeTab(StupidThings.tab);
 		}
 		GameRegistry.register(item);
@@ -83,7 +80,7 @@ public class ModItems {
 		return item;
 	}
 
-	private static void registerRender(Item item, int meta) {
+	public static void registerRender(Item item, int meta) {
 		if (item != null)
 			Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, meta, 
 					new ModelResourceLocation(StupidThings.MODID+":" + item.getUnlocalizedName().substring(5), "inventory"));

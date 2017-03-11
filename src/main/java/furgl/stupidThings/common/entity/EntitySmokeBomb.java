@@ -103,8 +103,9 @@ public class EntitySmokeBomb extends EntityThrowable {
 		}
 
 		//give nearby entities blindness
-		if (this.ticksExisted > 40) {
-			double radius = Math.min(this.ticksExisted/30f, 5d);
+		if (!this.worldObj.isRemote && this.ticksExisted > 40) {
+			double radius = Math.min(this.ticksExisted/30f, 6d);
+			System.out.println(radius);
 			List<Entity> list = this.worldObj.getEntitiesInAABBexcluding(this, this.getEntityBoundingBox().expandXyz(radius), EntitySelectors.<Entity>getTeamCollisionPredicate(this));
 			for (Entity entity : list)
 				if (entity instanceof EntityLivingBase)

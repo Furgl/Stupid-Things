@@ -48,7 +48,7 @@ public class ModBlocks {
 			Item item = new ItemBlock(block).setRegistryName(block.getRegistryName());
 			GameRegistry.register(item);
 			if (addToTab) {
-				block.getSubBlocks(item, StupidThings.tab, StupidThings.tab.orderedStacks);
+				//block.getSubBlocks(item, StupidThings.tab, StupidThings.tab.orderedStacks); FIXME
 				block.setCreativeTab(StupidThings.tab);
 			}
 		}
