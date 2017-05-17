@@ -1,18 +1,23 @@
 package furgl.stupidThings.common.entity;
 
+import furgl.stupidThings.common.StupidThings;
 import furgl.stupidThings.common.item.ModItems;
 import furgl.stupidThings.common.sound.ModSoundEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
 public class EntityBalloon extends EntityThrowable {
 
@@ -33,6 +38,14 @@ public class EntityBalloon extends EntityThrowable {
 		this.gravity = 0;
 		this.bounceMultiplier = 0.5f;
 		this.setSize(0.7F, 1.3F);
+	}
+
+	@Override
+	public ItemStack getPickedResult(RayTraceResult target) {
+		if (target.entityHit instanceof EntityBalloon)
+			return new ItemStack(ModItems.balloon, 1, target.entityHit.getDataManager().get(COLOR));
+		else
+			return null;
 	}
 
 	@Override
@@ -96,6 +109,19 @@ public class EntityBalloon extends EntityThrowable {
 					else if (!this.getLeashedToEntity().isSneaking())
 						this.getLeashedToEntity().motionY += 0.05d;
 					this.getLeashedToEntity().fallDistance = 0;
+
+					// reset floatingTickCount so player isn't kicked for flying
+					// TODO test this in compiled version
+					try {
+						if (this.getLeashedToEntity() instanceof EntityPlayerMP) { 
+							ReflectionHelper.setPrivateValue(NetHandlerPlayServer.class, 
+									((EntityPlayerMP) this.getLeashedToEntity()).connection, 0, 
+									"field_147365_f", "floatingTickCount");
+						}
+					}
+					catch (Exception e) {
+						StupidThings.logger.warn("EntityBalloon unable to reset floatingTickCount: ", e);
+					}
 				}
 			}
 

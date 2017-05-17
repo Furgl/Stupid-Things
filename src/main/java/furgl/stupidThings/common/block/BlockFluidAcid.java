@@ -96,7 +96,6 @@ public class BlockFluidAcid extends BlockFluidClassic implements ICustomTooltip 
 			if (!world.isAirBlock(pos2) && hardness < 2 && hardness >= 0 && rand.nextInt((int) (hardness*10f+1f)) <= 5 &&
 					!(state2.getBlock() instanceof BlockLiquid || state2.getBlock() instanceof IFluidBlock) && 
 					(state.getValue(BlockLiquid.LEVEL) != 15 || pos2 == pos.down())) {
-				//System.out.println("setting "+state2.getBlock().getLocalizedName()+" to air"); //TODO remove
 				world.setBlockToAir(pos2);
 				world.playSound(null, pos2, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 
 						rand.nextFloat()+1f, rand.nextFloat()+1.5f);

@@ -1,12 +1,12 @@
 package furgl.stupidThings.client;
 
+import java.util.ArrayList;
+
 import furgl.stupidThings.client.model.ModelAnvilBackpack;
-import furgl.stupidThings.client.model.ModelBalloon;
-import furgl.stupidThings.client.model.ModelBalloonLiquid;
 import furgl.stupidThings.client.model.ModelPaperBagHat;
-import furgl.stupidThings.client.model.ModelSmokeBomb;
 import furgl.stupidThings.client.particle.ParticleSmokeCloud;
 import furgl.stupidThings.client.renderer.entity.RenderBalloon;
+import furgl.stupidThings.client.renderer.entity.RenderBalloonLiquid;
 import furgl.stupidThings.client.renderer.entity.RenderReverseTntPrimed;
 import furgl.stupidThings.client.renderer.entity.RenderSmokeBomb;
 import furgl.stupidThings.common.CommonProxy;
@@ -26,7 +26,7 @@ import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.color.IItemColor;
-import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -45,52 +45,28 @@ public class ClientProxy extends CommonProxy
 {
 	private static final ModelAnvilBackpack MODEL_ANVIL_BACKPACK = new ModelAnvilBackpack();
 	private static final ModelPaperBagHat MODEL_PAPER_BAG_HAT = new ModelPaperBagHat();
-	
+
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
 		StupidThings.util = TooltipHelper.INSTANCE;
-		registerModels();
-	}
-	
-	@SuppressWarnings("deprecation")
-	public static void registerEntityRenders() {
-		RenderManager renderManager = Minecraft.getMinecraft().getRenderManager();
-		RenderingRegistry.registerEntityRenderingHandler(EntityReverseTntPrimed.class, new RenderReverseTntPrimed(renderManager));
-		RenderingRegistry.registerEntityRenderingHandler(EntityBalloon.class, new RenderBalloon(renderManager, new ModelBalloon()));
-		RenderingRegistry.registerEntityRenderingHandler(EntityBalloonLiquid.class, new RenderBalloon(renderManager, new ModelBalloonLiquid()));
-		RenderingRegistry.registerEntityRenderingHandler(EntitySmokeBomb.class, new RenderSmokeBomb(renderManager, new ModelSmokeBomb()));
-	}
-	
-	private static void registerModels() {
-		for (IFluidBlock fluidBlock : ModFluids.allFluidBlocks) {
-			Item item = Item.getItemFromBlock((Block) fluidBlock);
-
-			final ModelResourceLocation modelLocation = new ModelResourceLocation(StupidThings.MODID+":acid", "fluid");
-
-			ModelLoader.setCustomMeshDefinition(item, new ItemMeshDefinition() {
-				public ModelResourceLocation getModelLocation(ItemStack stack) {
-					return modelLocation;
-				}
-			});
-
-			ModelLoader.setCustomStateMapper((Block) fluidBlock, new StateMapperBase() {
-				protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-					return modelLocation;
-				}
-			});
-		}
+		registerFluidModels();
+		registerEntityRenders();
 	}
 
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
 		ModBlocks.registerRenders();
-		registerRenders();
-		registerEntityRenders();
+		registerColoredItemRenders();
 	}
-	
-	public static void registerRenders() {
+
+	@Override
+	public void postInit(FMLPostInitializationEvent event) {
+		super.postInit(event);
+	}
+
+	private static void registerColoredItemRenders() {
 		for (Item item : ModItems.allItems)
 			ModItems.registerRender(item, 0);
 
@@ -111,22 +87,44 @@ public class ClientProxy extends CommonProxy
 		}
 	}
 
-	@Override
-	public void postInit(FMLPostInitializationEvent event) {
-		super.postInit(event);
+	private static void registerEntityRenders() {
+		RenderingRegistry.registerEntityRenderingHandler(EntityReverseTntPrimed.class, RenderReverseTntPrimed::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityBalloon.class, RenderBalloon::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityBalloonLiquid.class, RenderBalloonLiquid::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntitySmokeBomb.class, RenderSmokeBomb::new);
 	}
-	
+
+	private static void registerFluidModels() {
+		for (IFluidBlock fluidBlock : ModFluids.allFluidBlocks) {
+			Item item = Item.getItemFromBlock((Block) fluidBlock);
+
+			final ModelResourceLocation modelLocation = new ModelResourceLocation(StupidThings.MODID+":acid", "fluid");
+
+			ModelLoader.setCustomMeshDefinition(item, new ItemMeshDefinition() {
+				public ModelResourceLocation getModelLocation(ItemStack stack) {
+					return modelLocation;
+				}
+			});
+
+			ModelLoader.setCustomStateMapper((Block) fluidBlock, new StateMapperBase() {
+				protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+					return modelLocation;
+				}
+			});
+		}
+	}
+
 	@Override
 	protected void registerEventListeners() {
 		super.registerEventListeners();
 		MinecraftForge.EVENT_BUS.register(this);
 	}
-	
+
 	@SubscribeEvent
 	public void stitcherEventPre(TextureStitchEvent.Pre event) {
 		event.getMap().registerSprite(ParticleSmokeCloud.TEXTURE);
 	}
-	
+
 	@Override
 	public Object getArmorModel(Item item) {
 		if (item == null)
@@ -138,10 +136,17 @@ public class ClientProxy extends CommonProxy
 
 		return null;
 	}
-	
+
 	@Override
 	public void spawnParticlesSmokeCloud(World worldIn, int color, double x, double y, double z, double motionX, double motionY, double motionZ, float scale) {
 		ParticleSmokeCloud particle = new ParticleSmokeCloud(worldIn, color, x, y, z, motionX, motionY, motionZ, scale);
 		Minecraft.getMinecraft().effectRenderer.addEffect(particle);
+	}
+
+	/**Add item (and sub-items in clientproxy) to creative tab*/
+	@Override
+	public void addToTab(Item item, CreativeTabs tab, ArrayList<ItemStack> stacks) {
+		item.getSubItems(item, tab, stacks);
+		item.setCreativeTab(StupidThings.tab);
 	}
 }

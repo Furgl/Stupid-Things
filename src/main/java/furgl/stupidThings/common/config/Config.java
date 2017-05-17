@@ -13,7 +13,6 @@ public class Config {
 
 	public static void preInit(final File file) {
 		config = new Configuration(file);
-		
 		config.load();
 		config.save();
 	}

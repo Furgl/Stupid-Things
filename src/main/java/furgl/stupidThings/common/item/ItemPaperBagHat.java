@@ -2,7 +2,6 @@ package furgl.stupidThings.common.item;
 
 import java.util.List;
 
-import furgl.stupidThings.client.model.ModelPaperBagHat;
 import furgl.stupidThings.common.StupidThings;
 import furgl.stupidThings.util.ICustomTooltip;
 import furgl.stupidThings.util.TooltipHelper;
@@ -42,7 +41,7 @@ public class ItemPaperBagHat extends ItemArmor implements ICustomTooltip {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped defaultModel) {
-		return new ModelPaperBagHat();//(ModelBiped) StupidThings.proxy.getArmorModel(this); TODO
+		return (ModelBiped) StupidThings.proxy.getArmorModel(this); 
 	}
 
 	@Override

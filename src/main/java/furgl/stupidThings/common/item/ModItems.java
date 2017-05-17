@@ -45,36 +45,13 @@ public class ModItems {
 		balloonLava = registerItem(new ItemBalloonLiquid.ItemBalloonLava(), "balloon_lava", true, true);
 	}
 
-/*	public static void registerRenders() { FIXME ItemColors is clientside only
-		for (Item item : allItems)
-			registerRender(item, 0);
-
-		Item[] coloredItems = new Item[] {balloon, balloonDeflated, balloonWater, balloonLava, smokeBomb};
-
-		for (Item item : coloredItems) {
-			if (item != null) {			
-				for (int i=1; i<16; i++) 
-					registerRender(item, i);
-
-				Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
-					@Override
-					public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-						return EnumDyeColor.byMetadata(stack.getMetadata()).getMapColor().colorValue;
-					}
-				}, item);
-			}
-		}
-	}*/
-
 	public static Item registerItem(Item item, String unlocalizedName, boolean addToTab, boolean checkIfDisabled) {
 		item.setUnlocalizedName(unlocalizedName);
 		if (checkIfDisabled && !Config.isNameEnabled(I18n.translateToLocal("item."+unlocalizedName+".name").replace("White ", "")))
 			return null;
 		item.setRegistryName(StupidThings.MODID, unlocalizedName);
-		if (addToTab) {
-			//item.getSubItems(item, StupidThings.tab, StupidThings.tab.orderedStacks); FIXME
-			item.setCreativeTab(StupidThings.tab);
-		}
+		if (addToTab) 
+			StupidThings.proxy.addToTab(item, StupidThings.tab, StupidThings.tab.orderedStacks);
 		GameRegistry.register(item);
 		allItems.add(item);
 		return item;

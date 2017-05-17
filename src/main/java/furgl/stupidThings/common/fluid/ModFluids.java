@@ -8,15 +8,8 @@ import furgl.stupidThings.common.block.ModBlocks;
 import furgl.stupidThings.common.config.Config;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.StateMapperBase;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.translation.I18n;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -39,29 +32,7 @@ public class ModFluids {
 			acid.setDensity(100).setViscosity(1000);
 			acidBlock = registerFluidBlock(acid, new BlockFluidAcid(acid, Material.WATER), "acid");
 		}
-
-		/*registerModels();*/
 	}
-
-	/*private static void registerModels() { FIXME
-		for (IFluidBlock fluidBlock : allFluidBlocks) {
-			Item item = Item.getItemFromBlock((Block) fluidBlock);
-
-			final ModelResourceLocation modelLocation = new ModelResourceLocation(StupidThings.MODID+":acid", "fluid");
-
-			ModelLoader.setCustomMeshDefinition(item, new ItemMeshDefinition() {
-				public ModelResourceLocation getModelLocation(ItemStack stack) {
-					return modelLocation;
-				}
-			});
-
-			ModelLoader.setCustomStateMapper((Block) fluidBlock, new StateMapperBase() {
-				protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-					return modelLocation;
-				}
-			});
-		}
-	}*/ 
 
 	private static Fluid registerFluid(Fluid fluid, String unlocalizedName, boolean checkIfDisabled) {
 		fluid.setUnlocalizedName(unlocalizedName);

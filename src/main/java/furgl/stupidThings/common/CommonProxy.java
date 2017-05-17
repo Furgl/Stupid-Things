@@ -1,5 +1,7 @@
 package furgl.stupidThings.common;
 
+import java.util.ArrayList;
+
 import furgl.stupidThings.common.block.ModBlocks;
 import furgl.stupidThings.common.config.Config;
 import furgl.stupidThings.common.entity.ModEntities;
@@ -8,6 +10,7 @@ import furgl.stupidThings.common.item.ModItems;
 import furgl.stupidThings.common.sound.ModSoundEvents;
 import furgl.stupidThings.common.tileentity.ModTileEntities;
 import net.minecraft.block.BlockTallGrass.EnumType;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -97,10 +100,15 @@ public class CommonProxy {
 			for (ItemStack rubber : OreDictionary.getOres("itemRubber")) 
 				GameRegistry.addRecipe(new ItemStack(ModItems.rubberChicken), " A ", "ABA", " A ", 'A', rubber, 'B', new ItemStack(Items.CHICKEN));
 	}
-
+	
 	public Object getArmorModel(Item item) {
 		return null;
 	}
 
 	public void spawnParticlesSmokeCloud(World worldIn, int color, double x, double y, double z, double motionX, double motionY, double motionZ, float scale) {}
+
+	/**Add item (and sub-items in clientproxy) to creative tab*/
+	public void addToTab(Item item, CreativeTabs tab, ArrayList<ItemStack> stacks) {
+		item.setCreativeTab(StupidThings.tab);
+	}
 }

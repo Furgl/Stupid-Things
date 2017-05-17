@@ -39,7 +39,7 @@ public class TooltipHelper {
 			for (String string : shiftText == null ? new String[0] : shiftText)
 				tooltip.add(string);
 		else if (shiftText != null)
-			tooltip.add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+"Hold shift for more info");
+			tooltip.add(TextFormatting.AQUA+""+TextFormatting.ITALIC+"SHIFT "+TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+"for info");
 		if (GuiScreen.isCtrlKeyDown()) {
 			if (GuiScreen.isShiftKeyDown() && ctrlText != null && ctrlText.length > 0)
 				tooltip.add("");
@@ -47,7 +47,7 @@ public class TooltipHelper {
 				tooltip.add(string);
 		}
 		else if (ctrlText != null)
-			tooltip.add(TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+"Hold ctrl for recipe");
+			tooltip.add(TextFormatting.AQUA+""+TextFormatting.ITALIC+"CTRL "+TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+"for recipe");
 	}
 
 	@SubscribeEvent(receiveCanceled=true)

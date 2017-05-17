@@ -47,10 +47,8 @@ public class ModBlocks {
 		if (isItemBlock) {
 			Item item = new ItemBlock(block).setRegistryName(block.getRegistryName());
 			GameRegistry.register(item);
-			if (addToTab) {
-				//block.getSubBlocks(item, StupidThings.tab, StupidThings.tab.orderedStacks); FIXME
-				block.setCreativeTab(StupidThings.tab);
-			}
+			if (addToTab) 
+				StupidThings.proxy.addToTab(item, StupidThings.tab, StupidThings.tab.orderedStacks);
 		}
 		allBlocks.add(block);
 		return block;

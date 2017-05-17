@@ -1,8 +1,8 @@
 package furgl.stupidThings.client.renderer.entity;
 
+import furgl.stupidThings.client.model.ModelBalloon;
 import furgl.stupidThings.common.StupidThings;
 import furgl.stupidThings.common.entity.EntityBalloon;
-import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.VertexBuffer;
@@ -17,8 +17,8 @@ public class RenderBalloon extends RenderLiving<EntityBalloon> {
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation(StupidThings.MODID+":textures/entity/balloon.png");
 
-	public RenderBalloon(RenderManager renderManagerIn, ModelBase model) {
-		super(renderManagerIn, model, 0.3f);
+	public RenderBalloon(RenderManager renderManagerIn) {
+		super(renderManagerIn, new ModelBalloon(), 0.3f);
 	}
 	
 	private double interpolateValue(double start, double end, double pct) {

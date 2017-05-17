@@ -35,7 +35,7 @@ public class ModelBalloonLiquid extends ModelBase {
 			Color color = new Color(EnumDyeColor.byMetadata(((EntityBalloon)entity).getColor()).getMapColor().colorValue);
 			GlStateManager.color(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f);
 		}
-		GlStateManager.translate(0, 1.2d, 0);/*System.out.println(entity.rotationYaw);*/
+		GlStateManager.translate(0, 1.2d, 0);
 		GlStateManager.rotate(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * 1 + 180f, 0.0F, 0.0F, 1.0F);//angle
 		balloon.rotateAngleY = (float) (entity.rotationYaw + Math.sin(Math.abs(entity.motionX)+
 				Math.abs(entity.motionY*2f)+Math.abs(entity.motionZ))*10f);
