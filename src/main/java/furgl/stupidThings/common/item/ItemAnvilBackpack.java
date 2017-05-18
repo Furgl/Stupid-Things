@@ -59,7 +59,7 @@ public class ItemAnvilBackpack extends ItemArmor implements ICustomTooltip {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, EntityEquipmentSlot armorSlot, ModelBiped defaultModel) {
-		return (ModelBiped) StupidThings.proxy.getArmorModel(this);
+		return (ModelBiped) StupidThings.proxy.getArmorModel(this, entityLiving);
 	}
 
 	@Override

@@ -11,6 +11,7 @@ item.rubber_raw.name=Raw Rubber
 item.smoke_bomb.name=Smoke Bomb
 item.target_chestplate.name=Target Chestplate
 item.rubber_chicken.name=Rubber Chicken
+item.propeller_hat.name=Propeller Hat
 
 tile.reverse_tnt.name=Reverse TNT
 tile.rail_explosive.name=Explosive Rail

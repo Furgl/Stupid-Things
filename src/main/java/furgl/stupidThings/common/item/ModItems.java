@@ -26,6 +26,7 @@ public class ModItems {
 	public static Item targetChestplate;
 	public static Item rubberChicken;
 	public static Item ball;
+	public static Item propellerHat;
 
 	public static void preInit() {		
 		allItems = new ArrayList<Item>();
@@ -37,6 +38,7 @@ public class ModItems {
 			rawRubber = registerItem(new ItemRubberRaw(), "rubber_raw", true, false);
 		targetChestplate = registerItem(new ItemTargetChestplate(), "target_chestplate", true, true);
 		rubberChicken = registerItem(new ItemRubberChicken(), "rubber_chicken", true, true);
+		propellerHat = registerItem(new ItemPropellerHat(), "propeller_hat", true, true);
 		
 		smokeBomb = registerItem(new ItemSmokeBomb(), "smoke_bomb", true, true);
 		balloon = registerItem(new ItemBalloon(), "balloon", true, true);

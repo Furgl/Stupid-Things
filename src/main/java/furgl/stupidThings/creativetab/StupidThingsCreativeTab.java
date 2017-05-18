@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -20,7 +20,7 @@ public class StupidThingsCreativeTab extends CreativeTabs
 
 	@Override
 	public Item getTabIconItem() {
-		return Items.APPLE;
+		return orderedStacks.isEmpty() ? Item.getItemFromBlock(Blocks.BARRIER) : orderedStacks.get(0).getItem();
 	}
 
 	@Override
