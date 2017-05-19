@@ -22,7 +22,7 @@ public class ItemRubber extends Item implements ICustomTooltip {
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.GRAY+"Used for crafting"}, new String[] {TextFormatting.GRAY+"Smelt Raw Rubber"});
 	}

@@ -36,7 +36,7 @@ public class BlockRailExplosive extends BlockRailPowered implements ICustomToolt
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.DARK_RED+"Explodes when a minecart passes",
 							TextFormatting.DARK_RED+"over while this is powered"}, new String[0]);

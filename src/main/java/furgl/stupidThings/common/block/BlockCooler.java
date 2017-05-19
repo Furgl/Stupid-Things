@@ -47,7 +47,7 @@ public class BlockCooler extends Block implements ICustomTooltip {
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.AQUA+"Freezes nearby water and spawns snow"}, new String[0]);
 	}
@@ -81,7 +81,7 @@ public class BlockCooler extends Block implements ICustomTooltip {
 				(rand.nextDouble()-0.5d)/3d, (rand.nextDouble()-0.5d)/3d, (rand.nextDouble()-0.5d)/3d, new int[0]);
 		if (rand.nextInt(5) == 0)
 			for (int i=0; i<3; i++)
-				world.playSound(Minecraft.getMinecraft().thePlayer, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
+				world.playSound(Minecraft.getMinecraft().player, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
 						SoundCategory.BLOCKS, rand.nextFloat()+1.3f, rand.nextFloat()+1.3f);
 	}
 }

@@ -21,7 +21,7 @@ public class ItemRubberRaw extends Item implements ICustomTooltip {
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
 		ItemStack item = new ItemStack(Blocks.SAPLING);
-		if (Math.sin(Minecraft.getMinecraft().theWorld.getTotalWorldTime()/6.5f) > 0)
+		if (Math.sin(Minecraft.getMinecraft().world.getTotalWorldTime()/6.5f) > 0)
 			item = new ItemStack(Blocks.TALLGRASS, 1, EnumType.GRASS.getMeta());
 		return new ItemStack[] {item, item, item,
 				item, item, item,
@@ -30,7 +30,7 @@ public class ItemRubberRaw extends Item implements ICustomTooltip {
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.GRAY+"Can be smelted into Rubber"}, new String[0]);
 	}

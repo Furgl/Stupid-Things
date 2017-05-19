@@ -57,7 +57,7 @@ public class EntityBalloonLiquid extends EntityBalloon {
 
 		//angle down over time
 		this.prevRotationYaw = this.rotationYaw;
-		if (MathHelper.abs_max(motionX, motionZ)+motionY < 0.5D) 
+		if (MathHelper.absMax(motionX, motionZ)+motionY < 0.5D) 
 			if (Math.abs(180-this.rotationYaw) <= Math.abs(-180-this.rotationYaw)) { //closer to 180
 				if (this.rotationYaw > 180) 
 					this.rotationYaw = Math.max(this.rotationYaw-10, 180);
@@ -78,21 +78,21 @@ public class EntityBalloonLiquid extends EntityBalloon {
 		}
 
 		//spawn particles
-		if (this.worldObj.isRemote && this.liquid != null) {
+		if (this.world.isRemote && this.liquid != null) {
 			if (this.liquid == Blocks.WATER)
-				this.worldObj.spawnParticle(EnumParticleTypes.WATER_SPLASH, this.posX+(worldObj.rand.nextDouble()-0.5d)*0.4d, 
-						this.posY+worldObj.rand.nextDouble()*0.4d, this.posZ+(worldObj.rand.nextDouble()-0.5d)*0.4d, 
+				this.world.spawnParticle(EnumParticleTypes.WATER_SPLASH, this.posX+(world.rand.nextDouble()-0.5d)*0.4d, 
+						this.posY+world.rand.nextDouble()*0.4d, this.posZ+(world.rand.nextDouble()-0.5d)*0.4d, 
 						0, 0, 0, new int[0]);
 			else if (this.liquid == Blocks.LAVA)
-				this.worldObj.spawnParticle(EnumParticleTypes.FLAME, this.posX+(worldObj.rand.nextDouble()-0.5d)*0.4d, 
-						this.posY+worldObj.rand.nextDouble()*0.4d, this.posZ+(worldObj.rand.nextDouble()-0.5d)*0.4d, 
+				this.world.spawnParticle(EnumParticleTypes.FLAME, this.posX+(world.rand.nextDouble()-0.5d)*0.4d, 
+						this.posY+world.rand.nextDouble()*0.4d, this.posZ+(world.rand.nextDouble()-0.5d)*0.4d, 
 						0, 0, 0, new int[0]);
 		}
 
 		//raytrace for entity collision
 		Vec3d vec3d = new Vec3d(this.posX, this.posY, this.posZ);
 		Vec3d vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
-		RayTraceResult raytraceresult = this.worldObj.rayTraceBlocks(vec3d, vec3d1);
+		RayTraceResult raytraceresult = this.world.rayTraceBlocks(vec3d, vec3d1);
 		vec3d = new Vec3d(this.posX, this.posY, this.posZ);
 		vec3d1 = new Vec3d(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
 
@@ -100,7 +100,7 @@ public class EntityBalloonLiquid extends EntityBalloon {
 			vec3d1 = new Vec3d(raytraceresult.hitVec.xCoord, raytraceresult.hitVec.yCoord, raytraceresult.hitVec.zCoord);
 
 		Entity entity = null;
-		List<Entity> list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expandXyz(1.0D));
+		List<Entity> list = this.world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().addCoord(this.motionX, this.motionY, this.motionZ).expandXyz(1.0D));
 		double d0 = 0.0D;
 		for (int i = 0; i < list.size(); ++i) {
 			Entity entity1 = (Entity)list.get(i);
@@ -124,31 +124,31 @@ public class EntityBalloonLiquid extends EntityBalloon {
 			raytraceresult = new RayTraceResult(entity);
 
 		if (raytraceresult != null) {
-			if (raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK && this.worldObj.getBlockState(raytraceresult.getBlockPos()).getBlock() == Blocks.PORTAL)
+			if (raytraceresult.typeOfHit == RayTraceResult.Type.BLOCK && this.world.getBlockState(raytraceresult.getBlockPos()).getBlock() == Blocks.PORTAL)
 				this.setPortal(raytraceresult.getBlockPos());
 			else if (this.ticksExisted > 2)
-				this.attackEntityFrom(DamageSource.generic, 1);
+				this.attackEntityFrom(DamageSource.GENERIC, 1);
 		}
 
 		//pop if hitting block
 		if (this.onGround || this.isCollidedHorizontally) 
-			this.attackEntityFrom(DamageSource.generic, 1);
+			this.attackEntityFrom(DamageSource.GENERIC, 1);
 	}
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (!this.worldObj.isRemote && !source.equals(DamageSource.fall) && 
-				!source.equals(DamageSource.inFire) && !source.equals(DamageSource.onFire)) {
-			this.worldObj.playSound(null, this.getPosition(), ModSoundEvents.balloonPop, SoundCategory.NEUTRAL, 
-					0.8f, this.worldObj.rand.nextFloat()+0.3f);
+		if (!this.world.isRemote && !source.equals(DamageSource.FALL) && 
+				!source.equals(DamageSource.IN_FIRE) && !source.equals(DamageSource.ON_FIRE)) {
+			this.world.playSound(null, this.getPosition(), ModSoundEvents.balloonPop, SoundCategory.NEUTRAL, 
+					0.8f, this.world.rand.nextFloat()+0.3f);
 			this.setDead();
 			if (this.liquid != null) {
 				BlockPos[] positions = new BlockPos[] {this.getPosition(), this.getPosition().up(), this.getPosition().down()};
 				for (BlockPos pos : positions)	
-					if (this.worldObj.isAirBlock(pos) || 
-							this.worldObj.getBlockState(pos).getBlock().isReplaceable(worldObj, pos)) {
-						this.worldObj.setBlockState(pos, this.liquid.getStateFromMeta(pos == getPosition() ? 15 : 1));
-						this.worldObj.notifyBlockOfStateChange(pos, this.liquid);
+					if (this.world.isAirBlock(pos) || 
+							this.world.getBlockState(pos).getBlock().isReplaceable(world, pos)) {
+						this.world.setBlockState(pos, this.liquid.getStateFromMeta(pos == getPosition() ? 15 : 1));
+						this.world.updateObservingBlocksAt(pos, this.liquid);
 					}
 			}
 			return true;

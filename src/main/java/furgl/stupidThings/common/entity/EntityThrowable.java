@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.SoundEvent;
@@ -51,7 +52,7 @@ public class EntityThrowable extends EntityLiving implements IProjectile {
 		if (!this.hasNoGravity())
 			this.motionY -= gravity;
 
-		this.moveEntity(this.motionX, this.motionY, this.motionZ);
+		this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
 		this.motionX *= 0.98D;
 		this.motionY *= 0.98D;
 		this.motionZ *= 0.98D;
@@ -64,7 +65,7 @@ public class EntityThrowable extends EntityLiving implements IProjectile {
 		this.handleWaterMovement();
 
 		if (this.canBeCollidedWith()) {
-			List<Entity> list = this.worldObj.getEntitiesInAABBexcluding(this, this.getEntityBoundingBox(), EntitySelectors.<Entity>getTeamCollisionPredicate(this));
+			List<Entity> list = this.world.getEntitiesInAABBexcluding(this, this.getEntityBoundingBox(), EntitySelectors.<Entity>getTeamCollisionPredicate(this));
 
 			if (!list.isEmpty()) {
 				for (int i = 0; i < list.size(); ++i) {
@@ -89,7 +90,7 @@ public class EntityThrowable extends EntityLiving implements IProjectile {
 
 	@Override
 	public void setThrowableHeading(double x, double y, double z, float velocity, float inaccuracy) {
-		float f = MathHelper.sqrt_double(x * x + y * y + z * z);
+		float f = MathHelper.sqrt(x * x + y * y + z * z);
 		x = x / (double)f;
 		y = y / (double)f;
 		z = z / (double)f;
@@ -102,7 +103,7 @@ public class EntityThrowable extends EntityLiving implements IProjectile {
 		this.motionX = x;
 		this.motionY = y;
 		this.motionZ = z;
-		float f1 = MathHelper.sqrt_double(x * x + z * z);
+		float f1 = MathHelper.sqrt(x * x + z * z);
 		this.rotationYaw = (float)(MathHelper.atan2(x, z) * (180D / Math.PI));
 		this.rotationPitch = (float)(MathHelper.atan2(y, (double)f1) * (180D / Math.PI));
 		this.prevRotationYaw = this.rotationYaw;

@@ -47,7 +47,7 @@ public class BlockHeater extends Block implements ICustomTooltip {
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.RED+"Melts nearby snow and ice"}, new String[0]);
 	}
@@ -66,7 +66,7 @@ public class BlockHeater extends Block implements ICustomTooltip {
 				Block block = worldIn.getBlockState(pos2).getBlock();
 				if (block == Blocks.ICE && rand.nextInt(3) == 0) {
 					worldIn.setBlockState(pos2, Blocks.WATER.getDefaultState());
-					worldIn.notifyBlockOfStateChange(pos, Blocks.WATER);
+					worldIn.updateObservingBlocksAt(pos, Blocks.WATER);
 				}
 				else if ((block == Blocks.SNOW || block == Blocks.SNOW_LAYER) && rand.nextInt(3) == 0)
 					worldIn.setBlockToAir(pos2);
@@ -81,7 +81,7 @@ public class BlockHeater extends Block implements ICustomTooltip {
 				pos.getX()+rand.nextDouble(), pos.getY()+1.0d, pos.getZ()+rand.nextDouble(), 
 				0, 0, 0, new int[0]);
 		if (rand.nextInt(10) == 0)
-			world.playSound(Minecraft.getMinecraft().thePlayer, pos, SoundEvents.BLOCK_FIRE_AMBIENT, 
+			world.playSound(Minecraft.getMinecraft().player, pos, SoundEvents.BLOCK_FIRE_AMBIENT, 
 					SoundCategory.BLOCKS, rand.nextFloat(), rand.nextFloat());
     }
 }

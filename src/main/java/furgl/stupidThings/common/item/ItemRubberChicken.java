@@ -39,22 +39,22 @@ public class ItemRubberChicken extends Item implements ICustomTooltip {
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.GOLD+"The perfect weapon!"}, new String[0]);
 	}
 
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
-		player.worldObj.playSound(player, entity.getPosition(), ModSoundEvents.rubberChicken, SoundCategory.PLAYERS, 
-				player.worldObj.rand.nextFloat()+0.5f, player.worldObj.rand.nextFloat()*0.5f+0.75f);
+		player.world.playSound(player, entity.getPosition(), ModSoundEvents.rubberChicken, SoundCategory.PLAYERS, 
+				player.world.rand.nextFloat()+0.5f, player.world.rand.nextFloat()*0.5f+0.75f);
 		return true;
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
-		playerIn.worldObj.playSound(playerIn, playerIn.getPosition(), ModSoundEvents.rubberChicken, SoundCategory.PLAYERS, 
-				playerIn.worldObj.rand.nextFloat()+0.5f, playerIn.worldObj.rand.nextFloat()*0.5f+0.75f);
-        return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+		player.world.playSound(player, player.getPosition(), ModSoundEvents.rubberChicken, SoundCategory.PLAYERS, 
+				player.world.rand.nextFloat()+0.5f, player.world.rand.nextFloat()*0.5f+0.75f);
+        return new ActionResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 }

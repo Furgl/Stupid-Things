@@ -72,9 +72,9 @@ public class EntityBalloon extends EntityThrowable {
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (!this.worldObj.isRemote && !source.equals(DamageSource.fall)) {
-			this.worldObj.playSound(null, this.getPosition(), ModSoundEvents.balloonPop, SoundCategory.NEUTRAL, 
-					0.8f, this.worldObj.rand.nextFloat()+0.3f);
+		if (!this.world.isRemote && !source.equals(DamageSource.FALL)) {
+			this.world.playSound(null, this.getPosition(), ModSoundEvents.balloonPop, SoundCategory.NEUTRAL, 
+					0.8f, this.world.rand.nextFloat()+0.3f);
 			if (ModItems.balloonDeflated != null && !this.isDead)
 				this.entityDropItem(new ItemStack(ModItems.balloonDeflated, 1, this.getColor()), 0);
 			this.setDead();
@@ -87,7 +87,7 @@ public class EntityBalloon extends EntityThrowable {
 	protected void updateLeashedState() {
 		super.updateLeashedState();
 
-		if (this.getLeashed() && this.getLeashedToEntity() != null && this.getLeashedToEntity().worldObj == this.worldObj) {
+		if (this.getLeashed() && this.getLeashedToEntity() != null && this.getLeashedToEntity().world == this.world) {
 			Entity entity = this.getLeashedToEntity();
 			float f = this.getDistanceToEntity(entity);
 
@@ -152,7 +152,7 @@ public class EntityBalloon extends EntityThrowable {
 	public void applyEntityCollision(Entity entityIn) {
 		if (!this.isRidingSameEntity(entityIn) && !entityIn.noClip && !this.noClip) {
 			this.motionY += 0.02d;
-			this.rotationYaw += (entityIn.worldObj.rand.nextFloat()-0.5f)*100f;
+			this.rotationYaw += (entityIn.world.rand.nextFloat()-0.5f)*100f;
 			this.prevRotationYaw = this.rotationYaw;
 		}
 

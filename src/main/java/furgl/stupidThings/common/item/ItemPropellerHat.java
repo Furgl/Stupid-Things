@@ -38,7 +38,7 @@ public class ItemPropellerHat extends ItemArmor implements ICustomTooltip {
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.YELLOW+"Faster ascension and slower descension when jumping"}, new String[0]);
 	}
@@ -66,6 +66,6 @@ public class ItemPropellerHat extends ItemArmor implements ICustomTooltip {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-		return StupidThings.MODID+":/textures/models/armor/propeller_hat.png";
+		return StupidThings.MODID+":textures/models/armor/propeller_hat.png";
 	}
 }

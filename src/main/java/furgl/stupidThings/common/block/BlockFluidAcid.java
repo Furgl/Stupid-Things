@@ -52,7 +52,7 @@ public class BlockFluidAcid extends BlockFluidClassic implements ICustomTooltip 
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.DARK_GREEN+""+TextFormatting.BOLD+"Warning: Extremely corrosive",
 							TextFormatting.GREEN+"Rapidly dissolves soft blocks on contact"}, new String[0]);
@@ -60,7 +60,7 @@ public class BlockFluidAcid extends BlockFluidClassic implements ICustomTooltip 
 
 	@SubscribeEvent(receiveCanceled=true)
 	public void addTooltip(ItemTooltipEvent event) {
-		if (event.getEntity().worldObj.isRemote && event.getItemStack() != null && 
+		if (event.getEntity().world.isRemote && event.getItemStack() != null && 
 				event.getItemStack().getItem() instanceof UniversalBucket && 
 				((UniversalBucket)event.getItemStack().getItem()).getFluid(event.getItemStack()).getFluid() == ModFluids.acid) 
 			TooltipHelper.addTooltipText(event.getToolTip(), 
@@ -70,10 +70,10 @@ public class BlockFluidAcid extends BlockFluidClassic implements ICustomTooltip 
 
 	@Override
 	public Boolean isEntityInsideMaterial(IBlockAccess world, BlockPos blockpos, IBlockState iblockstate, Entity entity, double yToTest, Material materialIn, boolean testingHead) {
-		if (entity instanceof EntityLivingBase && !entity.worldObj.isRemote && ((EntityLivingBase)entity).attackEntityFrom(DamageSource.lava, 2.0f)) {
-			entity.worldObj.playSound(null, entity.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 
-					entity.worldObj.rand.nextFloat()+1f, entity.worldObj.rand.nextFloat()+1.5f);
-			((WorldServer)entity.worldObj).spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, entity.posX, entity.posY, 
+		if (entity instanceof EntityLivingBase && !entity.world.isRemote && ((EntityLivingBase)entity).attackEntityFrom(DamageSource.LAVA, 2.0f)) {
+			entity.world.playSound(null, entity.getPosition(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 
+					entity.world.rand.nextFloat()+1f, entity.world.rand.nextFloat()+1.5f);
+			((WorldServer)entity.world).spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, entity.posX, entity.posY, 
 					entity.posZ, 10, 0.5d, 0.5d, 0.5d, 0, new int[0]);
 		}
 		return null;

@@ -50,7 +50,7 @@ public class ItemAnvilBackpack extends ItemArmor implements ICustomTooltip {
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.GRAY+"Weighs down the wearer and",
 							TextFormatting.GRAY+"damages entities that are fallen on"}, new String[0]);
@@ -71,8 +71,8 @@ public class ItemAnvilBackpack extends ItemArmor implements ICustomTooltip {
 	public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot slot) {
 		Multimap<String, AttributeModifier> map = super.getItemAttributeModifiers(slot);
 		if (slot == EntityEquipmentSlot.CHEST)
-			map.put(SharedMonsterAttributes.MOVEMENT_SPEED.getAttributeUnlocalizedName(), new AttributeModifier(MOVEMENT_SPEED_UUID, 
-					SharedMonsterAttributes.MOVEMENT_SPEED.getAttributeUnlocalizedName(), -0.02d, 0));
+			map.put(SharedMonsterAttributes.MOVEMENT_SPEED.getName(), new AttributeModifier(MOVEMENT_SPEED_UUID, 
+					SharedMonsterAttributes.MOVEMENT_SPEED.getName(), -0.02d, 0));
 		return map;
 	}
 
@@ -86,20 +86,20 @@ public class ItemAnvilBackpack extends ItemArmor implements ICustomTooltip {
 				player.motionY *= 1.3d;
 		//hurt entities while falling
 		if (!world.isRemote && player.fallDistance > 1) {
-			List<Entity> list = Lists.newArrayList(world.getEntitiesWithinAABBExcludingEntity(player, player.getEntityBoundingBox()));
+			List<Entity> list = Lists.newArrayList(world.getEntitiesWithinAABBExcludingEntity(player, player.getEntityBoundingBox().expandXyz(3)));
 
 			for (Entity entity : list) 
-				entity.attackEntityFrom(DamageSource.anvil, Math.min(player.fallDistance, 20));
+				entity.attackEntityFrom(DamageSource.ANVIL, Math.min(player.fallDistance, 20));
 		}
 	}
 
 	@SubscribeEvent
 	public void onEvent(LivingFallEvent event) {
 		//play anvil sound when landing
-		if (event.getEntityLiving() != null && !event.getEntityLiving().worldObj.isRemote &&
+		if (event.getEntityLiving() != null && !event.getEntityLiving().world.isRemote &&
 				event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.CHEST) != null &&
 				event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == this) 
-			event.getEntityLiving().worldObj.playSound(null, event.getEntityLiving().getPosition(), SoundEvents.BLOCK_ANVIL_LAND, 
-					SoundCategory.PLAYERS, event.getDistance()/15f, event.getEntityLiving().worldObj.rand.nextFloat());
+			event.getEntityLiving().world.playSound(null, event.getEntityLiving().getPosition(), SoundEvents.BLOCK_ANVIL_LAND, 
+					SoundCategory.PLAYERS, event.getDistance()/15f, event.getEntityLiving().world.rand.nextFloat());
 	}
 }

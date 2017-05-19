@@ -1,6 +1,5 @@
 package furgl.stupidThings.common;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import furgl.stupidThings.common.block.ModBlocks;
@@ -18,6 +17,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.MinecraftForge;
@@ -125,7 +125,7 @@ public class CommonProxy {
 	public void spawnParticlesSmokeCloud(World worldIn, int color, double x, double y, double z, double motionX, double motionY, double motionZ, float scale) {}
 
 	/**Add item (and sub-items in clientproxy) to creative tab*/
-	public void addToTab(Item item, CreativeTabs tab, ArrayList<ItemStack> stacks) {
+	public void addToTab(Item item, CreativeTabs tab, NonNullList<ItemStack> stacks) {
 		item.setCreativeTab(StupidThings.tab);
 	}
 

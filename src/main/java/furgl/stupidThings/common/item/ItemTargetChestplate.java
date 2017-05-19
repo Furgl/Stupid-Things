@@ -33,7 +33,7 @@ public class ItemTargetChestplate extends ItemArmor implements ICustomTooltip {
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.RED+"Causes nearby mobs to target you"}, new String[0]);
 	}

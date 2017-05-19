@@ -61,7 +61,7 @@ public class EntitySmokeBomb extends EntityThrowable {
 
 	@Override
 	public boolean isEntityInvulnerable(DamageSource source) {
-		return source != DamageSource.outOfWorld;
+		return source != DamageSource.OUT_OF_WORLD;
 	}
 
 	@Override
@@ -74,38 +74,38 @@ public class EntitySmokeBomb extends EntityThrowable {
 		}
 		
 		//kill after certain amount of time
-		if (!this.worldObj.isRemote && this.ticksExisted > 250)
+		if (!this.world.isRemote && this.ticksExisted > 250)
 			this.setDead();
 
 		//play sound
 		if (this.ticksExisted > 40 && this.ticksExisted % 4 == 0)
-			this.worldObj.playSound(null, this.getPosition(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.NEUTRAL, 
+			this.world.playSound(null, this.getPosition(), SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.NEUTRAL, 
 					0.2f, 1);
 
 		//spawn particles
-		if (this.worldObj.isRemote) {
+		if (this.world.isRemote) {
 			double speedModifier = Math.min(this.ticksExisted/90f, 1.5d);
 			for (int i=0; i<2; i++)
-				StupidThings.proxy.spawnParticlesSmokeCloud(worldObj, this.getColor(), posX, posY, posZ, 
-						(this.worldObj.rand.nextDouble()-0.5d)*speedModifier, (this.worldObj.rand.nextDouble()-0.5d)*speedModifier, 
-						(this.worldObj.rand.nextDouble()-0.5d)*speedModifier, (float) Math.min(this.ticksExisted/100f, 1d));
+				StupidThings.proxy.spawnParticlesSmokeCloud(world, this.getColor(), posX, posY, posZ, 
+						(this.world.rand.nextDouble()-0.5d)*speedModifier, (this.world.rand.nextDouble()-0.5d)*speedModifier, 
+						(this.world.rand.nextDouble()-0.5d)*speedModifier, (float) Math.min(this.ticksExisted/100f, 1d));
 			if (this.ticksExisted < 40)
 				for (int i=0; i<this.ticksExisted/2; i++)
-					this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, posX, posY, posZ, 
-							(this.worldObj.rand.nextDouble()-0.5d)*0.3d, (this.worldObj.rand.nextDouble()-0.5d)*0.3d, 
-							(this.worldObj.rand.nextDouble()-0.5d)*0.3d, new int[0]);
+					this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, posX, posY, posZ, 
+							(this.world.rand.nextDouble()-0.5d)*0.3d, (this.world.rand.nextDouble()-0.5d)*0.3d, 
+							(this.world.rand.nextDouble()-0.5d)*0.3d, new int[0]);
 			else {
 				for (int i=0; i<3; i++)
-					this.worldObj.spawnParticle(EnumParticleTypes.SMOKE_LARGE, posX, posY, posZ, 
-							(this.worldObj.rand.nextDouble()-0.5d)*0.3d, (this.worldObj.rand.nextDouble()-0.5d)*0.3d, 
-							(this.worldObj.rand.nextDouble()-0.5d)*0.3d, new int[0]);
+					this.world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, posX, posY, posZ, 
+							(this.world.rand.nextDouble()-0.5d)*0.3d, (this.world.rand.nextDouble()-0.5d)*0.3d, 
+							(this.world.rand.nextDouble()-0.5d)*0.3d, new int[0]);
 			}
 		}
 
 		//give nearby entities blindness
-		if (!this.worldObj.isRemote && this.ticksExisted > 40) {
+		if (!this.world.isRemote && this.ticksExisted > 40) {
 			double radius = Math.min(this.ticksExisted/30f, 6d);
-			List<Entity> list = this.worldObj.getEntitiesInAABBexcluding(this, this.getEntityBoundingBox().expandXyz(radius), EntitySelectors.<Entity>getTeamCollisionPredicate(this));
+			List<Entity> list = this.world.getEntitiesInAABBexcluding(this, this.getEntityBoundingBox().expandXyz(radius), EntitySelectors.<Entity>getTeamCollisionPredicate(this));
 			for (Entity entity : list)
 				if (entity instanceof EntityLivingBase)
 					((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 0, true, false));

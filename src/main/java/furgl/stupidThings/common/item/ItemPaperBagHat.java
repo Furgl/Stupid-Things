@@ -33,7 +33,7 @@ public class ItemPaperBagHat extends ItemArmor implements ICustomTooltip {
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.GOLD+"For when makeup isn't enough"}, new String[0]);
 	}
@@ -46,6 +46,6 @@ public class ItemPaperBagHat extends ItemArmor implements ICustomTooltip {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-		return StupidThings.MODID+":/textures/models/armor/paper_bag_hat.png";
+		return StupidThings.MODID+":textures/models/armor/paper_bag_hat.png";
 	}
 }

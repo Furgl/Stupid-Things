@@ -38,7 +38,7 @@ public class BlockReverseTnt extends BlockTNT implements ICustomTooltip {
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.AQUA+"Pulls in nearby blocks and entities"}, new String[0]);
 	}
@@ -49,7 +49,7 @@ public class BlockReverseTnt extends BlockTNT implements ICustomTooltip {
 		if (!worldIn.isRemote) {
 			EntityTNTPrimed entitytntprimed = new EntityReverseTntPrimed(worldIn, (double)((float)pos.getX() + 0.5F), (double)pos.getY(), (double)((float)pos.getZ() + 0.5F), explosionIn.getExplosivePlacedBy());
 			entitytntprimed.setFuse((short)(worldIn.rand.nextInt(entitytntprimed.getFuse() / 4) + entitytntprimed.getFuse() / 8));
-			worldIn.spawnEntityInWorld(entitytntprimed);
+			worldIn.spawnEntity(entitytntprimed);
 		}
 	}
 
@@ -58,7 +58,7 @@ public class BlockReverseTnt extends BlockTNT implements ICustomTooltip {
 	public void explode(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase igniter) {
 		if (!worldIn.isRemote && ((Boolean)state.getValue(EXPLODE)).booleanValue()) {
 			EntityTNTPrimed entitytntprimed = new EntityReverseTntPrimed(worldIn, (double)((float)pos.getX() + 0.5F), (double)pos.getY(), (double)((float)pos.getZ() + 0.5F), igniter);
-			worldIn.spawnEntityInWorld(entitytntprimed);
+			worldIn.spawnEntity(entitytntprimed);
 			worldIn.playSound((EntityPlayer)null, entitytntprimed.posX, entitytntprimed.posY, entitytntprimed.posZ, SoundEvents.ENTITY_TNT_PRIMED, SoundCategory.BLOCKS, 1.0F, 1.0F);
 		}
 	}

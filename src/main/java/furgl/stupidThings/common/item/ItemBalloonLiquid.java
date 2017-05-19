@@ -32,7 +32,7 @@ public class ItemBalloonLiquid extends ItemBalloon {
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {COLORS[stack.getMetadata()]+"Right click to throw",
 							COLORS[stack.getMetadata()]+"Spawns "+liquid.getLocalizedName().toLowerCase()+" on impact"}, 
@@ -43,7 +43,7 @@ public class ItemBalloonLiquid extends ItemBalloon {
 	protected void throwBalloon(World world, EntityPlayer player, int meta) {
 		EntityBalloon balloon = new EntityBalloonLiquid(liquid, world, player, meta);
         balloon.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 2F, 1.0F);
-        world.spawnEntityInWorld(balloon);
+        world.spawnEntity(balloon);
 	}
 	
 	public static class ItemBalloonWater extends ItemBalloonLiquid {

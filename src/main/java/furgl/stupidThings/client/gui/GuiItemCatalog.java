@@ -66,7 +66,7 @@ public class GuiItemCatalog extends GuiScreen {
 			int mX = (int) ((mouseX-w));
 			int mY = (int) ((mouseY-h));
 			if (mX >= xPos && mY >= yPos && mX < xPos + 16 && mY < yPos + 16) {
-				List<String> tooltip = StupidThings.tab.orderedStacks.get(i).getTooltip(mc.thePlayer, false);
+				List<String> tooltip = StupidThings.tab.orderedStacks.get(i).getTooltip(mc.player, false);
 				GuiUtils.drawHoveringText(StupidThings.tab.orderedStacks.get(i), tooltip, mX, mY, width/2, height, -1, mc.fontRendererObj);
 				RenderHelper.disableStandardItemLighting();
 			}

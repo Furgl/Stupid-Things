@@ -36,26 +36,26 @@ public class ItemBalloonDeflated extends ItemBalloon {
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.worldObj.isRemote)
+		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {COLORS[stack.getMetadata()]+"Hold right click to blow up"}, 
 					OreDictionary.getOres("itemRubber").isEmpty() ? null : new String[0]);
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
 			world.playSound(null, player.getPosition(), ModSoundEvents.balloonInflate, SoundCategory.PLAYERS, 0.5f, 1.0f);
 			player.setActiveHand(hand);
 		}
 
-		return new ActionResult(EnumActionResult.SUCCESS, stack);
+		return new ActionResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
 
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity) {
 		if (!world.isRemote) {
-			--stack.stackSize;
+			stack.shrink(1);
 
 			if (ModItems.balloon != null) {
 				ItemStack balloon = new ItemStack(ModItems.balloon, 1, stack.getMetadata());
