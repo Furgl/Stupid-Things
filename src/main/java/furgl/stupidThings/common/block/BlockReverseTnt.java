@@ -32,7 +32,7 @@ public class BlockReverseTnt extends BlockTNT implements ICustomTooltip {
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
 		return new ItemStack[] {null, null, null, 
-				new ItemStack(Blocks.TNT), new ItemStack(Items.ENDER_PEARL), null,
+				new ItemStack(Items.ENDER_PEARL), new ItemStack(Blocks.TNT), null,
 				null, null, null};
 	}
 

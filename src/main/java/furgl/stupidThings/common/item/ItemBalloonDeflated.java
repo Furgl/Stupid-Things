@@ -27,7 +27,7 @@ public class ItemBalloonDeflated extends ItemBalloon {
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
 		if (!OreDictionary.getOres("itemRubber").isEmpty())
 			return new ItemStack[] {null, null, null,
-					OreDictionary.getOres("itemRubber").get(0), new ItemStack(Items.STRING), 
+					new ItemStack(Items.STRING), OreDictionary.getOres("itemRubber").get(0),
 					new ItemStack(Items.DYE, 1, EnumDyeColor.byMetadata(stack.getMetadata()).getDyeDamage()),
 					null, null, null};
 		else 

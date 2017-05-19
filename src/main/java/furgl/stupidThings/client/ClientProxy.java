@@ -5,9 +5,11 @@ import java.util.HashMap;
 
 import com.google.common.collect.Maps;
 
+import furgl.stupidThings.client.gui.GuiItemCatalog;
 import furgl.stupidThings.client.model.ModelAnvilBackpack;
 import furgl.stupidThings.client.model.ModelPaperBagHat;
 import furgl.stupidThings.client.model.ModelPropellerHat;
+import furgl.stupidThings.client.model.ModelUpsideDownGoggles;
 import furgl.stupidThings.client.particle.ParticleSmokeCloud;
 import furgl.stupidThings.client.renderer.entity.RenderBalloon;
 import furgl.stupidThings.client.renderer.entity.RenderBalloonLiquid;
@@ -21,6 +23,7 @@ import furgl.stupidThings.common.entity.EntityBalloonLiquid;
 import furgl.stupidThings.common.entity.EntityReverseTntPrimed;
 import furgl.stupidThings.common.entity.EntitySmokeBomb;
 import furgl.stupidThings.common.fluid.ModFluids;
+import furgl.stupidThings.common.item.ItemCatalog;
 import furgl.stupidThings.common.item.ModItems;
 import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.block.Block;
@@ -49,6 +52,10 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ClientProxy extends CommonProxy
 {
+	private static final ModelBiped MODEL_ANVIL_BACKPACK = new ModelAnvilBackpack();
+	private static final ModelBiped MODEL_PAPER_BAG_HAT = new ModelPaperBagHat();
+	private static final ModelBiped MODEL_UPSIDE_DOWN_GOGGLES = new ModelUpsideDownGoggles();
+	// used for models that are unique per entity
 	private HashMap<EntityLivingBase, ModelBiped> modelMap = Maps.newHashMap();
 
 	@Override
@@ -85,7 +92,7 @@ public class ClientProxy extends CommonProxy
 				Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
 					@Override
 					public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-						return EnumDyeColor.byMetadata(stack.getMetadata()).getMapColor().colorValue;
+						return tintIndex > 0 ? -1 : EnumDyeColor.byMetadata(stack.getMetadata()).getMapColor().colorValue;
 					}
 				}, item);
 			}
@@ -132,16 +139,12 @@ public class ClientProxy extends CommonProxy
 
 	@Override
 	public Object getArmorModel(Item item, EntityLivingBase entity) {
-		if (item == ModItems.anvilBackpack) {
-			if (!modelMap.containsKey(entity) || !(modelMap.get(entity) instanceof ModelAnvilBackpack)) 
-				modelMap.put(entity, new ModelAnvilBackpack());		
-			return modelMap.get(entity);
-		}
-		else if (item == ModItems.paperBagHat) {
-			if (!modelMap.containsKey(entity) || !(modelMap.get(entity) instanceof ModelPaperBagHat)) 
-				modelMap.put(entity, new ModelPaperBagHat());		
-			return modelMap.get(entity);
-		}
+		if (item == ModItems.anvilBackpack) 
+			return MODEL_ANVIL_BACKPACK;
+		else if (item == ModItems.paperBagHat) 
+			return MODEL_PAPER_BAG_HAT;
+		else if (item == ModItems.upsideDownGoggles)
+			return MODEL_UPSIDE_DOWN_GOGGLES;
 		else if (item == ModItems.propellerHat) {
 			if (!modelMap.containsKey(entity) || !(modelMap.get(entity) instanceof ModelPropellerHat)) 
 				modelMap.put(entity, new ModelPropellerHat());		
@@ -160,7 +163,15 @@ public class ClientProxy extends CommonProxy
 	/**Add item (and sub-items in clientproxy) to creative tab*/
 	@Override
 	public void addToTab(Item item, CreativeTabs tab, ArrayList<ItemStack> stacks) {
-		item.getSubItems(item, tab, stacks);
+		if (item instanceof ItemCatalog)
+			stacks.add(0, new ItemStack(item));
+		else
+			item.getSubItems(item, tab, stacks);
 		item.setCreativeTab(StupidThings.tab);
+	}
+	
+	@Override
+	public void openCatalogGui() { 
+		Minecraft.getMinecraft().displayGuiScreen(new GuiItemCatalog());
 	}
 }

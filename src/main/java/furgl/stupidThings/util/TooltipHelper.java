@@ -50,7 +50,7 @@ public class TooltipHelper {
 			tooltip.add(TextFormatting.AQUA+""+TextFormatting.ITALIC+"CTRL "+TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+"for recipe");
 	}
 
-	@SubscribeEvent(receiveCanceled=true)
+	@SubscribeEvent
 	public void addTooltipRecipe(RenderTooltipEvent.PostText event) {
 		if (event.getStack() != null) {
 			ItemStack[] recipe = null;
@@ -69,7 +69,9 @@ public class TooltipHelper {
 				GlStateManager.translate(event.getX()+event.getWidth()/2-33, event.getY()+event.getHeight(), 0);
 				Minecraft.getMinecraft().getTextureManager().bindTexture(TOOLTIP_RECIPE_BACKGROUND);
 
-				GuiUtils.drawTexturedModalRect(0, 1, 0, 0, 66, 65, 1);
+				GlStateManager.enableBlend();
+				GuiUtils.drawTexturedModalRect(0, 1, 0, 0, 66, 66, 1);
+		        GlStateManager.disableBlend();
 
 				RenderHelper.enableGUIStandardItemLighting();
 				for (int i=0; i<9; i++)

@@ -59,6 +59,7 @@ public class CommonProxy {
 	}
 
 	private void registerRecipes() {
+		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemCatalog), new ItemStack(Items.BOOK), new ItemStack(Blocks.DIRT));
 		if (ModBlocks.reverseTnt != null)
 			GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.reverseTnt), new ItemStack(Blocks.TNT), new ItemStack(Items.ENDER_PEARL));
 		if (ModItems.anvilBackpack != null)
@@ -109,9 +110,12 @@ public class CommonProxy {
 		if (ModItems.rubberChicken != null)
 			for (ItemStack rubber : OreDictionary.getOres("itemRubber")) 
 				GameRegistry.addRecipe(new ItemStack(ModItems.rubberChicken), " A ", "ABA", " A ", 'A', rubber, 'B', new ItemStack(Items.CHICKEN));
-		if (ModItems.propellerHat != null) {
+		if (ModItems.propellerHat != null) 
 			GameRegistry.addRecipe(new ItemStack(ModItems.propellerHat), "FRF", "YLG", "FBF", 'F', new ItemStack(Items.FEATHER), 'L', new ItemStack(Items.LEATHER_HELMET), 'R', new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage()), 'G', new ItemStack(Items.DYE, 1, EnumDyeColor.GREEN.getDyeDamage()), 'B', new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()), 'Y', new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage()));
-		}
+		if (ModItems.pocketSand != null)
+			GameRegistry.addRecipe(new ItemStack(ModItems.pocketSand), " T ", "LSL", " L ", 'L', new ItemStack(Items.LEATHER), 'S', new ItemStack(Blocks.SAND), 'T', new ItemStack(Items.STRING));
+		if (ModItems.upsideDownGoggles != null)
+			GameRegistry.addRecipe(new ItemStack(ModItems.upsideDownGoggles), "III", "I I", "GRG", 'I', new ItemStack(Items.IRON_INGOT), 'G', new ItemStack(Blocks.GLASS), 'R', new ItemStack(Items.REDSTONE));
 	}
 
 	public Object getArmorModel(Item item, EntityLivingBase entity) {
@@ -124,4 +128,6 @@ public class CommonProxy {
 	public void addToTab(Item item, CreativeTabs tab, ArrayList<ItemStack> stacks) {
 		item.setCreativeTab(StupidThings.tab);
 	}
+
+	public void openCatalogGui() {}
 }

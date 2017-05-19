@@ -32,7 +32,7 @@ public class ItemSmokeBomb extends Item implements ICustomTooltip {
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
 		if (!OreDictionary.getOres("itemRubber").isEmpty())
 			return new ItemStack[] {null, null, null,
-					OreDictionary.getOres("itemRubber").get(0), new ItemStack(Items.GUNPOWDER), 
+					new ItemStack(Items.GUNPOWDER), OreDictionary.getOres("itemRubber").get(0),
 					new ItemStack(Items.DYE, 1, EnumDyeColor.byMetadata(stack.getMetadata()).getDyeDamage()),
 					null, null, null};
 		else 

@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class ModItems {
 	public static ArrayList<Item> allItems;
 
+	public static Item itemCatalog;
 	public static Item anvilBackpack;
 	public static Item balloonDeflated;
 	public static Item balloon;
@@ -27,10 +28,13 @@ public class ModItems {
 	public static Item rubberChicken;
 	public static Item ball;
 	public static Item propellerHat;
+	public static Item pocketSand;
+	public static Item upsideDownGoggles;
 
 	public static void preInit() {		
 		allItems = new ArrayList<Item>();
 
+		itemCatalog = registerItem(new ItemCatalog(), "item_catalog", true, false);
 		anvilBackpack = registerItem(new ItemAnvilBackpack(), "anvil_backpack", true, true);
 		paperBagHat = registerItem(new ItemPaperBagHat(), "paper_bag_hat", true, true);
 		rubber = registerItem(new ItemRubber(), "rubber", true, true);
@@ -39,10 +43,12 @@ public class ModItems {
 		targetChestplate = registerItem(new ItemTargetChestplate(), "target_chestplate", true, true);
 		rubberChicken = registerItem(new ItemRubberChicken(), "rubber_chicken", true, true);
 		propellerHat = registerItem(new ItemPropellerHat(), "propeller_hat", true, true);
+		pocketSand = registerItem(new ItemPocketSand(), "pocket_sand", true, true);
+		upsideDownGoggles = registerItem(new ItemUpsideDownGoggles(), "upside_down_goggles", true, true);
 		
 		smokeBomb = registerItem(new ItemSmokeBomb(), "smoke_bomb", true, true);
-		balloon = registerItem(new ItemBalloon(), "balloon", true, true);
 		balloonDeflated = registerItem(new ItemBalloonDeflated(), "balloon_deflated", true, true);
+		balloon = registerItem(new ItemBalloon(), "balloon", true, true);
 		balloonWater = registerItem(new ItemBalloonLiquid.ItemBalloonWater(), "balloon_water", true, true);
 		balloonLava = registerItem(new ItemBalloonLiquid.ItemBalloonLava(), "balloon_lava", true, true);
 	}

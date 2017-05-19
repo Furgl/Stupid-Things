@@ -1,5 +1,6 @@
 itemGroup.tabStupidThings=Stupid Things
 
+item.item_catalog.name=Item Catalog
 item.anvil_backpack.name=Anvil Backpack
 item.balloon_deflated.name=Deflated Balloon
 item.balloon.name=Balloon
@@ -12,6 +13,8 @@ item.smoke_bomb.name=Smoke Bomb
 item.target_chestplate.name=Target Chestplate
 item.rubber_chicken.name=Rubber Chicken
 item.propeller_hat.name=Propeller Hat
+item.pocket_sand.name=Pocket Sand
+item.upside_down_goggles.name=Upside Down Goggles
 
 tile.reverse_tnt.name=Reverse TNT
 tile.rail_explosive.name=Explosive Rail

@@ -24,7 +24,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -39,7 +38,7 @@ public class BlockPetRock extends BlockDirectional implements ICustomTooltip {
 		this.setSoundType(SoundType.STONE);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 		
-		MinecraftForge.EVENT_BUS.register(this); //TODO remove
+		//MinecraftForge.EVENT_BUS.register(this); //TODO remove
 	}
 	
 	@SubscribeEvent
@@ -51,7 +50,7 @@ public class BlockPetRock extends BlockDirectional implements ICustomTooltip {
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
 		return new ItemStack[] {null, null, null, 
-				new ItemStack(Blocks.STONE), new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage()), null,
+				new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage()), new ItemStack(Blocks.STONE), null,
 				null, null, null};
 	}
 
