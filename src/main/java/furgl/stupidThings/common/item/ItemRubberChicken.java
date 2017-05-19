@@ -52,9 +52,9 @@ public class ItemRubberChicken extends Item implements ICustomTooltip {
 	}
 	
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
-		playerIn.worldObj.playSound(playerIn, playerIn.getPosition(), ModSoundEvents.rubberChicken, SoundCategory.PLAYERS, 
-				playerIn.worldObj.rand.nextFloat()+0.5f, playerIn.worldObj.rand.nextFloat()*0.5f+0.75f);
-        return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+		player.worldObj.playSound(player, player.getPosition(), ModSoundEvents.rubberChicken, SoundCategory.PLAYERS, 
+				player.worldObj.rand.nextFloat()+0.5f, player.worldObj.rand.nextFloat()*0.5f+0.75f);
+        return new ActionResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
     }
 }

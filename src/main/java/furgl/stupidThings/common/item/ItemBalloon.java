@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -56,23 +57,23 @@ public class ItemBalloon extends Item implements ICustomTooltip {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
+    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
 		for (int i = 0; i < 16; ++i)
 			subItems.add(new ItemStack(itemIn, 1, i));
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		if (!player.capabilities.isCreativeMode)
-			--stack.stackSize;
+			player.getHeldItem(hand).func_190918_g(1);
 
 		world.playSound(null, player.posX, player.posY, player.posZ, SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL, 
 				0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
 
 		if (!world.isRemote) 
-			this.throwBalloon(world, player, stack.getMetadata());
+			this.throwBalloon(world, player, player.getHeldItem(hand).getMetadata());
 
-		return new ActionResult(EnumActionResult.SUCCESS, stack);
+		return new ActionResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
 
 	protected void throwBalloon(World world, EntityPlayer player, int meta) {

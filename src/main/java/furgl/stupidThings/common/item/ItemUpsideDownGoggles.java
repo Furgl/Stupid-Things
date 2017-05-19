@@ -63,6 +63,6 @@ public class ItemUpsideDownGoggles extends ItemArmor implements ICustomTooltip {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-		return StupidThings.MODID+":/textures/models/armor/upside_down_goggles.png";
+		return StupidThings.MODID+":textures/models/armor/upside_down_goggles.png";
 	}
 }

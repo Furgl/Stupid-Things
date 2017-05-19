@@ -1,6 +1,5 @@
 package furgl.stupidThings.client;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.google.common.collect.Maps;
@@ -39,6 +38,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -162,7 +162,7 @@ public class ClientProxy extends CommonProxy
 
 	/**Add item (and sub-items in clientproxy) to creative tab*/
 	@Override
-	public void addToTab(Item item, CreativeTabs tab, ArrayList<ItemStack> stacks) {
+	public void addToTab(Item item, CreativeTabs tab, NonNullList<ItemStack> stacks) {
 		if (item instanceof ItemCatalog)
 			stacks.add(0, new ItemStack(item));
 		else

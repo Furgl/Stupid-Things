@@ -46,7 +46,7 @@ public class BlockCooler extends Block implements ICustomTooltip {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
+	public void func_190948_a(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
 		if (player.worldObj.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.AQUA+"Freezes nearby water and spawns snow"}, new String[0]);

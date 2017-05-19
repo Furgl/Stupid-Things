@@ -58,7 +58,7 @@ public class ModelPropellerHat extends ModelBiped {
 		if (entityIn instanceof EntityArmorStand) 
 			netHeadYaw = 0;
 		// FIXME double propeller when rotating
-		float motion = (float) (Math.abs(entityIn.motionX)/1f + Math.abs(entityIn.motionY + (entityIn.motionY == 0 || !entityIn.onGround ? 0.01f : 0.07f))*2.5f + Math.abs(entityIn.motionZ)/1f);
+		float motion = (float) (Math.abs(entityIn.motionX)*1.5f + Math.abs(entityIn.motionY + (entityIn.motionY == 0 || !entityIn.onGround ? 0.01f : 0.07f))*5f + Math.abs(entityIn.motionZ)*1.5f);
 		this.propeller.rotateAngleY += motion / 6f;
 		
 		super.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);

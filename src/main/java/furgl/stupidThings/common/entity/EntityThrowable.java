@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.SoundEvent;
@@ -51,7 +52,7 @@ public class EntityThrowable extends EntityLiving implements IProjectile {
 		if (!this.hasNoGravity())
 			this.motionY -= gravity;
 
-		this.moveEntity(this.motionX, this.motionY, this.motionZ);
+		this.moveEntity(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
 		this.motionX *= 0.98D;
 		this.motionY *= 0.98D;
 		this.motionZ *= 0.98D;

@@ -66,6 +66,6 @@ public class ItemPropellerHat extends ItemArmor implements ICustomTooltip {
 
 	@Override
 	public String getArmorTexture(ItemStack stack, Entity entity, EntityEquipmentSlot slot, String type) {
-		return StupidThings.MODID+":/textures/models/armor/propeller_hat.png";
+		return StupidThings.MODID+":textures/models/armor/propeller_hat.png";
 	}
 }

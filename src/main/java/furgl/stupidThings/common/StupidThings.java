@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid = StupidThings.MODID, version = StupidThings.VERSION, name = StupidThings.MODNAME, guiFactory = "furgl.stupidThings.client.gui.config.StupidThingsGuiFactory", updateJSON = "https://raw.githubusercontent.com/Furgl/Stupid-Things/1.10.2/update.json")
+@Mod(modid = StupidThings.MODID, version = StupidThings.VERSION, name = StupidThings.MODNAME, guiFactory = "furgl.stupidThings.client.gui.config.StupidThingsGuiFactory", updateJSON = "https://raw.githubusercontent.com/Furgl/Stupid-Things/1.11/update.json")
 public class StupidThings {
 	public static final String MODNAME = "Stupid Things"; 
 	public static final String MODID = "stupidthings";

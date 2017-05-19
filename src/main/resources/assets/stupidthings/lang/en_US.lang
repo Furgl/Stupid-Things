@@ -23,9 +23,9 @@ tile.heater.name=Heater
 tile.cooler.name=Cooler
 tile.pet_rock.name=Pet Rock
 
-entity.stupidthings.reverseTntPrimed.name=Reverse TNT
-entity.stupidthings.balloon.name=Balloon
-entity.stupidthings.balloonLiquid.name=Balloon
-entity.stupidthings.smokeBomb.name=Smoke Bomb
+entity.reverseTntPrimed.name=Reverse TNT
+entity.balloon.name=Balloon
+entity.balloonLiquid.name=Balloon
+entity.smokeBomb.name=Smoke Bomb
 
 fluid.acid=Acid

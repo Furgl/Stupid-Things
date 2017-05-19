@@ -148,7 +148,7 @@ public class EntityBalloonLiquid extends EntityBalloon {
 					if (this.worldObj.isAirBlock(pos) || 
 							this.worldObj.getBlockState(pos).getBlock().isReplaceable(worldObj, pos)) {
 						this.worldObj.setBlockState(pos, this.liquid.getStateFromMeta(pos == getPosition() ? 15 : 1));
-						this.worldObj.notifyBlockOfStateChange(pos, this.liquid);
+						this.worldObj.func_190522_c(pos, this.liquid);
 					}
 			}
 			return true;

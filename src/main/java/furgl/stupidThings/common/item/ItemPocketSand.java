@@ -51,37 +51,37 @@ public class ItemPocketSand extends Item implements ICustomTooltip {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
-		if (worldIn instanceof WorldServer) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+		if (world instanceof WorldServer) {
 			// spawn particles
-			double d0 = (double)(-MathHelper.sin(playerIn.rotationYaw * 0.017453292F));
-			double d1 = (double)MathHelper.cos(playerIn.rotationYaw * 0.017453292F);
-			double d2 = (double)(-MathHelper.sin(playerIn.rotationPitch * 0.017453292F));
+			double d0 = (double)(-MathHelper.sin(player.rotationYaw * 0.017453292F));
+			double d1 = (double)MathHelper.cos(player.rotationYaw * 0.017453292F);
+			double d2 = (double)(-MathHelper.sin(player.rotationPitch * 0.017453292F));
 			
 			double variation = 0.5d;
-			((WorldServer)worldIn).spawnParticle(EnumParticleTypes.BLOCK_CRACK, 
-					playerIn.posX + d0*2d, playerIn.posY + (double)playerIn.height * 0.6D + d2 * 2d, playerIn.posZ + d1*2d, 
+			((WorldServer)world).spawnParticle(EnumParticleTypes.BLOCK_CRACK, 
+					player.posX + d0*2d, player.posY + (double)player.height * 0.6D + d2 * 2d, player.posZ + d1*2d, 
 					40, variation, variation/2d, variation, 0,
 					new int[] {Block.getStateId(Blocks.SAND.getDefaultState())});
-			((WorldServer)worldIn).spawnParticle(EnumParticleTypes.FALLING_DUST, 
-					playerIn.posX + d0*2d, playerIn.posY + (double)playerIn.height * 0.6D + d2 * 2d, playerIn.posZ + d1*2d, 
+			((WorldServer)world).spawnParticle(EnumParticleTypes.FALLING_DUST, 
+					player.posX + d0*2d, player.posY + (double)player.height * 0.6D + d2 * 2d, player.posZ + d1*2d, 
 					40, variation, variation/2d, variation, 0, 
 					new int[] {Block.getStateId(Blocks.SAND.getDefaultState())});
 			
 			// blind entities in front 
 			// TODO test that this works properly on server w/ other players
-			AxisAlignedBB aabb = playerIn.getEntityBoundingBox().expandXyz(1);
-			aabb = aabb.offset(new BlockPos(playerIn.getLookVec().scale(2)));
-			List<Entity> entities = worldIn.getEntitiesWithinAABBExcludingEntity(playerIn, aabb);
+			AxisAlignedBB aabb = player.getEntityBoundingBox().expandXyz(1);
+			aabb = aabb.offset(new BlockPos(player.getLookVec().scale(2)));
+			List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(player, aabb);
 			for (Entity entity : entities)
 				if (entity instanceof EntityLivingBase)
 					((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 0, false, false));
 			
 			// play sound
-			worldIn.playSound(null, playerIn.getPosition(), SoundEvents.BLOCK_SAND_BREAK, SoundCategory.PLAYERS, 1.0f, 1.3f + worldIn.rand.nextFloat());
+			world.playSound(null, player.getPosition(), SoundEvents.BLOCK_SAND_BREAK, SoundCategory.PLAYERS, 1.0f, 1.3f + world.rand.nextFloat());
 		}
 		
-		playerIn.getCooldownTracker().setCooldown(this, 20);
-		return new ActionResult(EnumActionResult.SUCCESS, itemStackIn);
+		player.getCooldownTracker().setCooldown(this, 20);
+		return new ActionResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 	}
 }
