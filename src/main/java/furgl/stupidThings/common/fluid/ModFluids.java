@@ -40,7 +40,10 @@ public class ModFluids {
 			return null;
 		FluidRegistry.registerFluid(fluid);
 		FluidRegistry.addBucketForFluid(fluid);
-		StupidThings.tab.orderedStacks.add(1, UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, fluid));
+		if (StupidThings.tab.orderedStacks.size() > 1)
+			StupidThings.tab.orderedStacks.add(1, UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, fluid));
+		else
+			StupidThings.tab.orderedStacks.add(UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, fluid));
 		allFluids.add(fluid);
 		return fluid;
 	}
