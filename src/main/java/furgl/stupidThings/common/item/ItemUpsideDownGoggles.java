@@ -30,6 +30,7 @@ public class ItemUpsideDownGoggles extends ItemArmor implements ICustomTooltip {
 	}
 
 	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
 	public void fovEvent(EntityViewRenderEvent.FOVModifier event) {
 		if (event.getEntity() instanceof EntityLivingBase) {
 			ItemStack helm = ((EntityLivingBase) event.getEntity()).getItemStackFromSlot(EntityEquipmentSlot.HEAD);
