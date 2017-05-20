@@ -77,7 +77,7 @@ public class TooltipHelper {
 				for (int i=0; i<9; i++)
 					if (recipe[i] != null)
 						Minecraft.getMinecraft().getRenderItem().renderItemAndEffectIntoGUI(recipe[i], 
-								7+18*(i%3), 7+18*(i/3));
+								7+18*(i%3), 8+18*(i/3));
 
 				GlStateManager.popMatrix();
 			}

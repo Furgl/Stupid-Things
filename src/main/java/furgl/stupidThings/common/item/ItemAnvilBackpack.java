@@ -86,7 +86,7 @@ public class ItemAnvilBackpack extends ItemArmor implements ICustomTooltip {
 				player.motionY *= 1.3d;
 		//hurt entities while falling
 		if (!world.isRemote && player.fallDistance > 1) {
-			List<Entity> list = Lists.newArrayList(world.getEntitiesWithinAABBExcludingEntity(player, player.getEntityBoundingBox()));
+			List<Entity> list = Lists.newArrayList(world.getEntitiesWithinAABBExcludingEntity(player, player.getEntityBoundingBox().expandXyz(3)));
 
 			for (Entity entity : list) 
 				entity.attackEntityFrom(DamageSource.anvil, Math.min(player.fallDistance, 20));
