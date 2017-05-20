@@ -100,6 +100,6 @@ public class ItemAnvilBackpack extends ItemArmor implements ICustomTooltip {
 				event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.CHEST) != null &&
 				event.getEntityLiving().getItemStackFromSlot(EntityEquipmentSlot.CHEST).getItem() == this) 
 			event.getEntityLiving().world.playSound(null, event.getEntityLiving().getPosition(), SoundEvents.BLOCK_ANVIL_LAND, 
-					SoundCategory.PLAYERS, event.getDistance()/15f, event.getEntityLiving().world.rand.nextFloat());
+					SoundCategory.PLAYERS, event.getDistance()/30f, event.getEntityLiving().world.rand.nextFloat());
 	}
 }
