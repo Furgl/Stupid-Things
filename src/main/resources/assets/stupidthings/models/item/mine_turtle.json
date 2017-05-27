@@ -1,8 +1,8 @@
 {
-    "parent": "stupidthings:block/pet_rock",
+    "parent": "stupidthings:block/mine_turtle",
     "display": {
         "gui": {
-            "rotation": [ 30, 137, 0 ],
+            "rotation": [ 30, 315, 0 ],
             "translation": [ 0, 0, 0],
             "scale":[ 0.625, 0.625, 0.625 ]
         }

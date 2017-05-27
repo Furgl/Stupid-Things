@@ -22,6 +22,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -62,14 +63,37 @@ public class BlockCooler extends Block implements ICustomTooltip {
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		if (!worldIn.isRemote) {
 			Iterable<BlockPos> positionsToCheck = BlockPos.getAllInBox(pos.add(-RADIUS, -RADIUS/2, -RADIUS), pos.add(RADIUS, RADIUS/2, RADIUS));
+			boolean empty = true;
 			for (BlockPos pos2 : positionsToCheck) {
-				Block block = worldIn.getBlockState(pos2).getBlock();
-				if ((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && rand.nextInt(3) == 0 && worldIn.isAirBlock(pos2.up()) &&
+				IBlockState state2 = worldIn.getBlockState(pos2);
+				Block block = state2.getBlock();
+
+				if ((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && worldIn.isAirBlock(pos2.up()) &&
 						((Integer)worldIn.getBlockState(pos2).getValue(BlockLiquid.LEVEL)).intValue() == 0) 
-					worldIn.setBlockState(pos2, Blocks.ICE.getDefaultState());
-				else if (worldIn.isAirBlock(pos2) && Blocks.SNOW_LAYER.canPlaceBlockAt(worldIn, pos2) && rand.nextInt(5) == 0)
-					worldIn.setBlockState(pos2, Blocks.SNOW_LAYER.getDefaultState());
+					if (rand.nextInt(3) == 0) {
+						worldIn.setBlockState(pos2, Blocks.ICE.getDefaultState());
+						if (worldIn instanceof WorldServer) {
+							worldIn.playSound(Minecraft.getMinecraft().thePlayer, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
+									SoundCategory.BLOCKS, rand.nextFloat(), rand.nextFloat()+1.3f);
+							((WorldServer)worldIn).spawnParticle(EnumParticleTypes.SNOW_SHOVEL, pos2.getX()+0.5d, pos2.getY()+1.5d, pos2.getZ()+0.5d, 4, 0.4d, 0.4d, 0.4d, 0, new int[0]);
+						}
+					}
+					else 
+						empty = false;
+				else if (worldIn.isAirBlock(pos2) && Blocks.SNOW_LAYER.canPlaceBlockAt(worldIn, pos2))
+					if (rand.nextInt(5) == 0) {
+						worldIn.setBlockState(pos2, Blocks.SNOW_LAYER.getDefaultState());
+						if (worldIn instanceof WorldServer) {
+							worldIn.playSound(Minecraft.getMinecraft().thePlayer, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
+									SoundCategory.BLOCKS, rand.nextFloat(), rand.nextFloat()+1.3f);
+							((WorldServer)worldIn).spawnParticle(EnumParticleTypes.SNOW_SHOVEL, pos2.getX()+0.5d, pos2.getY()+0.5d, pos2.getZ()+0.5d, 4, 0.4d, 0.4d, 0.4d, 0, new int[0]);
+						}
+					}
+					else
+						empty = false;
 			}
+			if (!empty) // schedule new update if there are more valid positions to do
+				worldIn.scheduleUpdate(pos, this, 150);
 		}
 	}
 
