@@ -6,8 +6,12 @@ import java.util.List;
 import furgl.stupidThings.common.block.ModBlocks;
 import furgl.stupidThings.common.config.Config;
 import furgl.stupidThings.common.entity.ModEntities;
+import furgl.stupidThings.common.event.BlindnessClearTargetEvent;
 import furgl.stupidThings.common.fluid.ModFluids;
+import furgl.stupidThings.common.item.ItemImprovedHoe;
 import furgl.stupidThings.common.item.ModItems;
+import furgl.stupidThings.common.recipe.ShapedMatchingRecipe;
+import furgl.stupidThings.common.recipe.ShapelessMatchingRecipe;
 import furgl.stupidThings.common.sound.ModSoundEvents;
 import furgl.stupidThings.common.tileentity.ModTileEntities;
 import net.minecraft.block.BlockTallGrass.EnumType;
@@ -27,6 +31,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.RecipeSorter;
+import net.minecraftforge.oredict.RecipeSorter.Category;
 
 public class CommonProxy {
 
@@ -56,9 +62,13 @@ public class CommonProxy {
 
 	protected void registerEventListeners() {
 		MinecraftForge.EVENT_BUS.register(new Config());
+		MinecraftForge.EVENT_BUS.register(new BlindnessClearTargetEvent());
 	}
 
 	private void registerRecipes() {
+		RecipeSorter.register("Matching Damage/Enchants Shapeless Recipe", ShapelessMatchingRecipe.class, Category.SHAPELESS, "");
+		RecipeSorter.register("Matching Damage/Enchants Shaped Recipe", ShapedMatchingRecipe.class, Category.SHAPED, "");
+
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemCatalog), new ItemStack(Items.BOOK), new ItemStack(Blocks.DIRT));
 		if (ModBlocks.reverseTnt != null)
 			GameRegistry.addShapelessRecipe(new ItemStack(ModBlocks.reverseTnt), new ItemStack(Blocks.TNT), new ItemStack(Items.ENDER_PEARL));
@@ -106,16 +116,32 @@ public class CommonProxy {
 		if (ModItems.targetChestplate != null)
 			for (ItemStack redDye : OreDictionary.getOres("dyeRed")) 
 				for (ItemStack whiteDye : OreDictionary.getOres("dyeWhite"))
-					GameRegistry.addShapelessRecipe(new ItemStack(ModItems.targetChestplate), redDye, new ItemStack(Items.LEATHER_CHESTPLATE), whiteDye);
+					GameRegistry.addRecipe(new ShapelessMatchingRecipe(new ItemStack(ModItems.targetChestplate), redDye, new ItemStack(Items.IRON_CHESTPLATE, 1, OreDictionary.WILDCARD_VALUE), whiteDye));
 		if (ModItems.rubberChicken != null)
 			for (ItemStack rubber : OreDictionary.getOres("itemRubber")) 
 				GameRegistry.addRecipe(new ItemStack(ModItems.rubberChicken), " A ", "ABA", " A ", 'A', rubber, 'B', new ItemStack(Items.CHICKEN));
 		if (ModItems.propellerHat != null) 
-			GameRegistry.addRecipe(new ItemStack(ModItems.propellerHat), "FRF", "YLG", "FBF", 'F', new ItemStack(Items.FEATHER), 'L', new ItemStack(Items.LEATHER_HELMET), 'R', new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage()), 'G', new ItemStack(Items.DYE, 1, EnumDyeColor.GREEN.getDyeDamage()), 'B', new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()), 'Y', new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage()));
+			GameRegistry.addRecipe(new ShapedMatchingRecipe(3, 3, new ItemStack[] {new ItemStack(Items.FEATHER), new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage()), new ItemStack(Items.FEATHER), new ItemStack(Items.DYE, 1, EnumDyeColor.YELLOW.getDyeDamage()), new ItemStack(Items.LEATHER_HELMET, 1, OreDictionary.WILDCARD_VALUE), new ItemStack(Items.DYE, 1, EnumDyeColor.GREEN.getDyeDamage()), new ItemStack(Items.FEATHER), new ItemStack(Items.DYE, 1, EnumDyeColor.BLUE.getDyeDamage()), new ItemStack(Items.FEATHER)}, new ItemStack(ModItems.propellerHat)));
 		if (ModItems.pocketSand != null)
 			GameRegistry.addRecipe(new ItemStack(ModItems.pocketSand), " T ", "LSL", " L ", 'L', new ItemStack(Items.LEATHER), 'S', new ItemStack(Blocks.SAND), 'T', new ItemStack(Items.STRING));
 		if (ModItems.upsideDownGoggles != null)
 			GameRegistry.addRecipe(new ItemStack(ModItems.upsideDownGoggles), "III", "I I", "GRG", 'I', new ItemStack(Items.IRON_INGOT), 'G', new ItemStack(Blocks.GLASS), 'R', new ItemStack(Items.REDSTONE));
+		if (ModItems.invisibleHelmet != null) {
+			ItemStack g = new ItemStack(Blocks.GLASS);
+			GameRegistry.addRecipe(new ShapedMatchingRecipe(3, 3, new ItemStack[] {g,g,g, g,new ItemStack(Items.IRON_HELMET, 1, OreDictionary.WILDCARD_VALUE),g, g,g,g}, new ItemStack(ModItems.invisibleHelmet)));
+			GameRegistry.addRecipe(new ShapedMatchingRecipe(3, 3, new ItemStack[] {g,g,g, g,new ItemStack(Items.IRON_CHESTPLATE, 1, OreDictionary.WILDCARD_VALUE),g, g,g,g}, new ItemStack(ModItems.invisibleChestplate)));
+			GameRegistry.addRecipe(new ShapedMatchingRecipe(3, 3, new ItemStack[] {g,g,g, g,new ItemStack(Items.IRON_LEGGINGS, 1, OreDictionary.WILDCARD_VALUE),g, g,g,g}, new ItemStack(ModItems.invisibleLeggings)));
+			GameRegistry.addRecipe(new ShapedMatchingRecipe(3, 3, new ItemStack[] {g,g,g, g,new ItemStack(Items.IRON_BOOTS, 1, OreDictionary.WILDCARD_VALUE),g, g,g,g}, new ItemStack(ModItems.invisibleBoots)));
+		}
+		if (ModBlocks.mineTurtle != null) 
+			GameRegistry.addRecipe(new ItemStack(ModBlocks.mineTurtle), "WPW", "WTW", "WWW", 'W', new ItemStack(Blocks.WOOL, 1, EnumDyeColor.GREEN.getMetadata()), 'P', new ItemStack(Blocks.STONE_PRESSURE_PLATE), 'T', new ItemStack(Blocks.TNT));
+		if (ModBlocks.gravityAccelerator != null)
+			GameRegistry.addRecipe(new ItemStack(ModBlocks.gravityAccelerator), "IOI", "OEO", "IOI", 'I', new ItemStack(Items.IRON_INGOT), 'O', new ItemStack(Blocks.OBSIDIAN), 'E', new ItemStack(Items.ENDER_EYE));
+		if (ModItems.improvedWoodHoe != null)
+			for (Item improvedHoe : new Item[] {ModItems.improvedWoodHoe, ModItems.improvedStoneHoe, ModItems.improvedIronHoe, ModItems.improvedGoldHoe, ModItems.improvedDiamondHoe})
+				GameRegistry.addShapelessRecipe(new ItemStack(improvedHoe), ((ItemImprovedHoe)improvedHoe).hoe, ((ItemImprovedHoe)improvedHoe).hoe, ((ItemImprovedHoe)improvedHoe).hoe, new ItemStack(Items.STRING));
+		if (ModItems.firingCan != null)
+			GameRegistry.addRecipe(new ItemStack(ModItems.firingCan), "I  ", "ILI", " I ", 'I', new ItemStack(Items.IRON_INGOT), 'L', new ItemStack(Items.LAVA_BUCKET.setContainerItem(Items.BUCKET)));
 	}
 
 	public Object getArmorModel(Item item, EntityLivingBase entity) {

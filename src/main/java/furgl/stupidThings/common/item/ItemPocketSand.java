@@ -31,6 +31,7 @@ public class ItemPocketSand extends Item implements ICustomTooltip {
 
 	public ItemPocketSand() {
 		super();
+		this.setMaxStackSize(1);
 	}
 
 	@Override
@@ -47,7 +48,7 @@ public class ItemPocketSand extends Item implements ICustomTooltip {
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
 		if (player.worldObj.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.GOLD+"Right click to throw", TextFormatting.GOLD+"Blinds nearby enemies"}, new String[0]);
+					new String[] {TextFormatting.GOLD+"Right click to throw", TextFormatting.GOLD+"Blinds nearby enemies", "", TextFormatting.GRAY+"(King of the Hill reference)"}, new String[0]);
 	}
 
 	@Override
@@ -69,13 +70,14 @@ public class ItemPocketSand extends Item implements ICustomTooltip {
 					new int[] {Block.getStateId(Blocks.SAND.getDefaultState())});
 			
 			// blind entities in front 
-			// TODO test that this works properly on server w/ other players
-			AxisAlignedBB aabb = playerIn.getEntityBoundingBox().expandXyz(1);
+			AxisAlignedBB aabb = playerIn.getEntityBoundingBox().expandXyz(3);
 			aabb = aabb.offset(new BlockPos(playerIn.getLookVec().scale(2)));
 			List<Entity> entities = worldIn.getEntitiesWithinAABBExcludingEntity(playerIn, aabb);
 			for (Entity entity : entities)
-				if (entity instanceof EntityLivingBase)
-					((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 0, false, false));
+				if (entity instanceof EntityLivingBase) {
+					((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 0, false, true));
+					((EntityLivingBase)entity).setRevengeTarget(null);
+				}
 			
 			// play sound
 			worldIn.playSound(null, playerIn.getPosition(), SoundEvents.BLOCK_SAND_BREAK, SoundCategory.PLAYERS, 1.0f, 1.3f + worldIn.rand.nextFloat());

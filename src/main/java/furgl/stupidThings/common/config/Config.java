@@ -25,6 +25,10 @@ public class Config {
 	
 	/**Check in config for this name to see if it's enabled - also populates config*/
 	public static boolean isNameEnabled(String name) {
+		if (name.contains("Invisible"))
+			name = "Invisible Armor";
+		else if (name.contains("Improved"))
+			name = "Improved Hoes";
 		Property prop = config.get(Configuration.CATEGORY_GENERAL, name, true, "Should this be enabled?");
 		prop.setRequiresMcRestart(true);
 		config.save();

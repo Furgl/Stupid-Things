@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "facing=north": { "model": "stupidthings:mine_turtle" },
+        "facing=up": { "model": "stupidthings:mine_turtle" },
+        "facing=down": { "model": "stupidthings:mine_turtle" },
+        "facing=south": { "model": "stupidthings:mine_turtle", "y": 180 },
+        "facing=west":  { "model": "stupidthings:mine_turtle", "y": 270 },
+        "facing=east":  { "model": "stupidthings:mine_turtle", "y": 90 }
+    }
+}

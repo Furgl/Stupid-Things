@@ -15,13 +15,25 @@ item.rubber_chicken.name=Rubber Chicken
 item.propeller_hat.name=Propeller Hat
 item.pocket_sand.name=Pocket Sand
 item.upside_down_goggles.name=Upside Down Goggles
+item.invisible_helmet.name=Invisible Helmet
+item.invisible_chestplate.name=Invisible Chestplate
+item.invisible_leggings.name=Invisible Leggings
+item.invisible_boots.name=Invisible Boots
+item.improved_wood_hoe.name=Improved Wooden Hoe
+item.improved_stone_hoe.name=Improved Stone Hoe
+item.improved_iron_hoe.name=Improved Iron Hoe
+item.improved_gold_hoe.name=Improved Golden Hoe
+item.improved_diamond_hoe.name=Improved Diamond Hoe
+item.firing_can.name=Firing Can
 
 tile.reverse_tnt.name=Reverse TNT
 tile.rail_explosive.name=Explosive Rail
 tile.acid.name=Acid
 tile.heater.name=Heater
 tile.cooler.name=Cooler
+tile.gravity_accelerator.name=Gravity Accelerator
 tile.pet_rock.name=Pet Rock
+tile.mine_turtle.name=Mine Turtle
 
 entity.stupidthings.reverseTntPrimed.name=Reverse TNT
 entity.stupidthings.balloon.name=Balloon

@@ -41,7 +41,7 @@ public class ItemRubberChicken extends Item implements ICustomTooltip {
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
 		if (player.worldObj.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.GOLD+"The perfect weapon!"}, new String[0]);
+					new String[] {TextFormatting.GOLD+"Squeak"}, new String[0]);
 	}
 
 	@Override

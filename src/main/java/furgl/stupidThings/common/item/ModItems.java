@@ -6,7 +6,9 @@ import furgl.stupidThings.common.StupidThings;
 import furgl.stupidThings.common.config.Config;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
@@ -30,6 +32,16 @@ public class ModItems {
 	public static Item propellerHat;
 	public static Item pocketSand;
 	public static Item upsideDownGoggles;
+	public static Item invisibleHelmet;
+	public static Item invisibleChestplate;
+	public static Item invisibleLeggings;
+	public static Item invisibleBoots;
+	public static Item improvedWoodHoe;
+	public static Item improvedStoneHoe;
+	public static Item improvedIronHoe;
+	public static Item improvedGoldHoe;
+	public static Item improvedDiamondHoe;
+	public static Item firingCan;
 
 	public static void preInit() {		
 		allItems = new ArrayList<Item>();
@@ -45,7 +57,17 @@ public class ModItems {
 		propellerHat = registerItem(new ItemPropellerHat(), "propeller_hat", true, true);
 		pocketSand = registerItem(new ItemPocketSand(), "pocket_sand", true, true);
 		upsideDownGoggles = registerItem(new ItemUpsideDownGoggles(), "upside_down_goggles", true, true);
-		
+		invisibleHelmet = registerItem(new ItemInvisibleArmor(EntityEquipmentSlot.HEAD), "invisible_helmet", true, true);
+		invisibleChestplate = registerItem(new ItemInvisibleArmor(EntityEquipmentSlot.CHEST), "invisible_chestplate", true, true);
+		invisibleLeggings = registerItem(new ItemInvisibleArmor(EntityEquipmentSlot.LEGS), "invisible_leggings", true, true);
+		invisibleBoots = registerItem(new ItemInvisibleArmor(EntityEquipmentSlot.FEET), "invisible_boots", true, true);
+		improvedWoodHoe = registerItem(new ItemImprovedHoe(ToolMaterial.WOOD), "improved_wood_hoe", true, true);
+		improvedStoneHoe = registerItem(new ItemImprovedHoe(ToolMaterial.STONE), "improved_stone_hoe", true, true);
+		improvedIronHoe = registerItem(new ItemImprovedHoe(ToolMaterial.IRON), "improved_iron_hoe", true, true);
+		improvedGoldHoe = registerItem(new ItemImprovedHoe(ToolMaterial.GOLD), "improved_gold_hoe", true, true);
+		improvedDiamondHoe = registerItem(new ItemImprovedHoe(ToolMaterial.DIAMOND), "improved_diamond_hoe", true, true);
+		firingCan = registerItem(new ItemFiringCan(), "firing_can", true, true);
+
 		smokeBomb = registerItem(new ItemSmokeBomb(), "smoke_bomb", true, true);
 		balloonDeflated = registerItem(new ItemBalloonDeflated(), "balloon_deflated", true, true);
 		balloon = registerItem(new ItemBalloon(), "balloon", true, true);

@@ -1,0 +1,8 @@
+{
+    "parent": "block/cube_bottom_top",
+    "textures": {
+        "bottom": "stupidthings:blocks/gravity_accelerator_bottom",
+        "top": "stupidthings:blocks/gravity_accelerator_top",
+        "side": "stupidthings:blocks/gravity_accelerator_side"
+    }
+}

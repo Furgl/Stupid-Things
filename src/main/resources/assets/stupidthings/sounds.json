@@ -22,5 +22,13 @@
         [
             "stupidthings:rubber_chicken"
         ]
+    },
+   		"mine_turtle":
+    {
+    	"category": "block",
+    	"sounds":
+    	[
+    		"stupidthings:mine_turtle"
+    	]
     }
 }
