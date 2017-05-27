@@ -19,14 +19,14 @@ import net.minecraft.world.World;
 public class ItemTargetChestplate extends ItemArmor implements ICustomTooltip {
 
 	public ItemTargetChestplate() {
-		super(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.CHEST);
+		super(ArmorMaterial.IRON, 0, EntityEquipmentSlot.CHEST);
 	}
 
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
 		return new ItemStack[] {null, null, null, 
 				new ItemStack(Items.DYE, 1, EnumDyeColor.RED.getDyeDamage()), 
-				new ItemStack(Items.LEATHER_CHESTPLATE), 
+				new ItemStack(Items.IRON_CHESTPLATE), 
 				new ItemStack(Items.DYE, 1, EnumDyeColor.WHITE.getDyeDamage()), 
 				null, null, null};
 	}

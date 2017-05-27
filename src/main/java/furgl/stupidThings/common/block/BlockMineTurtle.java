@@ -1,7 +1,12 @@
 package furgl.stupidThings.common.block;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import com.google.common.collect.Maps;
+
+import furgl.stupidThings.common.sound.ModSoundEvents;
 import furgl.stupidThings.util.ICustomTooltip;
 import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.block.BlockDirectional;
@@ -10,55 +15,82 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
+import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
 
-public class BlockPetRock extends BlockDirectional implements ICustomTooltip {
+public class BlockMineTurtle extends BlockDirectional implements ICustomTooltip {
 
-	private static final AxisAlignedBB AABB = new AxisAlignedBB(0.1d, 0, 0, 0.95d, 0.75d, 1);
+	private static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.6d, 1);
+	private static HashMap<BlockPos, Integer> activeTurtles = Maps.newHashMap();
 
-	protected BlockPetRock() {
-		super(Material.ROCK);
+	protected BlockMineTurtle() {
+		super(Material.CLOTH);
 		this.setHardness(1.5F);
 		this.setResistance(10.0f);
-		this.setSoundType(SoundType.STONE);
+		this.setSoundType(SoundType.CLOTH);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-		
-		//MinecraftForge.EVENT_BUS.register(this); //TODO remove
+		MinecraftForge.EVENT_BUS.register(this);
 	}
 	
+	@Override
+    public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
+    	if (!worldIn.isRemote && !activeTurtles.containsKey(pos)) {
+    		activeTurtles.put(pos, 50);
+    		worldIn.playSound(null, pos, ModSoundEvents.mineTurtle, SoundCategory.BLOCKS, 1.0F, 0.9F+worldIn.rand.nextFloat()/2f);
+    	}
+    }
+	
 	@SubscribeEvent
-	public void onEvent(BlockEvent.NeighborNotifyEvent event) {
-		/*if (!event.getWorld().isRemote) 
-			event.setCanceled(true);*/
+	public void onEvent(WorldTickEvent event) {
+		if (!activeTurtles.isEmpty() && event.phase == Phase.START && !event.world.isRemote) {
+			ArrayList<BlockPos> posToRemove = new ArrayList<BlockPos>();
+			
+			for (BlockPos pos : activeTurtles.keySet()) {
+				// if timer up, delete mine turtle and explode
+				if (activeTurtles.get(pos) - 1 <= 0 && event.world.getBlockState(pos).getBlock() == this) {
+					posToRemove.add(pos);
+					event.world.setBlockToAir(pos);
+					event.world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 4.0F, true);
+				}
+				else 
+					activeTurtles.put(pos, activeTurtles.get(pos) - 1);
+			}
+			
+			for (BlockPos pos : posToRemove)
+				activeTurtles.remove(pos);
+		}
 	}
 
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
-		return new ItemStack[] {null, null, null, 
-				new ItemStack(Items.DYE, 1, EnumDyeColor.BLACK.getDyeDamage()), new ItemStack(Blocks.STONE), null,
-				null, null, null};
+		ItemStack wool = new ItemStack(Blocks.WOOL, 1, EnumDyeColor.GREEN.getMetadata());
+		return new ItemStack[] {wool, new ItemStack(Blocks.STONE_PRESSURE_PLATE), wool, 
+				wool, new ItemStack(Blocks.TNT), wool,
+				wool, wool, wool};
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
 		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.GRAY+"Not good at playing fetch"}, new String[0]);
+					new String[] {TextFormatting.GREEN+"Hello!", "", TextFormatting.GRAY+"(asdfmovie reference)"}, new String[0]);
 	}
 	
 	@Override
@@ -78,12 +110,12 @@ public class BlockPetRock extends BlockDirectional implements ICustomTooltip {
 
 	@Override
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing());
 	}
 
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
-		worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
+		worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing()), 2);
 	}
 	
 	@Override

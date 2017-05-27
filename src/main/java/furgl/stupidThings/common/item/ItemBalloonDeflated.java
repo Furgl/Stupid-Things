@@ -55,13 +55,13 @@ public class ItemBalloonDeflated extends ItemBalloon {
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity) {
 		if (!world.isRemote) {
-			stack.shrink(1);
-
 			if (ModItems.balloon != null) {
 				ItemStack balloon = new ItemStack(ModItems.balloon, 1, stack.getMetadata());
 				if (!(entity instanceof EntityPlayer) || !((EntityPlayer)entity).inventory.addItemStackToInventory(balloon))
 					entity.entityDropItem(balloon, 0);
 			}
+			
+			stack.shrink(1);
 		}
 
 		return stack;

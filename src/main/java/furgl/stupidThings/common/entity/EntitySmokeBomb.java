@@ -108,7 +108,7 @@ public class EntitySmokeBomb extends EntityThrowable {
 			List<Entity> list = this.world.getEntitiesInAABBexcluding(this, this.getEntityBoundingBox().expandXyz(radius), EntitySelectors.<Entity>getTeamCollisionPredicate(this));
 			for (Entity entity : list)
 				if (entity instanceof EntityLivingBase)
-					((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 0, true, false));
+					((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 0, true, true));
 		}
 	}
 }

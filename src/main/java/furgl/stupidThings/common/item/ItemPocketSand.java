@@ -31,6 +31,7 @@ public class ItemPocketSand extends Item implements ICustomTooltip {
 
 	public ItemPocketSand() {
 		super();
+		this.setMaxStackSize(1);
 	}
 
 	@Override
@@ -47,7 +48,7 @@ public class ItemPocketSand extends Item implements ICustomTooltip {
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
 		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.GOLD+"Right click to throw", TextFormatting.GOLD+"Blinds nearby enemies"}, new String[0]);
+					new String[] {TextFormatting.GOLD+"Right click to throw", TextFormatting.GOLD+"Blinds nearby enemies", "", TextFormatting.GRAY+"(King of the Hill reference)"}, new String[0]);
 	}
 
 	@Override
@@ -75,7 +76,7 @@ public class ItemPocketSand extends Item implements ICustomTooltip {
 			List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(player, aabb);
 			for (Entity entity : entities)
 				if (entity instanceof EntityLivingBase)
-					((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 0, false, false));
+					((EntityLivingBase)entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 0, false, true));
 			
 			// play sound
 			world.playSound(null, player.getPosition(), SoundEvents.BLOCK_SAND_BREAK, SoundCategory.PLAYERS, 1.0f, 1.3f + world.rand.nextFloat());

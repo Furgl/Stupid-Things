@@ -6,12 +6,13 @@ import java.util.Random;
 import furgl.stupidThings.util.ICustomTooltip;
 import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.BlockFalling;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -26,11 +27,11 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class BlockCooler extends Block implements ICustomTooltip {
+public class BlockGravityAccelerator extends Block implements ICustomTooltip {
 
 	private static final int RADIUS = 10;
 
-	protected BlockCooler() {
+	protected BlockGravityAccelerator() {
 		super(Material.IRON);
 		this.setHardness(3.5F);
 		this.setSoundType(SoundType.STONE);
@@ -40,17 +41,17 @@ public class BlockCooler extends Block implements ICustomTooltip {
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
 		ItemStack iron = new ItemStack(Items.IRON_INGOT);
-		ItemStack snow = new ItemStack(Blocks.SNOW);
-		return new ItemStack[] {iron, snow, iron, 
-				snow, new ItemStack(Blocks.ICE), snow,
-				iron, new ItemStack(Blocks.IRON_BARS), iron};
+		ItemStack obsidian = new ItemStack(Blocks.OBSIDIAN);
+		return new ItemStack[] {iron, obsidian, iron, 
+				obsidian, new ItemStack(Items.ENDER_EYE), obsidian,
+				iron, obsidian, iron};
 	}
 
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
 		if (player.world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.AQUA+"Freezes nearby water and spawns snow"}, new String[0]);
+					new String[] {TextFormatting.DARK_GRAY+"Increases gravity for nearby blocks and causes them to fall"}, new String[0]);
 	}
 
 	@Override
@@ -59,6 +60,7 @@ public class BlockCooler extends Block implements ICustomTooltip {
 			worldIn.scheduleUpdate(pos, this, 100);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		if (!worldIn.isRemote) {
@@ -67,30 +69,21 @@ public class BlockCooler extends Block implements ICustomTooltip {
 			for (BlockPos pos2 : positionsToCheck) {
 				IBlockState state2 = worldIn.getBlockState(pos2);
 				Block block = state2.getBlock();
-
-				if ((block == Blocks.WATER || block == Blocks.FLOWING_WATER) && worldIn.isAirBlock(pos2.up()) &&
-						((Integer)worldIn.getBlockState(pos2).getValue(BlockLiquid.LEVEL)).intValue() == 0) 
+				
+				if (worldIn.isAirBlock(pos2.down()) && BlockFalling.canFallThrough(worldIn.getBlockState(pos2.down())) && pos2.getY() >= 0 &&
+						!worldIn.isAirBlock(pos2) && !pos2.equals(pos) && block.getBlockHardness(state2, worldIn, pos2) > 0) {
 					if (rand.nextInt(3) == 0) {
-						worldIn.setBlockState(pos2, Blocks.ICE.getDefaultState());
+						EntityFallingBlock fallingEntity = new EntityFallingBlock(worldIn, (double)((float)pos2.getX() + 0.5F), (double)pos2.getY(), (double)((float)pos2.getZ() + 0.5F), state2);
+						worldIn.spawnEntity(fallingEntity);
 						if (worldIn instanceof WorldServer) {
-							worldIn.playSound(Minecraft.getMinecraft().player, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
-									SoundCategory.BLOCKS, rand.nextFloat(), rand.nextFloat()+1.3f);
-							((WorldServer)worldIn).spawnParticle(EnumParticleTypes.SNOW_SHOVEL, pos2.getX()+0.5d, pos2.getY()+1.5d, pos2.getZ()+0.5d, 4, 0.4d, 0.4d, 0.4d, 0, new int[0]);
-						}
-					}
-					else 
-						empty = false;
-				else if (worldIn.isAirBlock(pos2) && Blocks.SNOW_LAYER.canPlaceBlockAt(worldIn, pos2))
-					if (rand.nextInt(5) == 0) {
-						worldIn.setBlockState(pos2, Blocks.SNOW_LAYER.getDefaultState());
-						if (worldIn instanceof WorldServer) {
-							worldIn.playSound(Minecraft.getMinecraft().player, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
-									SoundCategory.BLOCKS, rand.nextFloat(), rand.nextFloat()+1.3f);
-							((WorldServer)worldIn).spawnParticle(EnumParticleTypes.SNOW_SHOVEL, pos2.getX()+0.5d, pos2.getY()+0.5d, pos2.getZ()+0.5d, 4, 0.4d, 0.4d, 0.4d, 0, new int[0]);
+							worldIn.playSound(Minecraft.getMinecraft().player, pos, SoundEvents.BLOCK_METAL_BREAK, 
+									SoundCategory.BLOCKS, rand.nextFloat(), rand.nextFloat()+0.3f);
+							((WorldServer)worldIn).spawnParticle(EnumParticleTypes.FALLING_DUST, pos2.getX()+0.5d, pos2.getY()+0.5d, pos2.getZ()+0.5d, 4, 0.4d, 0.4d, 0.4d, 0, new int[] {Block.getStateId(state2)});
 						}
 					}
 					else
 						empty = false;
+				}
 			}
 			if (!empty) // schedule new update if there are more valid positions to do
 				worldIn.scheduleUpdate(pos, this, 150);
@@ -100,12 +93,12 @@ public class BlockCooler extends Block implements ICustomTooltip {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
-		world.spawnParticle(EnumParticleTypes.SNOW_SHOVEL, 
+		world.spawnParticle(EnumParticleTypes.SUSPENDED, 
 				pos.getX()+rand.nextDouble(), pos.getY()+0.5d, pos.getZ()+rand.nextDouble(), 
 				(rand.nextDouble()-0.5d)/3d, (rand.nextDouble()-0.5d)/3d, (rand.nextDouble()-0.5d)/3d, new int[0]);
 		if (rand.nextInt(5) == 0)
 			for (int i=0; i<3; i++)
-				world.playSound(Minecraft.getMinecraft().player, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
-						SoundCategory.BLOCKS, rand.nextFloat()+1.3f, rand.nextFloat()+1.3f);
+				world.playSound(Minecraft.getMinecraft().player, pos, SoundEvents.ENTITY_ELDER_GUARDIAN_AMBIENT, 
+						SoundCategory.BLOCKS, rand.nextFloat()/2f, rand.nextFloat()+0.3f);
 	}
 }

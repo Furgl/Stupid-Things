@@ -43,7 +43,7 @@ public class ItemBalloon extends Item implements ICustomTooltip {
 							COLORS[stack.getMetadata()]+"Right click the balloon with a lead to attach it",
 							"",
 							COLORS[stack.getMetadata()]+"While the balloon is attached to a lead:",
-							COLORS[stack.getMetadata()]+"- holding it will pull you up",
+							COLORS[stack.getMetadata()]+"- holding multiple balloons will pull you up",
 							COLORS[stack.getMetadata()]+"- sneak to slowly float down again",
 							COLORS[stack.getMetadata()]+"- right click a fence to attach the balloon to it",
 							COLORS[stack.getMetadata()]+"- right click the balloon to detach the lead"}, 
