@@ -24,6 +24,7 @@ import furgl.stupidThings.common.entity.EntitySmokeBomb;
 import furgl.stupidThings.common.fluid.ModFluids;
 import furgl.stupidThings.common.item.ItemCatalog;
 import furgl.stupidThings.common.item.ModItems;
+import furgl.stupidThings.common.sound.SoundWorldsSmallestViolin;
 import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -35,6 +36,7 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -173,5 +175,10 @@ public class ClientProxy extends CommonProxy
 	@Override
 	public void openCatalogGui() { 
 		Minecraft.getMinecraft().displayGuiScreen(new GuiItemCatalog());
+	}
+	
+	@Override
+	public void playWorldsSmallestViolinSound(EntityPlayer player) {
+		Minecraft.getMinecraft().getSoundHandler().playSound(new SoundWorldsSmallestViolin(player));
 	}
 }

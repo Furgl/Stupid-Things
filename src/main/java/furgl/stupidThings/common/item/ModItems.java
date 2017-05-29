@@ -42,6 +42,8 @@ public class ModItems {
 	public static Item improvedGoldHoe;
 	public static Item improvedDiamondHoe;
 	public static Item firingCan;
+	public static Item cactusSword;
+	public static Item worldsSmallestViolin;
 
 	public static void preInit() {		
 		allItems = new ArrayList<Item>();
@@ -67,6 +69,8 @@ public class ModItems {
 		improvedGoldHoe = registerItem(new ItemImprovedHoe(ToolMaterial.GOLD), "improved_gold_hoe", true, true);
 		improvedDiamondHoe = registerItem(new ItemImprovedHoe(ToolMaterial.DIAMOND), "improved_diamond_hoe", true, true);
 		firingCan = registerItem(new ItemFiringCan(), "firing_can", true, true);
+		cactusSword = registerItem(new ItemCactusSword(), "cactus_sword", true, true);
+		worldsSmallestViolin = registerItem(new ItemWorldsSmallestViolin(), "worlds_smallest_violin", true, true);
 
 		smokeBomb = registerItem(new ItemSmokeBomb(), "smoke_bomb", true, true);
 		balloonDeflated = registerItem(new ItemBalloonDeflated(), "balloon_deflated", true, true);
