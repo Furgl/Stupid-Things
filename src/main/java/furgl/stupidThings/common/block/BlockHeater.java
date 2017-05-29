@@ -71,7 +71,7 @@ public class BlockHeater extends Block implements ICustomTooltip {
 						worldIn.setBlockState(pos2, Blocks.WATER.getDefaultState());
 						worldIn.notifyBlockOfStateChange(pos, Blocks.WATER);
 						if (worldIn instanceof WorldServer) {
-							worldIn.playSound(Minecraft.getMinecraft().thePlayer, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
+							worldIn.playSound(null, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
 									SoundCategory.BLOCKS, rand.nextFloat()/3f, rand.nextFloat());
 							((WorldServer)worldIn).spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos2.getX()+0.5d, pos2.getY()+0.5d, pos2.getZ()+0.5d, 4, 0.4d, 0.4d, 0.4d, 0, new int[0]);
 						}
@@ -82,7 +82,7 @@ public class BlockHeater extends Block implements ICustomTooltip {
 					if (rand.nextInt(3) == 0) {
 						worldIn.setBlockToAir(pos2);
 						if (worldIn instanceof WorldServer) {
-							worldIn.playSound(Minecraft.getMinecraft().thePlayer, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
+							worldIn.playSound(null, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
 									SoundCategory.BLOCKS, rand.nextFloat()/3f, rand.nextFloat());
 							((WorldServer)worldIn).spawnParticle(EnumParticleTypes.SMOKE_NORMAL, pos2.getX()+0.5d, pos2.getY()+0.5d, pos2.getZ()+0.5d, 4, 0.4d, 0.4d, 0.4d, 0, new int[0]);
 						}

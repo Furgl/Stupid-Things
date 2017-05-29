@@ -12,6 +12,7 @@ public class BlindnessClearTargetEvent {
 		if (!event.getEntity().worldObj.isRemote && event.getEntity() instanceof EntityLiving && 
 				event.getEntityLiving().getActivePotionEffect(MobEffects.BLINDNESS) != null &&
 				event.getEntityLiving().getActivePotionEffect(MobEffects.BLINDNESS).getDuration() > 0 &&
+				event.getEntityLiving().isNonBoss() &&
 				((EntityLiving)event.getEntity()).getAttackTarget() != null)
 			((EntityLiving)event.getEntity()).setAttackTarget(null);
 	}

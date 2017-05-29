@@ -1,0 +1,6 @@
+{
+    "parent": "stupidthings:item/worlds_smallest_violin",
+    "textures": {
+        "layer0": "stupidthings:items/worlds_smallest_violin_2"
+    }
+}

@@ -53,7 +53,7 @@ public class GuiItemCatalog extends GuiScreen {
 			int row = i / itemsPerRow;
 			int spaceBetween = 335/(Math.min(StupidThings.tab.orderedStacks.size(), itemsPerRow));
 			int xPos = -89 + i*spaceBetween-row*itemsPerRow*spaceBetween;
-			int yPos = -20 + row*(spaceBetween+3);
+			int yPos = -28 + row*(spaceBetween+3);
 			RenderHelper.enableGUIStandardItemLighting();
 			this.itemRender.renderItemAndEffectIntoGUI(StupidThings.tab.orderedStacks.get(i), xPos, yPos);
 		}
@@ -62,7 +62,7 @@ public class GuiItemCatalog extends GuiScreen {
 			int row = i / itemsPerRow;
 			int spaceBetween = 335/(Math.min(StupidThings.tab.orderedStacks.size(), itemsPerRow));
 			int xPos = -89 + i*spaceBetween-row*itemsPerRow*spaceBetween;
-			int yPos = -20 + row*(spaceBetween+3);
+			int yPos = -28 + row*(spaceBetween+3);
 			int mX = (int) ((mouseX-w));
 			int mY = (int) ((mouseY-h));
 			if (mX >= xPos && mY >= yPos && mX < xPos + 16 && mY < yPos + 16) {

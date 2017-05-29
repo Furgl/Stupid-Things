@@ -25,6 +25,8 @@ item.improved_iron_hoe.name=Improved Iron Hoe
 item.improved_gold_hoe.name=Improved Golden Hoe
 item.improved_diamond_hoe.name=Improved Diamond Hoe
 item.firing_can.name=Firing Can
+item.cactus_sword.name=Cactus Sword
+item.worlds_smallest_violin.name=World's Smallest Violin
 
 tile.reverse_tnt.name=Reverse TNT
 tile.rail_explosive.name=Explosive Rail

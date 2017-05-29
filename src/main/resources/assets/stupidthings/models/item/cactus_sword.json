@@ -1,0 +1,6 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "stupidthings:items/cactus_sword"
+    }
+}

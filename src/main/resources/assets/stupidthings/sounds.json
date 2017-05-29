@@ -30,5 +30,16 @@
     	[
     		"stupidthings:mine_turtle"
     	]
+    },
+   		"worlds_smallest_violin":
+    {
+    	"category": "player",
+    	"sounds":
+    	[
+          {
+            "name": "stupidthings:worlds_smallest_violin",
+            "stream": true 
+          }
+    	]
     }
 }

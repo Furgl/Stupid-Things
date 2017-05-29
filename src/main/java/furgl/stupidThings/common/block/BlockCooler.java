@@ -73,7 +73,7 @@ public class BlockCooler extends Block implements ICustomTooltip {
 					if (rand.nextInt(3) == 0) {
 						worldIn.setBlockState(pos2, Blocks.ICE.getDefaultState());
 						if (worldIn instanceof WorldServer) {
-							worldIn.playSound(Minecraft.getMinecraft().thePlayer, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
+							worldIn.playSound(null, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
 									SoundCategory.BLOCKS, rand.nextFloat(), rand.nextFloat()+1.3f);
 							((WorldServer)worldIn).spawnParticle(EnumParticleTypes.SNOW_SHOVEL, pos2.getX()+0.5d, pos2.getY()+1.5d, pos2.getZ()+0.5d, 4, 0.4d, 0.4d, 0.4d, 0, new int[0]);
 						}
@@ -84,7 +84,7 @@ public class BlockCooler extends Block implements ICustomTooltip {
 					if (rand.nextInt(5) == 0) {
 						worldIn.setBlockState(pos2, Blocks.SNOW_LAYER.getDefaultState());
 						if (worldIn instanceof WorldServer) {
-							worldIn.playSound(Minecraft.getMinecraft().thePlayer, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
+							worldIn.playSound(null, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
 									SoundCategory.BLOCKS, rand.nextFloat(), rand.nextFloat()+1.3f);
 							((WorldServer)worldIn).spawnParticle(EnumParticleTypes.SNOW_SHOVEL, pos2.getX()+0.5d, pos2.getY()+0.5d, pos2.getZ()+0.5d, 4, 0.4d, 0.4d, 0.4d, 0, new int[0]);
 						}

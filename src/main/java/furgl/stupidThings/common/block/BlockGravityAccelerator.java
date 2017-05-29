@@ -76,7 +76,7 @@ public class BlockGravityAccelerator extends Block implements ICustomTooltip {
 						EntityFallingBlock fallingEntity = new EntityFallingBlock(worldIn, (double)((float)pos2.getX() + 0.5F), (double)pos2.getY(), (double)((float)pos2.getZ() + 0.5F), state2);
 						worldIn.spawnEntityInWorld(fallingEntity);
 						if (worldIn instanceof WorldServer) {
-							worldIn.playSound(Minecraft.getMinecraft().thePlayer, pos, SoundEvents.BLOCK_METAL_BREAK, 
+							worldIn.playSound(null, pos, SoundEvents.BLOCK_METAL_BREAK, 
 									SoundCategory.BLOCKS, rand.nextFloat(), rand.nextFloat()+0.3f);
 							((WorldServer)worldIn).spawnParticle(EnumParticleTypes.FALLING_DUST, pos2.getX()+0.5d, pos2.getY()+0.5d, pos2.getZ()+0.5d, 4, 0.4d, 0.4d, 0.4d, 0, new int[] {Block.getStateId(state2)});
 						}
