@@ -1,0 +1,103 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "stupidthings:items/worlds_smallest_violin"
+    },
+    "display": {
+        "thirdperson_righthand": {
+            "rotation": [ 0, -90, 55 ],
+            "translation": [ 0, 4.0, 0.5 ],
+            "scale": [ 0.4, 0.4, 0.01 ]
+        },
+        "thirdperson_lefthand": {
+            "rotation": [ 0, 90, -55 ],
+            "translation": [ 0, 4.0, 0.5 ],
+            "scale": [ 0.4, 0.4, 0.01 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, -90, 25 ],
+            "translation": [ 1.13, 3.2, 1.13 ],
+            "scale": [ 0.3, 0.3, 0.3 ]
+        },
+        "firstperson_lefthand": {
+            "rotation": [ 0, 90, -25 ],
+            "translation": [ 1.13, 3.2, 1.13 ],
+            "scale": [ 0.3, 0.3, 0.3 ]
+        }
+    },
+    "overrides": [
+        {
+            "predicate": {
+                "playing": 0
+            },
+            "model": "stupidthings:item/worlds_smallest_violin_0"
+        },
+        {
+            "predicate": {
+                "playing": 0.1
+            },
+            "model": "stupidthings:item/worlds_smallest_violin_1"
+        },
+        {
+            "predicate": {
+                "playing": 0.2
+            },
+            "model": "stupidthings:item/worlds_smallest_violin_2"
+        },
+        {
+            "predicate": {
+                "playing": 0.3
+            },
+            "model": "stupidthings:item/worlds_smallest_violin_3"
+        },
+        {
+            "predicate": {
+                "playing": 0.4
+            },
+            "model": "stupidthings:item/worlds_smallest_violin_4"
+        },
+        {
+            "predicate": {
+                "playing": 0.5
+            },
+            "model": "stupidthings:item/worlds_smallest_violin_5"
+        },
+        {
+            "predicate": {
+                "playing": 0.6
+            },
+            "model": "stupidthings:item/worlds_smallest_violin_6"
+        },
+        {
+            "predicate": {
+                "playing": 0.7
+            },
+            "model": "stupidthings:item/worlds_smallest_violin_7"
+        },
+        {
+            "predicate": {
+                "playing": 0.8
+            },
+            "model": "stupidthings:item/worlds_smallest_violin_8"
+        },
+        {
+            "predicate": {
+                "playing": 0.9
+            },
+            "model": "stupidthings:item/worlds_smallest_violin_9"
+        },
+        {
+            "predicate": {
+                "playing": 1.0
+            },
+            "model": "stupidthings:item/worlds_smallest_violin_10"
+        },
+        {
+            "predicate": {
+                "playing": 1.1
+            },
+            "model": "stupidthings:item/worlds_smallest_violin_11"
+        }
+    ]
+    
+}

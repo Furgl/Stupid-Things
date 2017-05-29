@@ -13,9 +13,11 @@ import furgl.stupidThings.common.recipe.ShapedMatchingRecipe;
 import furgl.stupidThings.common.recipe.ShapelessMatchingRecipe;
 import furgl.stupidThings.common.sound.ModSoundEvents;
 import furgl.stupidThings.common.tileentity.ModTileEntities;
+import furgl.stupidThings.packet.PacketWorldsSmallestViolinSound;
 import net.minecraft.block.BlockTallGrass.EnumType;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
@@ -30,6 +32,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.RecipeSorter.Category;
@@ -58,7 +61,10 @@ public class CommonProxy {
 
 	}
 
-	private void registerPackets() {}
+	private void registerPackets() { // Side is where the packet goes TO
+		int id = 0;
+		StupidThings.network.registerMessage(PacketWorldsSmallestViolinSound.Handler.class, PacketWorldsSmallestViolinSound.class, id++, Side.CLIENT);
+	}
 
 	protected void registerEventListeners() {
 		MinecraftForge.EVENT_BUS.register(new Config());
@@ -106,7 +112,7 @@ public class CommonProxy {
 		if (ModItems.paperBagHat != null)
 			GameRegistry.addRecipe(new ItemStack(ModItems.paperBagHat), "AAA", "A A", 'A', new ItemStack(Items.PAPER));
 		if (ModFluids.acid != null)
-			GameRegistry.addShapelessRecipe(UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, ModFluids.acid), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.GUNPOWDER), new ItemStack(Items.SPIDER_EYE), new ItemStack(Items.WATER_BUCKET.setContainerItem(Items.BUCKET)));
+			GameRegistry.addShapelessRecipe(UniversalBucket.getFilledBucket(ForgeModContainer.getInstance().universalBucket, ModFluids.acid), new ItemStack(Items.ROTTEN_FLESH), new ItemStack(Items.GUNPOWDER), new ItemStack(Items.SPIDER_EYE), new ItemStack(Items.WATER_BUCKET)); 
 		if (ModBlocks.heater != null)
 			GameRegistry.addRecipe(new ItemStack(ModBlocks.heater), "ABA", "BCB", "ADA", 'A', new ItemStack(Items.IRON_INGOT),'B', new ItemStack(Blocks.RED_NETHER_BRICK), 'C', new ItemStack(Items.LAVA_BUCKET), 'D', new ItemStack(Blocks.IRON_BARS));
 		if (ModBlocks.cooler != null)
@@ -140,6 +146,11 @@ public class CommonProxy {
 				GameRegistry.addShapelessRecipe(new ItemStack(improvedHoe), ((ItemImprovedHoe)improvedHoe).hoe, ((ItemImprovedHoe)improvedHoe).hoe, ((ItemImprovedHoe)improvedHoe).hoe, new ItemStack(Items.STRING));
 		if (ModItems.firingCan != null)
 			GameRegistry.addRecipe(new ItemStack(ModItems.firingCan), "I  ", "ILI", " I ", 'I', new ItemStack(Items.IRON_INGOT), 'L', new ItemStack(Items.LAVA_BUCKET.setContainerItem(Items.BUCKET)));
+		if (ModItems.cactusSword != null)
+			GameRegistry.addRecipe(new ItemStack(ModItems.cactusSword), " C ", " C ", " S ", 'C', new ItemStack(Blocks.CACTUS), 'S', new ItemStack(Items.STICK));
+		if (ModItems.worldsSmallestViolin != null)
+			for (ItemStack plank : OreDictionary.getOres("plankWood"))
+			GameRegistry.addRecipe(new ItemStack(ModItems.worldsSmallestViolin), " PT", "PSP", "PP ", 'T', new ItemStack(Items.STICK), 'P', plank, 'S', new ItemStack(Items.STRING));
 	}
 
 	public Object getArmorModel(Item item, EntityLivingBase entity) {
@@ -154,4 +165,6 @@ public class CommonProxy {
 	}
 
 	public void openCatalogGui() {}
+
+	public void playWorldsSmallestViolinSound(EntityPlayer player) {}
 }
