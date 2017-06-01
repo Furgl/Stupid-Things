@@ -13,6 +13,7 @@ public class ModEntities
 		registerEntity(EntityBalloon.class);
 		registerEntity(EntityBalloonLiquid.class);
 		registerEntity(EntitySmokeBomb.class);
+		registerEntity(EntityBlockBomb.class);
 	}
 
 	/**Registers entity to unlocalizedName based on entity class (i.e. EntityZombieRunt = zombieRunt)*/

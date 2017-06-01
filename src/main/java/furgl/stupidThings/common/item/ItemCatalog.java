@@ -20,6 +20,7 @@ public class ItemCatalog extends Item implements ICustomTooltip {
 
 	public ItemCatalog() {
 		super();
+		this.setMaxStackSize(1);
 	}
 	
 	@Override

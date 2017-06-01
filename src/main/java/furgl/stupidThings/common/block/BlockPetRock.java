@@ -24,8 +24,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BlockPetRock extends BlockDirectional implements ICustomTooltip {
 
@@ -37,14 +35,6 @@ public class BlockPetRock extends BlockDirectional implements ICustomTooltip {
 		this.setResistance(10.0f);
 		this.setSoundType(SoundType.STONE);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-		
-		//MinecraftForge.EVENT_BUS.register(this); //TODO remove
-	}
-	
-	@SubscribeEvent
-	public void onEvent(BlockEvent.NeighborNotifyEvent event) {
-		/*if (!event.getWorld().isRemote) 
-			event.setCanceled(true);*/
 	}
 
 	@Override

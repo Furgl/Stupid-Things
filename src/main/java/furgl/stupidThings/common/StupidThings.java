@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.apache.logging.log4j.Logger;
 
+import furgl.stupidThings.client.gui.GuiHandler;
 import furgl.stupidThings.creativetab.StupidThingsCreativeTab;
 import furgl.stupidThings.util.TooltipHelper;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -33,6 +34,8 @@ public class StupidThings {
 	protected static File configFile;
 	@SideOnly(Side.CLIENT)
 	public static TooltipHelper util;
+	public static GuiHandler guiHandler = new GuiHandler();
+	public static final int GUI_BLOCK_BOMB_LAUNCHER_ID = 0;
 
 	static {
 		FluidRegistry.enableUniversalBucket();
