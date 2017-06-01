@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import com.google.common.collect.Maps;
 
-import furgl.stupidThings.client.gui.GuiItemCatalog;
+import furgl.stupidThings.client.gui.GuiCatalog;
 import furgl.stupidThings.client.model.ModelAnvilBackpack;
 import furgl.stupidThings.client.model.ModelPaperBagHat;
 import furgl.stupidThings.client.model.ModelPropellerHat;
@@ -12,6 +12,7 @@ import furgl.stupidThings.client.model.ModelUpsideDownGoggles;
 import furgl.stupidThings.client.particle.ParticleSmokeCloud;
 import furgl.stupidThings.client.renderer.entity.RenderBalloon;
 import furgl.stupidThings.client.renderer.entity.RenderBalloonLiquid;
+import furgl.stupidThings.client.renderer.entity.RenderBlockBomb;
 import furgl.stupidThings.client.renderer.entity.RenderReverseTntPrimed;
 import furgl.stupidThings.client.renderer.entity.RenderSmokeBomb;
 import furgl.stupidThings.common.CommonProxy;
@@ -19,6 +20,7 @@ import furgl.stupidThings.common.StupidThings;
 import furgl.stupidThings.common.block.ModBlocks;
 import furgl.stupidThings.common.entity.EntityBalloon;
 import furgl.stupidThings.common.entity.EntityBalloonLiquid;
+import furgl.stupidThings.common.entity.EntityBlockBomb;
 import furgl.stupidThings.common.entity.EntityReverseTntPrimed;
 import furgl.stupidThings.common.entity.EntitySmokeBomb;
 import furgl.stupidThings.common.fluid.ModFluids;
@@ -44,6 +46,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -64,6 +67,8 @@ public class ClientProxy extends CommonProxy
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
 		StupidThings.util = TooltipHelper.INSTANCE;
+		OBJLoader.INSTANCE.addDomain(StupidThings.MODID);
+		registerItemObjModels();
 		registerFluidModels();
 		registerEntityRenders();
 	}
@@ -72,7 +77,7 @@ public class ClientProxy extends CommonProxy
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
 		ModBlocks.registerRenders();
-		registerColoredItemRenders();
+		registerItemRenders();
 	}
 
 	@Override
@@ -80,9 +85,15 @@ public class ClientProxy extends CommonProxy
 		super.postInit(event);
 	}
 
-	private static void registerColoredItemRenders() {
+	private static void registerItemObjModels() {
+		for (Item item : ModItems.objModelItems)
+			ModItems.registerObjRender(item, 0);
+	}
+
+	private static void registerItemRenders() {
 		for (Item item : ModItems.allItems)
-			ModItems.registerRender(item, 0);
+			if (!ModItems.objModelItems.contains(item))
+				ModItems.registerRender(item, 0);
 
 		Item[] coloredItems = new Item[] {ModItems.balloon, ModItems.balloonDeflated, ModItems.balloonWater, ModItems.balloonLava, ModItems.smokeBomb};
 
@@ -106,6 +117,7 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityBalloon.class, RenderBalloon::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityBalloonLiquid.class, RenderBalloonLiquid::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntitySmokeBomb.class, RenderSmokeBomb::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityBlockBomb.class, RenderBlockBomb::new);
 	}
 
 	private static void registerFluidModels() {
@@ -171,14 +183,20 @@ public class ClientProxy extends CommonProxy
 			item.getSubItems(item, tab, stacks);
 		item.setCreativeTab(StupidThings.tab);
 	}
-	
+
 	@Override
 	public void openCatalogGui() { 
-		Minecraft.getMinecraft().displayGuiScreen(new GuiItemCatalog());
+		Minecraft.getMinecraft().displayGuiScreen(new GuiCatalog());
 	}
-	
+
 	@Override
 	public void playWorldsSmallestViolinSound(EntityPlayer player) {
 		Minecraft.getMinecraft().getSoundHandler().playSound(new SoundWorldsSmallestViolin(player));
 	}
+
+	@Override
+	public EntityPlayer getPlayer() {
+		return Minecraft.getMinecraft().player;
+	}
+
 }

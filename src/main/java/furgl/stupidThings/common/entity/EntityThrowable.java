@@ -19,6 +19,7 @@ public class EntityThrowable extends EntityLiving implements IProjectile {
 
 	protected float bounceMultiplier;
 	protected double gravity;
+	protected EntityLivingBase thrower;
 
 	public EntityThrowable(World world) {
 		super(world);
@@ -26,6 +27,7 @@ public class EntityThrowable extends EntityLiving implements IProjectile {
 
 	public EntityThrowable(World world, EntityLivingBase thrower) {
 		this(world);
+		this.thrower = thrower;
 		this.setPosition(thrower.posX, thrower.posY + (double)thrower.getEyeHeight() - 0.1D, thrower.posZ);
 	}
 

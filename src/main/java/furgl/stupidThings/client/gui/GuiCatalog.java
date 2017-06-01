@@ -10,13 +10,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
 
-public class GuiItemCatalog extends GuiScreen {
+public class GuiCatalog extends GuiScreen {
 
 	private final int textureHeight = 180/2;
 	private final int textureWidth = 292/2;
 	private final ResourceLocation catalogTexture = new ResourceLocation(StupidThings.MODID, "textures/gui/item_catalog.png");
 
-	public GuiItemCatalog() {
+	public GuiCatalog() {
 	}
 	
 	@Override

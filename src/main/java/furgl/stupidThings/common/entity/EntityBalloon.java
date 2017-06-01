@@ -107,11 +107,10 @@ public class EntityBalloon extends EntityThrowable {
 					if (this.getLeashedToEntity().isSneaking() && this.getLeashedToEntity().motionY < 0d && !this.getLeashedToEntity().onGround) 
 						this.getLeashedToEntity().motionY += 0.01d;
 					else if (!this.getLeashedToEntity().isSneaking())
-						this.getLeashedToEntity().motionY += 0.05d;
+						this.getLeashedToEntity().motionY += 0.08d;
 					this.getLeashedToEntity().fallDistance = 0;
 
 					// reset floatingTickCount so player isn't kicked for flying
-					// TODO test this in compiled version
 					try {
 						if (this.getLeashedToEntity() instanceof EntityPlayerMP) { 
 							ReflectionHelper.setPrivateValue(NetHandlerPlayServer.class, 

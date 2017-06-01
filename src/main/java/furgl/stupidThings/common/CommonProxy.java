@@ -31,6 +31,7 @@ import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.oredict.OreDictionary;
@@ -53,6 +54,7 @@ public class CommonProxy {
 	}
 
 	public void init(FMLInitializationEvent event) {
+		NetworkRegistry.INSTANCE.registerGuiHandler(StupidThings.instance, StupidThings.guiHandler);
 		registerEventListeners();
 		registerRecipes();
 	}
@@ -151,6 +153,10 @@ public class CommonProxy {
 		if (ModItems.worldsSmallestViolin != null)
 			for (ItemStack plank : OreDictionary.getOres("plankWood"))
 			GameRegistry.addRecipe(new ItemStack(ModItems.worldsSmallestViolin), " PT", "PSP", "PP ", 'T', new ItemStack(Items.STICK), 'P', plank, 'S', new ItemStack(Items.STRING));
+		if (ModBlocks.hiddenLight != null)
+			GameRegistry.addRecipe(new ItemStack(ModBlocks.hiddenLight), " G ", "GLG", " G ", 'G', new ItemStack(Blocks.GLASS), 'L', new ItemStack(Items.GLOWSTONE_DUST));
+		if (ModItems.blockBombLauncher != null)
+			GameRegistry.addRecipe(new ItemStack(ModItems.blockBombLauncher), "  B", " BI", "BIL", 'B', new ItemStack(Blocks.IRON_BLOCK), 'I', new ItemStack(Items.DIAMOND), 'L', new ItemStack(Blocks.LEVER));
 	}
 
 	public Object getArmorModel(Item item, EntityLivingBase entity) {
@@ -167,4 +173,8 @@ public class CommonProxy {
 	public void openCatalogGui() {}
 
 	public void playWorldsSmallestViolinSound(EntityPlayer player) {}
+
+	public EntityPlayer getPlayer() {
+		return null;
+	}
 }

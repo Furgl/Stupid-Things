@@ -6,7 +6,9 @@ import java.util.Random;
 import furgl.stupidThings.util.ICustomTooltip;
 import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -80,7 +82,9 @@ public class BlockCooler extends Block implements ICustomTooltip {
 					}
 					else 
 						empty = false;
-				else if (worldIn.isAirBlock(pos2) && Blocks.SNOW_LAYER.canPlaceBlockAt(worldIn, pos2))
+				else if ((worldIn.isAirBlock(pos2) || worldIn.getBlockState(pos2).getBlock() instanceof BlockTallGrass ||
+						worldIn.getBlockState(pos2).getBlock() instanceof BlockDoublePlant) && 
+						Blocks.SNOW_LAYER.canPlaceBlockAt(worldIn, pos2))
 					if (rand.nextInt(5) == 0) {
 						worldIn.setBlockState(pos2, Blocks.SNOW_LAYER.getDefaultState());
 						if (worldIn instanceof WorldServer) {
