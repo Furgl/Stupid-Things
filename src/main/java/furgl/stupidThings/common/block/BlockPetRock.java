@@ -24,8 +24,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.event.world.BlockEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class BlockPetRock extends BlockDirectional implements ICustomTooltip {
 
@@ -37,14 +35,6 @@ public class BlockPetRock extends BlockDirectional implements ICustomTooltip {
 		this.setResistance(10.0f);
 		this.setSoundType(SoundType.STONE);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-		
-		//MinecraftForge.EVENT_BUS.register(this); //TODO remove
-	}
-	
-	@SubscribeEvent
-	public void onEvent(BlockEvent.NeighborNotifyEvent event) {
-		/*if (!event.getWorld().isRemote) 
-			event.setCanceled(true);*/
 	}
 
 	@Override
@@ -60,26 +50,26 @@ public class BlockPetRock extends BlockDirectional implements ICustomTooltip {
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.GRAY+"Not good at playing fetch"}, new String[0]);
 	}
-	
+
 	@Override
 	public boolean isFullCube(IBlockState state) {
-        return false;
-    }
+		return false;
+	}
 
 	@Override
-    public boolean isOpaqueCube(IBlockState state) {
-        return false;
-    }
-	
+	public boolean isOpaqueCube(IBlockState state) {
+		return false;
+	}
+
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return AABB;
-    }
+		return AABB;
+	}
 
-    @Override
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
-        return AABB;
-    }
+	@Override
+	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
+		return AABB;
+	}
 
 	@Override
 	public IBlockState onBlockPlaced(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
@@ -90,34 +80,34 @@ public class BlockPetRock extends BlockDirectional implements ICustomTooltip {
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		worldIn.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
 	}
-	
+
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-        EnumFacing enumfacing = EnumFacing.getFront(meta);
+		EnumFacing enumfacing = EnumFacing.getFront(meta);
 
-        if (enumfacing.getAxis() == EnumFacing.Axis.Y)
-            enumfacing = EnumFacing.NORTH;
+		if (enumfacing.getAxis() == EnumFacing.Axis.Y)
+			enumfacing = EnumFacing.NORTH;
 
-        return this.getDefaultState().withProperty(FACING, enumfacing);
-    }
-
-	@Override
-    public int getMetaFromState(IBlockState state) {
-        return ((EnumFacing)state.getValue(FACING)).getIndex();
-    }
+		return this.getDefaultState().withProperty(FACING, enumfacing);
+	}
 
 	@Override
-    public IBlockState withRotation(IBlockState state, Rotation rot) {
-        return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
-    }
+	public int getMetaFromState(IBlockState state) {
+		return ((EnumFacing)state.getValue(FACING)).getIndex();
+	}
 
 	@Override
-    public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
-        return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
-    }
+	public IBlockState withRotation(IBlockState state, Rotation rot) {
+		return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
+	}
 
 	@Override
-    protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[] {FACING});
-    }
+	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
+		return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, new IProperty[] {FACING});
+	}
 }

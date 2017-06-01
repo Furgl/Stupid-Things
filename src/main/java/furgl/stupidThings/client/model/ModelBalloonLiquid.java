@@ -19,9 +19,7 @@ public class ModelBalloonLiquid extends ModelBase {
 		this.balloon = new ModelRenderer(this, 0, 0);
 		this.balloon.addBox(-1.5f, 5.5f, -1.5f, 3, 1, 3);
 		this.balloon.addBox(-2.5f, 4.5f, -2.5f, 5, 1, 5);
-		ModelRenderer mainPart = new ModelRenderer(this, 16, 15);
-		mainPart.addBox(-3, -1.5f, -3, 6, 6, 6);
-		this.balloon.addChild(mainPart);
+		this.balloon.addBox(-3, -1.5f, -3, 6, 6, 6);
 		this.balloon.addBox(-2.5f, -3.5f, -2.5f, 5, 2, 5);
 		this.balloon.addBox(-1.5f, -4.5f, -1.5f, 3, 1, 3);
 		this.balloon.addBox(-0.5f, -5.5f, -0.5f, 1, 1, 1);
@@ -31,6 +29,10 @@ public class ModelBalloonLiquid extends ModelBase {
 	@Override
 	public void render(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		GlStateManager.pushMatrix();
+		
+		GlStateManager.enableBlend(); //enables transparency
+		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+		
 		if (entity instanceof EntityBalloon) {
 			Color color = new Color(EnumDyeColor.byMetadata(((EntityBalloon)entity).getColor()).getMapColor().colorValue);
 			GlStateManager.color(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f);
@@ -40,6 +42,9 @@ public class ModelBalloonLiquid extends ModelBase {
 		balloon.rotateAngleY = (float) (entity.rotationYaw + Math.sin(Math.abs(entity.motionX)+
 				Math.abs(entity.motionY*2f)+Math.abs(entity.motionZ))*10f);
 		balloon.render(scale);
+		
+		GlStateManager.disableBlend(); //disable transparency
+
 		GlStateManager.popMatrix(); 
 	}
 }
