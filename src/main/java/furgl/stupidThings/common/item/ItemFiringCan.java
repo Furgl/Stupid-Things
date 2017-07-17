@@ -4,6 +4,7 @@ import java.util.List;
 
 import furgl.stupidThings.util.ICustomTooltip;
 import furgl.stupidThings.util.TooltipHelper;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,6 +24,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemFiringCan extends Item implements ICustomTooltip {
 
@@ -42,8 +45,9 @@ public class ItemFiringCan extends Item implements ICustomTooltip {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.world.isRemote)
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
+		if (world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.DARK_RED+"\"Remember: only YOU can start forest fires.\"", TextFormatting.RED+" - Smokey Bear's evil twin brother"}, new String[0]);
 	}
@@ -66,14 +70,14 @@ public class ItemFiringCan extends Item implements ICustomTooltip {
 			
 			// spawn particles
 			((WorldServer)player.world).spawnParticle(EnumParticleTypes.LAVA, 
-					vec.xCoord, vec.yCoord + (double)player.height, vec.zCoord, 
+					vec.x, vec.y + (double)player.height, vec.z, 
 					2, 0.8d, 0.1d, 0.8d, 0,	new int[] {});
 			((WorldServer)player.world).spawnParticle(EnumParticleTypes.FLAME, 
-					vec.xCoord, vec.yCoord + (double)player.height, vec.zCoord, 
+					vec.x, vec.y + (double)player.height, vec.z, 
 					2, 0.8d, 0.1d, 0.8d, 0,	new int[] {});
 			
 			if ((count+1) % 10 == 0) {
-				AxisAlignedBB aabb = player.getEntityBoundingBox().expandXyz(1.5d).offset(new BlockPos(player.getLookVec().scale(4)));
+				AxisAlignedBB aabb = player.getEntityBoundingBox().grow(1.5d).offset(new BlockPos(player.getLookVec().scale(4)));
 				
 				// set enemies on fire  
 				List<Entity> entities = player.world.getEntitiesWithinAABBExcludingEntity(player, aabb);

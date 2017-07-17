@@ -19,7 +19,7 @@ public class RenderReverseTntPrimed extends RenderTNTPrimed {
 	/**Copied from RenderTNTPrimed to change  to ModBlocks.reverseTnt*/
 	public void doRender(EntityTNTPrimed entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
-		if (ModBlocks.reverseTnt == null)
+		if (ModBlocks.REVERSE_TNT == null)
 			return;
 		
         BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
@@ -40,14 +40,14 @@ public class RenderReverseTntPrimed extends RenderTNTPrimed {
         this.bindEntityTexture(entity);
         GlStateManager.rotate(-90.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.translate(-0.5F, -0.5F, 0.5F);
-        blockrendererdispatcher.renderBlockBrightness(ModBlocks.reverseTnt.getDefaultState(), entity.getBrightness(partialTicks));
+        blockrendererdispatcher.renderBlockBrightness(ModBlocks.REVERSE_TNT.getDefaultState(), entity.getBrightness());
         GlStateManager.translate(0.0F, 0.0F, 1.0F);
 
         if (this.renderOutlines)
         {
             GlStateManager.enableColorMaterial();
             GlStateManager.enableOutlineMode(this.getTeamColor(entity));
-            blockrendererdispatcher.renderBlockBrightness(ModBlocks.reverseTnt.getDefaultState(), 1.0F);
+            blockrendererdispatcher.renderBlockBrightness(ModBlocks.REVERSE_TNT.getDefaultState(), 1.0F);
             GlStateManager.disableOutlineMode();
             GlStateManager.disableColorMaterial();
         }
@@ -60,7 +60,7 @@ public class RenderReverseTntPrimed extends RenderTNTPrimed {
             GlStateManager.color(1.0F, 1.0F, 1.0F, f2);
             GlStateManager.doPolygonOffset(-3.0F, -3.0F);
             GlStateManager.enablePolygonOffset();
-            blockrendererdispatcher.renderBlockBrightness(ModBlocks.reverseTnt.getDefaultState(), 1.0F);
+            blockrendererdispatcher.renderBlockBrightness(ModBlocks.REVERSE_TNT.getDefaultState(), 1.0F);
             GlStateManager.doPolygonOffset(0.0F, 0.0F);
             GlStateManager.disablePolygonOffset();
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);

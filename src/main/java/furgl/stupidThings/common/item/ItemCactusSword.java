@@ -4,9 +4,9 @@ import java.util.List;
 
 import furgl.stupidThings.util.ICustomTooltip;
 import furgl.stupidThings.util.TooltipHelper;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -19,6 +19,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemCactusSword extends ItemSword implements ICustomTooltip {
 
@@ -40,8 +42,9 @@ public class ItemCactusSword extends ItemSword implements ICustomTooltip {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.world.isRemote)
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
+		if (world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.DARK_GREEN+"Prick your enemies (and yourself) to death!"}, new String[0]);
 	}

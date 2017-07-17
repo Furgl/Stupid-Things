@@ -5,6 +5,7 @@ import java.util.List;
 import furgl.stupidThings.common.entity.EntitySmokeBomb;
 import furgl.stupidThings.util.ICustomTooltip;
 import furgl.stupidThings.util.TooltipHelper;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -41,8 +42,9 @@ public class ItemSmokeBomb extends Item implements ICustomTooltip {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.world.isRemote)
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
+		if (world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {ItemBalloon.COLORS[stack.getMetadata()]+"Right click to throw", 
 							ItemBalloon.COLORS[stack.getMetadata()]+"Releases smoke to blind opponents"}, 
@@ -56,9 +58,9 @@ public class ItemSmokeBomb extends Item implements ICustomTooltip {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, NonNullList<ItemStack> subItems) {
+    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
 		for (int i = 0; i < 16; ++i)
-			subItems.add(new ItemStack(itemIn, 1, i));
+			subItems.add(new ItemStack(this, 1, i));
 	}
 
 	@Override

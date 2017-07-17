@@ -29,6 +29,7 @@ import furgl.stupidThings.common.item.ModItems;
 import furgl.stupidThings.common.sound.SoundWorldsSmallestViolin;
 import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
@@ -95,7 +96,7 @@ public class ClientProxy extends CommonProxy
 			if (!ModItems.objModelItems.contains(item))
 				ModItems.registerRender(item, 0);
 
-		Item[] coloredItems = new Item[] {ModItems.balloon, ModItems.balloonDeflated, ModItems.balloonWater, ModItems.balloonLava, ModItems.smokeBomb};
+		Item[] coloredItems = new Item[] {ModItems.BALLOON, ModItems.BALLOON_DEFLATED, ModItems.BALLOON_WATER, ModItems.BALLOON_LAVA, ModItems.SMOKE_BOMB};
 
 		for (Item item : coloredItems) {
 			if (item != null) {			
@@ -105,7 +106,7 @@ public class ClientProxy extends CommonProxy
 				Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
 					@Override
 					public int getColorFromItemstack(ItemStack stack, int tintIndex) {
-						return tintIndex > 0 ? -1 : EnumDyeColor.byMetadata(stack.getMetadata()).getMapColor().colorValue;
+						return tintIndex > 0 ? -1 : MapColor.getBlockColor(EnumDyeColor.byMetadata(stack.getMetadata())).colorValue;
 					}
 				}, item);
 			}
@@ -153,13 +154,13 @@ public class ClientProxy extends CommonProxy
 
 	@Override
 	public Object getArmorModel(Item item, EntityLivingBase entity) {
-		if (item == ModItems.anvilBackpack) 
+		if (item == ModItems.ANVIL_BACKPACK) 
 			return MODEL_ANVIL_BACKPACK;
-		else if (item == ModItems.paperBagHat) 
+		else if (item == ModItems.PAPER_BAG_HAT) 
 			return MODEL_PAPER_BAG_HAT;
-		else if (item == ModItems.upsideDownGoggles)
+		else if (item == ModItems.UPSIDE_DOWN_GOGGLES)
 			return MODEL_UPSIDE_DOWN_GOGGLES;
-		else if (item == ModItems.propellerHat) {
+		else if (item == ModItems.PROPELLER_HAT) {
 			if (!modelMap.containsKey(entity) || !(modelMap.get(entity) instanceof ModelPropellerHat)) 
 				modelMap.put(entity, new ModelPropellerHat());		
 			return modelMap.get(entity);
@@ -180,7 +181,7 @@ public class ClientProxy extends CommonProxy
 		if (item instanceof ItemCatalog)
 			stacks.add(0, new ItemStack(item));
 		else
-			item.getSubItems(item, tab, stacks);
+			item.getSubItems(tab, stacks);
 		item.setCreativeTab(StupidThings.tab);
 	}
 

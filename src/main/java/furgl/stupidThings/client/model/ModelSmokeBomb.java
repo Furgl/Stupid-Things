@@ -3,6 +3,7 @@ package furgl.stupidThings.client.model;
 import java.awt.Color;
 
 import furgl.stupidThings.common.entity.EntitySmokeBomb;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -22,7 +23,7 @@ public class ModelSmokeBomb extends ModelBase {
 	public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		GlStateManager.pushMatrix();
 		if (entityIn instanceof EntitySmokeBomb) {
-			Color color = new Color(EnumDyeColor.byMetadata(((EntitySmokeBomb)entityIn).getColor()).getMapColor().colorValue);
+			Color color = new Color(MapColor.getBlockColor(EnumDyeColor.byMetadata(((EntitySmokeBomb)entityIn).getColor())).colorValue);
 			GlStateManager.color(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f);
 		}
 		GlStateManager.translate(0, 1.35d, 0);

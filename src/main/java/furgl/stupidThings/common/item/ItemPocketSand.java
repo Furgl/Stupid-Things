@@ -5,6 +5,7 @@ import java.util.List;
 import furgl.stupidThings.util.ICustomTooltip;
 import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.block.Block;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,6 +27,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemPocketSand extends Item implements ICustomTooltip {
 
@@ -45,8 +48,8 @@ public class ItemPocketSand extends Item implements ICustomTooltip {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.world.isRemote)
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.GOLD+"Right click to throw", TextFormatting.GOLD+"Blinds nearby enemies", "", TextFormatting.GRAY+"(King of the Hill reference)"}, new String[0]);
 	}
@@ -70,8 +73,7 @@ public class ItemPocketSand extends Item implements ICustomTooltip {
 					new int[] {Block.getStateId(Blocks.SAND.getDefaultState())});
 			
 			// blind entities in front 
-			// TODO test that this works properly on server w/ other players
-			AxisAlignedBB aabb = player.getEntityBoundingBox().expandXyz(1);
+			AxisAlignedBB aabb = player.getEntityBoundingBox().grow(1);
 			aabb = aabb.offset(new BlockPos(player.getLookVec().scale(2)));
 			List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(player, aabb);
 			for (Entity entity : entities)

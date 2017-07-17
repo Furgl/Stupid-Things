@@ -7,6 +7,7 @@ import furgl.stupidThings.util.ICustomTooltip;
 import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -37,8 +38,9 @@ public class ItemPropellerHat extends ItemArmor implements ICustomTooltip {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.world.isRemote)
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
+		if (world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.YELLOW+"Faster ascension and slower descension when jumping"}, new String[0]);
 	}

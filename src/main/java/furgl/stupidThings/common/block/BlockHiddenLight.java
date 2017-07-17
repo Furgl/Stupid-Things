@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirectional;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -46,8 +47,9 @@ public class BlockHiddenLight extends BlockDirectional implements ICustomTooltip
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.world.isRemote)
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
+		if (world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.YELLOW+"The easiest way to hide lighting", "", "Can be broken while shifting", "Other placed Hidden Lights can be seen while holding this"}, new String[0]);
 	}

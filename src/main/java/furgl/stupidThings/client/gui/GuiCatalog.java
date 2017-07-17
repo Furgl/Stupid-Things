@@ -6,6 +6,7 @@ import furgl.stupidThings.common.StupidThings;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.util.ITooltipFlag.TooltipFlags;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.client.config.GuiUtils;
@@ -44,7 +45,7 @@ public class GuiCatalog extends GuiScreen {
 		GlStateManager.scale(1/scale, 1/scale, 1/scale);
 		GlStateManager.translate(-w + 100, -h, 0);
 		String title = TextFormatting.BOLD+""+TextFormatting.UNDERLINE+"Current Items in "+StupidThings.MODNAME;
-		this.mc.fontRendererObj.drawString(title, width/2-this.fontRendererObj.getStringWidth(title)/2, height/2-95, 16763904, true);
+		this.mc.fontRenderer.drawString(title, width/2-this.fontRenderer.getStringWidth(title)/2, height/2-95, 16763904, true);
 
 		// items
 		GlStateManager.translate(w, h, 0);
@@ -66,8 +67,8 @@ public class GuiCatalog extends GuiScreen {
 			int mX = (int) ((mouseX-w));
 			int mY = (int) ((mouseY-h));
 			if (mX >= xPos && mY >= yPos && mX < xPos + 16 && mY < yPos + 16) {
-				List<String> tooltip = StupidThings.tab.orderedStacks.get(i).getTooltip(mc.player, false);
-				GuiUtils.drawHoveringText(StupidThings.tab.orderedStacks.get(i), tooltip, mX, mY, width/2, height, -1, mc.fontRendererObj);
+				List<String> tooltip = StupidThings.tab.orderedStacks.get(i).getTooltip(mc.player, TooltipFlags.NORMAL);
+				GuiUtils.drawHoveringText(StupidThings.tab.orderedStacks.get(i), tooltip, mX, mY, width/2, height, -1, mc.fontRenderer);
 				RenderHelper.disableStandardItemLighting();
 			}
 		}

@@ -3,9 +3,9 @@ package furgl.stupidThings.client.renderer.entity;
 import furgl.stupidThings.client.model.ModelBalloon;
 import furgl.stupidThings.common.StupidThings;
 import furgl.stupidThings.common.entity.EntityBalloon;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -35,7 +35,7 @@ public class RenderBalloon extends RenderLiving<EntityBalloon> {
         if (entity != null && !entity.isDead) {
             y = y - (1.6D - (double)entityLivingIn.height) * 0.5D;
             Tessellator tessellator = Tessellator.getInstance();
-            VertexBuffer vertexbuffer = tessellator.getBuffer();
+            BufferBuilder vertexbuffer = tessellator.getBuffer();
             double d0 = this.interpolateValue((double)entity.prevRotationYaw, (double)entity.rotationYaw, (double)(partialTicks * 0.5F)) * 0.01745329238474369D;
             double d1 = this.interpolateValue((double)entity.prevRotationPitch, (double)entity.rotationPitch, (double)(partialTicks * 0.5F)) * 0.01745329238474369D;
             double d2 = Math.cos(d0);

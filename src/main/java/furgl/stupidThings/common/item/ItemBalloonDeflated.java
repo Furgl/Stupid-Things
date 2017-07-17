@@ -4,6 +4,7 @@ import java.util.List;
 
 import furgl.stupidThings.common.sound.ModSoundEvents;
 import furgl.stupidThings.util.TooltipHelper;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -15,6 +16,8 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class ItemBalloonDeflated extends ItemBalloon {
@@ -35,8 +38,9 @@ public class ItemBalloonDeflated extends ItemBalloon {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.world.isRemote)
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
+		if (world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {COLORS[stack.getMetadata()]+"Hold right click to blow up"}, 
 					OreDictionary.getOres("itemRubber").isEmpty() ? null : new String[0]);
@@ -45,7 +49,7 @@ public class ItemBalloonDeflated extends ItemBalloon {
 	@Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
-			world.playSound(null, player.getPosition(), ModSoundEvents.balloonInflate, SoundCategory.PLAYERS, 0.5f, 1.0f);
+			world.playSound(null, player.getPosition(), ModSoundEvents.BALLOON_INFLATE, SoundCategory.PLAYERS, 0.5f, 1.0f);
 			player.setActiveHand(hand);
 		}
 
@@ -55,8 +59,8 @@ public class ItemBalloonDeflated extends ItemBalloon {
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity) {
 		if (!world.isRemote) {
-			if (ModItems.balloon != null) {
-				ItemStack balloon = new ItemStack(ModItems.balloon, 1, stack.getMetadata());
+			if (ModItems.BALLOON != null) {
+				ItemStack balloon = new ItemStack(ModItems.BALLOON, 1, stack.getMetadata());
 				if (!(entity instanceof EntityPlayer) || !((EntityPlayer)entity).inventory.addItemStackToInventory(balloon))
 					entity.entityDropItem(balloon, 0);
 			}

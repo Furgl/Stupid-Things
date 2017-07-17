@@ -17,7 +17,7 @@ public class StupidThingsCreativeTab extends CreativeTabs
 
 	@Override
 	public ItemStack getTabIconItem() {
-		return new ItemStack(ModItems.itemCatalog);
+		return new ItemStack(ModItems.ITEM_CATALOG);
 	}
 
 	@Override

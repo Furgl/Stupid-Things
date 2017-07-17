@@ -3,6 +3,7 @@ package furgl.stupidThings.client.model;
 import java.awt.Color;
 
 import furgl.stupidThings.common.entity.EntityBalloon;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -38,7 +39,7 @@ public class ModelBalloon extends ModelBase {
 		GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 		
 		if (entity instanceof EntityBalloon) {
-			Color color = new Color(EnumDyeColor.byMetadata(((EntityBalloon)entity).getColor()).getMapColor().colorValue);
+			Color color = new Color(MapColor.getBlockColor(EnumDyeColor.byMetadata(((EntityBalloon)entity).getColor())).colorValue);
 			GlStateManager.color(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f);
 		}
 		GlStateManager.translate(-0.35d, 1.35d+Math.sin(entity.ticksExisted/20d)/15f, 0.35d);

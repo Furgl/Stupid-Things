@@ -15,9 +15,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
@@ -34,6 +34,8 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockMineTurtle extends BlockDirectional implements ICustomTooltip {
 
@@ -53,7 +55,7 @@ public class BlockMineTurtle extends BlockDirectional implements ICustomTooltip 
     public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
     	if (!worldIn.isRemote && !activeTurtles.containsKey(pos)) {
     		activeTurtles.put(pos, 50);
-    		worldIn.playSound(null, pos, ModSoundEvents.mineTurtle, SoundCategory.BLOCKS, 1.0F, 0.9F+worldIn.rand.nextFloat()/2f);
+    		worldIn.playSound(null, pos, ModSoundEvents.MINE_TURTLE, SoundCategory.BLOCKS, 1.0F, 0.9F+worldIn.rand.nextFloat()/2f);
     	}
     }
 	
@@ -87,8 +89,9 @@ public class BlockMineTurtle extends BlockDirectional implements ICustomTooltip 
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.world.isRemote)
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
+		if (world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.GREEN+"Hello!", "", TextFormatting.GRAY+"(asdfmovie reference)"}, new String[0]);
 	}

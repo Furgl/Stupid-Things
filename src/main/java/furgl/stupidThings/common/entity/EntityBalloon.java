@@ -43,7 +43,7 @@ public class EntityBalloon extends EntityThrowable {
 	@Override
 	public ItemStack getPickedResult(RayTraceResult target) {
 		if (target.entityHit instanceof EntityBalloon)
-			return new ItemStack(ModItems.balloon, 1, target.entityHit.getDataManager().get(COLOR));
+			return new ItemStack(ModItems.BALLOON, 1, target.entityHit.getDataManager().get(COLOR));
 		else
 			return null;
 	}
@@ -73,10 +73,10 @@ public class EntityBalloon extends EntityThrowable {
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (!this.world.isRemote && !source.equals(DamageSource.FALL)) {
-			this.world.playSound(null, this.getPosition(), ModSoundEvents.balloonPop, SoundCategory.NEUTRAL, 
+			this.world.playSound(null, this.getPosition(), ModSoundEvents.BALLOON_POP, SoundCategory.NEUTRAL, 
 					0.8f, this.world.rand.nextFloat()+0.3f);
-			if (ModItems.balloonDeflated != null && !this.isDead)
-				this.entityDropItem(new ItemStack(ModItems.balloonDeflated, 1, this.getColor()), 0);
+			if (ModItems.BALLOON_DEFLATED != null && !this.isDead)
+				this.entityDropItem(new ItemStack(ModItems.BALLOON_DEFLATED, 1, this.getColor()), 0);
 			this.setDead();
 		}
 
@@ -133,7 +133,7 @@ public class EntityBalloon extends EntityThrowable {
 	public void onUpdate() {
 		super.onUpdate();
 
-		if (ModItems.balloon == null)
+		if (ModItems.BALLOON == null)
 			this.setDead();
 
 		if (!this.hasNoGravity())

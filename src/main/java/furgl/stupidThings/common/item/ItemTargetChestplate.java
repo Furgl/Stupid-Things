@@ -5,6 +5,7 @@ import java.util.List;
 import furgl.stupidThings.common.StupidThings;
 import furgl.stupidThings.util.ICustomTooltip;
 import furgl.stupidThings.util.TooltipHelper;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +16,8 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class ItemTargetChestplate extends ItemArmor implements ICustomTooltip {
 
@@ -32,8 +35,9 @@ public class ItemTargetChestplate extends ItemArmor implements ICustomTooltip {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.world.isRemote)
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
+		if (world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.RED+"Causes nearby mobs to target you"}, new String[0]);
 	}
@@ -46,7 +50,7 @@ public class ItemTargetChestplate extends ItemArmor implements ICustomTooltip {
 	@Override
 	public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
 		if (!world.isRemote && player.ticksExisted % 150 == 0) {
-			List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(player, player.getEntityBoundingBox().expandXyz(30d));
+			List<Entity> entities = world.getEntitiesWithinAABBExcludingEntity(player, player.getEntityBoundingBox().grow(30d));
 			for (Entity entity : entities) 
 				if (entity instanceof EntityLiving) 
 					((EntityLiving)entity).setAttackTarget(player);

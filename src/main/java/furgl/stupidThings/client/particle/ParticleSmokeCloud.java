@@ -1,6 +1,7 @@
 package furgl.stupidThings.client.particle;
 
 import furgl.stupidThings.common.StupidThings;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleSimpleAnimated;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -25,7 +26,7 @@ public class ParticleSmokeCloud extends ParticleSimpleAnimated {
 		this.particleScale = scale;
 		this.particleAlpha = 0.7f;
 		this.setColorFade(0x666666);
-		this.setColor(EnumDyeColor.byMetadata(color).getMapColor().colorValue);
+		this.setColor(MapColor.getBlockColor(EnumDyeColor.byMetadata(color)).colorValue);
 		TextureAtlasSprite sprite = Minecraft.getMinecraft().getTextureMapBlocks().getAtlasSprite(TEXTURE.toString());
 		this.setParticleTexture(sprite);  
 	}
@@ -41,7 +42,7 @@ public class ParticleSmokeCloud extends ParticleSimpleAnimated {
 	}
 
 	@Override
-	public boolean isTransparent() {
+	public boolean shouldDisableDepth() {
 		return true;
 	}
 

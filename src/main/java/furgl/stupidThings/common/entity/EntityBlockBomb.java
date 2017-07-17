@@ -38,7 +38,7 @@ public class EntityBlockBomb extends EntityThrowable {
 		super(world, thrower);
 		this.setSize(0.6F, 0.6F);
 		this.gravity = 0.1f;
-		this.state = ((ItemBlock)items[0].getItem()).block.getStateForPlacement(world, BlockPos.ORIGIN, EnumFacing.UP, 0, 0, 0, items[0].getMetadata(), thrower, EnumHand.MAIN_HAND);
+		this.state = ((ItemBlock)items[0].getItem()).getBlock().getStateForPlacement(world, BlockPos.ORIGIN, EnumFacing.UP, 0, 0, 0, items[0].getMetadata(), thrower, EnumHand.MAIN_HAND);
 		this.dataManager.set(STATE, Optional.of(state));
 		this.items = items;
 	}
@@ -73,7 +73,7 @@ public class EntityBlockBomb extends EntityThrowable {
 					items[i] = new ItemStack((NBTTagCompound) list.get(i));
 		}
 
-		this.state = ((ItemBlock)items[0].getItem()).block.getStateForPlacement(world, BlockPos.ORIGIN, EnumFacing.UP, 0, 0, 0, items[0].getMetadata(), thrower, EnumHand.MAIN_HAND);
+		this.state = ((ItemBlock)items[0].getItem()).getBlock().getStateForPlacement(world, BlockPos.ORIGIN, EnumFacing.UP, 0, 0, 0, items[0].getMetadata(), thrower, EnumHand.MAIN_HAND);
 		this.dataManager.set(STATE, Optional.of(state));
 	}
 
@@ -129,7 +129,7 @@ public class EntityBlockBomb extends EntityThrowable {
 										for (int i=0; i<items.length; ++i)
 											if (items[i] != null && items[i].getCount() > 0 && items[i].getItem() instanceof ItemBlock &&
 											thrower instanceof EntityPlayer && ((EntityPlayer) this.thrower).canPlayerEdit(pos, EnumFacing.UP, items[i])) {
-												IBlockState state = ((ItemBlock)items[i].getItem()).block.getStateForPlacement(world, pos, EnumFacing.UP, 0, 0, 0, items[i].getMetadata(), thrower, EnumHand.MAIN_HAND);
+												IBlockState state = ((ItemBlock)items[i].getItem()).getBlock().getStateForPlacement(world, pos, EnumFacing.UP, 0, 0, 0, items[i].getMetadata(), thrower, EnumHand.MAIN_HAND);
 												if (((ItemBlock)items[i].getItem()).placeBlockAt(items[i], (EntityPlayer) thrower, world, pos, EnumFacing.UP, 0, 0, 0, state)) {
 													itemFound = true;
 													items[i].shrink(1);

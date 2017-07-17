@@ -12,8 +12,8 @@ public class SoundWorldsSmallestViolin extends MovingSound {
 
 	private EntityPlayer player;
 
-	public SoundWorldsSmallestViolin(EntityPlayer player) {//TODO stream?
-		super(ModSoundEvents.worldsSmallestViolin, SoundCategory.PLAYERS);
+	public SoundWorldsSmallestViolin(EntityPlayer player) {
+		super(ModSoundEvents.WORLDS_SMALLESTVIOLIN, SoundCategory.PLAYERS);
 		this.player = player;
 		this.xPosF = (float) player.posX;
 		this.yPosF = (float) player.posY;

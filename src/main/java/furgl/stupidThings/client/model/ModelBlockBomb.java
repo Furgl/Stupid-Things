@@ -34,7 +34,7 @@ public class ModelBlockBomb extends ModelBase {
 		if (entityIn instanceof EntityBlockBomb) {
 			Optional<IBlockState> state = ((EntityBlockBomb)entityIn).getDataManager().get(EntityBlockBomb.STATE);
 			if (state.isPresent()) {
-				Color color = new Color(state.get().getMapColor().colorValue);
+				Color color = new Color(state.get().getMapColor(entityIn.world, entityIn.getPosition()).colorValue);
 				GlStateManager.color(color.getRed()/255f, color.getGreen()/255f, color.getBlue()/255f);
 			}
 		}

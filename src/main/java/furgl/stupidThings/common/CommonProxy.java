@@ -45,11 +45,8 @@ public class CommonProxy {
 		StupidThings.logger = event.getModLog();
 		registerPackets();
 		Config.preInit(StupidThings.configFile);
-		ModBlocks.preInit();
-		ModItems.preInit();
 		ModFluids.preInit();
 		ModEntities.preInit();
-		ModSoundEvents.preInit();
 		ModTileEntities.preInit();
 	}
 
@@ -74,7 +71,7 @@ public class CommonProxy {
 	}
 
 	private void registerRecipes() {
-		RecipeSorter.register("Matching Damage/Enchants Shapeless Recipe", ShapelessMatchingRecipe.class, Category.SHAPELESS, "");
+		/*RecipeSorter.register("Matching Damage/Enchants Shapeless Recipe", ShapelessMatchingRecipe.class, Category.SHAPELESS, "");
 		RecipeSorter.register("Matching Damage/Enchants Shaped Recipe", ShapedMatchingRecipe.class, Category.SHAPED, "");
 		
 		GameRegistry.addShapelessRecipe(new ItemStack(ModItems.itemCatalog), new ItemStack(Items.BOOK), new ItemStack(Blocks.DIRT));
@@ -156,7 +153,7 @@ public class CommonProxy {
 		if (ModBlocks.hiddenLight != null)
 			GameRegistry.addRecipe(new ItemStack(ModBlocks.hiddenLight), " G ", "GLG", " G ", 'G', new ItemStack(Blocks.GLASS), 'L', new ItemStack(Items.GLOWSTONE_DUST));
 		if (ModItems.blockBombLauncher != null)
-			GameRegistry.addRecipe(new ItemStack(ModItems.blockBombLauncher), "  B", " BI", "BIL", 'B', new ItemStack(Blocks.IRON_BLOCK), 'I', new ItemStack(Items.DIAMOND), 'L', new ItemStack(Blocks.LEVER));
+			GameRegistry.addRecipe(new ItemStack(ModItems.blockBombLauncher), "  B", " BI", "BIL", 'B', new ItemStack(Blocks.IRON_BLOCK), 'I', new ItemStack(Items.DIAMOND), 'L', new ItemStack(Blocks.LEVER));*/
 	}
 
 	public Object getArmorModel(Item item, EntityLivingBase entity) {

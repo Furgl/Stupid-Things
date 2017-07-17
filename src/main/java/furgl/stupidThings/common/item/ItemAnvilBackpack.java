@@ -10,6 +10,7 @@ import furgl.stupidThings.common.StupidThings;
 import furgl.stupidThings.util.ICustomTooltip;
 import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -49,8 +50,9 @@ public class ItemAnvilBackpack extends ItemArmor implements ICustomTooltip {
 	}
 	
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.world.isRemote)
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
+		if (world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.GRAY+"Weighs down the wearer and",
 							TextFormatting.GRAY+"damages entities that are fallen on"}, new String[0]);
@@ -86,7 +88,7 @@ public class ItemAnvilBackpack extends ItemArmor implements ICustomTooltip {
 				player.motionY *= 1.3d;
 		//hurt entities while falling
 		if (!world.isRemote && player.fallDistance > 1) {
-			List<Entity> list = Lists.newArrayList(world.getEntitiesWithinAABBExcludingEntity(player, player.getEntityBoundingBox().expandXyz(3)));
+			List<Entity> list = Lists.newArrayList(world.getEntitiesWithinAABBExcludingEntity(player, player.getEntityBoundingBox().grow(3)));
 
 			for (Entity entity : list) 
 				entity.attackEntityFrom(DamageSource.ANVIL, Math.min(player.fallDistance, 20));

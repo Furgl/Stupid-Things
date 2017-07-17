@@ -8,6 +8,7 @@ import furgl.stupidThings.common.StupidThings;
 import furgl.stupidThings.packet.PacketWorldsSmallestViolinSound;
 import furgl.stupidThings.util.ICustomTooltip;
 import furgl.stupidThings.util.TooltipHelper;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -34,7 +35,7 @@ public class ItemWorldsSmallestViolin extends Item implements ICustomTooltip {
             @SideOnly(Side.CLIENT)
             public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
                 ItemStack itemstack = entityIn == null ? null : entityIn.getActiveItemStack();
-            	if (entityIn == null || itemstack == null || itemstack.getItem() != ModItems.worldsSmallestViolin || itemstack != stack) 
+            	if (entityIn == null || itemstack == null || itemstack.getItem() != ModItems.WORLDS_SMALLEST_VIOLIN || itemstack != stack) 
                     return 0.0F;
                 else 
                     return (MathHelper.sin(entityIn.getItemInUseCount()/7.5f)+1f)/2f+0.1f;
@@ -54,8 +55,9 @@ public class ItemWorldsSmallestViolin extends Item implements ICustomTooltip {
 	}
 
 	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List<String> tooltip, boolean advanced) {
-		if (player.world.isRemote)
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
+		if (world.isRemote)
 			TooltipHelper.addTooltipText(tooltip, 
 					new String[] {TextFormatting.GOLD+"Let me play you a sad song on the world's smallest violin", "", "(Spongebob reference)"}, new String[0]);
 	}
