@@ -3,6 +3,8 @@ package furgl.stupidThings.common.block;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import furgl.stupidThings.common.StupidThings;
 import furgl.stupidThings.util.ICustomTooltip;
 import furgl.stupidThings.util.TooltipHelper;
@@ -75,6 +77,11 @@ public class BlockHiddenLight extends BlockDirectional implements ICustomTooltip
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
+	
+    @Nullable
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+        return NULL_AABB;
+    }
 
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
