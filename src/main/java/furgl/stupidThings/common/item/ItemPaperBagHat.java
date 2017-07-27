@@ -23,7 +23,7 @@ public class ItemPaperBagHat extends ItemArmor implements ICustomTooltip {
 	public ItemPaperBagHat() {
 		super(ArmorMaterial.LEATHER, 0, EntityEquipmentSlot.HEAD);
 	}
-	
+
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
 		ItemStack paper = new ItemStack(Items.PAPER);
@@ -31,13 +31,12 @@ public class ItemPaperBagHat extends ItemArmor implements ICustomTooltip {
 				paper, null, paper, 
 				null, null, null};
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.GOLD+"For when makeup isn't enough"}, new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {TextFormatting.GOLD+"For when makeup isn't enough"}, new String[0]);
 	}
 
 	@Override

@@ -40,14 +40,13 @@ public class ItemBalloonDeflated extends ItemBalloon {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {COLORS[stack.getMetadata()]+"Hold right click to blow up"}, 
-					OreDictionary.getOres("itemRubber").isEmpty() ? null : new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {COLORS[stack.getMetadata()]+"Hold right click to blow up"}, 
+				OreDictionary.getOres("itemRubber").isEmpty() ? null : new String[0]);
 	}
 
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		if (!world.isRemote) {
 			world.playSound(null, player.getPosition(), ModSoundEvents.BALLOON_INFLATE, SoundCategory.PLAYERS, 0.5f, 1.0f);
 			player.setActiveHand(hand);
@@ -59,12 +58,12 @@ public class ItemBalloonDeflated extends ItemBalloon {
 	@Override
 	public ItemStack onItemUseFinish(ItemStack stack, World world, EntityLivingBase entity) {
 		if (!world.isRemote) {
-			if (ModItems.BALLOON != null) {
+			if (ModItems.BALLOON.getRegistryName() != null) {
 				ItemStack balloon = new ItemStack(ModItems.BALLOON, 1, stack.getMetadata());
 				if (!(entity instanceof EntityPlayer) || !((EntityPlayer)entity).inventory.addItemStackToInventory(balloon))
 					entity.entityDropItem(balloon, 0);
 			}
-			
+
 			stack.shrink(1);
 		}
 

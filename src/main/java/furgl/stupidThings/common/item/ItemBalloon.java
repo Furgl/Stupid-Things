@@ -39,17 +39,16 @@ public class ItemBalloon extends Item implements ICustomTooltip {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {COLORS[stack.getMetadata()]+"Right click to throw",
-							COLORS[stack.getMetadata()]+"Right click the balloon with a lead to attach it",
-							"",
-							COLORS[stack.getMetadata()]+"While the balloon is attached to a lead:",
-							COLORS[stack.getMetadata()]+"- holding multiple balloons will pull you up",
-							COLORS[stack.getMetadata()]+"- sneak to slowly float down again",
-							COLORS[stack.getMetadata()]+"- right click a fence to attach the balloon to it",
-							COLORS[stack.getMetadata()]+"- right click the balloon to detach the lead"}, 
-					new String[] {COLORS[stack.getMetadata()]+"Hold right click with a deflated balloon to blow it up"});
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {COLORS[stack.getMetadata()]+"Right click to throw",
+						COLORS[stack.getMetadata()]+"Right click the balloon with a lead to attach it",
+						"",
+						COLORS[stack.getMetadata()]+"While the balloon is attached to a lead:",
+						COLORS[stack.getMetadata()]+"- holding multiple balloons will pull you up",
+						COLORS[stack.getMetadata()]+"- sneak to slowly float down again",
+						COLORS[stack.getMetadata()]+"- right click a fence to attach the balloon to it",
+						COLORS[stack.getMetadata()]+"- right click the balloon to detach the lead"}, 
+				new String[] {COLORS[stack.getMetadata()]+"Hold right click with a deflated balloon to blow it up"});
 	}
 
 	@Override
@@ -59,13 +58,13 @@ public class ItemBalloon extends Item implements ICustomTooltip {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
 		for (int i = 0; i < 16; ++i)
 			subItems.add(new ItemStack(this, 1, i));
 	}
 
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		if (!player.capabilities.isCreativeMode)
 			player.getHeldItem(hand).shrink(1);
 

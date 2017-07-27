@@ -49,12 +49,11 @@ public class ItemBlockBombLauncher extends Item implements ICustomTooltip {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
 		String g = TextFormatting.GRAY+"";
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {g+"Launches block bombs that spawn clusters of blocks", "", 
-							g+"Shift + right click to open inventory", 
-							g+"Puts up to 10 blocks from the inventory in a bomb",
-							g+"Right click to shoot"}, new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {g+"Launches block bombs that spawn clusters of blocks", "", 
+						g+"Shift + right click to open inventory", 
+						g+"Puts up to 10 blocks from the inventory in a bomb",
+						g+"Right click to shoot"}, new String[0]);
 	}
 
 	@Override

@@ -21,6 +21,8 @@ public class ModBlocks {
 
 	public static ArrayList<Block> allBlocks = new ArrayList<Block>();
 
+	public static ArrayList<ItemBlock> itemBlocksToAddToTab = new ArrayList<ItemBlock>();
+
 	public static final Block REVERSE_TNT = new BlockReverseTnt();
 	public static final Block EXPLOSIVE_RAIL = new BlockRailExplosive();
 	public static final Block COOLER = new BlockCooler();
@@ -51,10 +53,23 @@ public class ModBlocks {
 
 			allBlocks.add(block);
 			block.setRegistryName(StupidThings.MODID, blockName);
-			block.setUnlocalizedName(block.getRegistryName().toString());
+			block.setUnlocalizedName(block.getRegistryName().getResourcePath());
 			registry.register(block);
-			if (addToTab) 
-				StupidThings.proxy.addToTab(new ItemBlock(block).setRegistryName(block.getRegistryName()), StupidThings.tab, StupidThings.tab.orderedStacks);
+			if (addToTab) {
+				itemBlocksToAddToTab.add(new ItemBlock(block));
+				block.setCreativeTab(StupidThings.tab);
+			}
+		}
+
+		@SubscribeEvent
+		public static void registerItems(final RegistryEvent.Register<Item> event) {
+			for (Block block : allBlocks) {
+				ItemBlock itemBlock = new ItemBlock(block);
+				event.getRegistry().register(itemBlock.setRegistryName(block.getRegistryName()));
+			}
+
+			for (ItemBlock itemBlock : ModBlocks.itemBlocksToAddToTab)
+				itemBlock.getSubItems(StupidThings.tab, StupidThings.tab.orderedStacks);
 		}
 
 	}

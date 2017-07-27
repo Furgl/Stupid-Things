@@ -70,16 +70,14 @@ public class ItemImprovedHoe extends ItemHoe implements ICustomTooltip {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote) {
-			int range = radius * 2 + 1;
-			String g = TextFormatting.GREEN+"";
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {g+"Range: "+range+"x"+range, "", g+"Actions: ", 
-							g+"- Left click crops -> harvest within range",
-							g+"- Right click crops -> harvest and replant within range",
-							g+"- Right click ground -> till within range",
-							g+"- Shift -> Minecraft default"}, new String[0]);
-		}
+		int range = radius * 2 + 1;
+		String g = TextFormatting.GREEN+"";
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {g+"Range: "+range+"x"+range, "", g+"Actions: ", 
+						g+"- Left click crops -> harvest within range",
+						g+"- Right click crops -> harvest and replant within range",
+						g+"- Right click ground -> till within range",
+						g+"- Shift -> Minecraft default"}, new String[0]);
 	}
 
 	@Override
@@ -111,7 +109,7 @@ public class ItemImprovedHoe extends ItemHoe implements ICustomTooltip {
 			for (int x=-radius; x<=radius; x++)
 				for (int z=-radius; z<=radius; z++)
 					if (playerIn.canPlayerEdit(pos.add(x, 0, z).offset(facing), facing, playerIn.getHeldItem(hand)))
-						ret = rightClickCrop(playerIn, worldIn, pos.add(x, 0, z)) || ret;
+						ret = rightClickCrop(playerIn, worldIn, pos.add(x, 0, z), playerIn.getHeldItem(hand)) || ret;
 		}
 		else {
 			for (int x=-radius; x<=radius; x++)
@@ -152,10 +150,10 @@ public class ItemImprovedHoe extends ItemHoe implements ICustomTooltip {
 		return false;
 	}
 
-	private boolean rightClickCrop(EntityPlayer playerIn, World worldIn, BlockPos pos) {
+	private boolean rightClickCrop(EntityPlayer playerIn, World worldIn, BlockPos pos, ItemStack stack) {
 		if (worldIn.getBlockState(pos).getBlock() instanceof BlockCrops && !((BlockCrops) worldIn.getBlockState(pos).getBlock()).canGrow(worldIn, pos, worldIn.getBlockState(pos), false)) {
 			BlockCrops crop = (BlockCrops) worldIn.getBlockState(pos).getBlock();
-			crop.harvestBlock(worldIn, playerIn, pos, worldIn.getBlockState(pos), null, null);
+			crop.harvestBlock(worldIn, playerIn, pos, worldIn.getBlockState(pos), null, stack);
 			try {
 				Method method = crop.getClass().getDeclaredMethod("getSeed");
 				method.setAccessible(true);

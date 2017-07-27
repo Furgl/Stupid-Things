@@ -41,21 +41,20 @@ public class ItemAnvilBackpack extends ItemArmor implements ICustomTooltip {
 		super(ArmorMaterial.IRON, 0, EntityEquipmentSlot.CHEST);
 		MinecraftForge.EVENT_BUS.register(this);
 	}
-	
+
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
 		return new ItemStack[] {null, null, null, 
 				new ItemStack(Items.STRING), new ItemStack(Item.getItemFromBlock(Blocks.ANVIL)), new ItemStack(Items.STRING), 
 				null, null, null};
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.GRAY+"Weighs down the wearer and",
-							TextFormatting.GRAY+"damages entities that are fallen on"}, new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {TextFormatting.GRAY+"Weighs down the wearer and",
+						TextFormatting.GRAY+"damages entities that are fallen on"}, new String[0]);
 	}
 
 	@Override

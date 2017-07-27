@@ -14,8 +14,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.client.config.GuiUtils;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -31,6 +33,16 @@ public class TooltipHelper {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
+	@SubscribeEvent(priority=EventPriority.HIGHEST)
+	public void addTooltip(ItemTooltipEvent event) {
+		if (event.getItemStack() != null && 
+				event.getItemStack().getItem() instanceof UniversalBucket && 
+				((UniversalBucket)event.getItemStack().getItem()).getFluid(event.getItemStack()).getFluid() == ModFluids.ACID) 
+			TooltipHelper.addTooltipText(event.getToolTip(), 
+					new String[] {TextFormatting.DARK_GREEN+""+TextFormatting.BOLD+"Warning: Extremely corrosive",
+							TextFormatting.GREEN+"Rapidly dissolves soft blocks on contact"}, new String[0]);
+	}
+	
 	/**Adds shiftText/ctrlText to tooltip appropriately;
 	 * displays prompt to hold keys for more info/recipe if shiftText/ctrlText are not null*/
 	@SideOnly(Side.CLIENT)
@@ -59,8 +71,8 @@ public class TooltipHelper {
 				recipe = ((ICustomTooltip) event.getStack().getItem()).getTooltipRecipe(event.getStack());
 			else if (event.getStack().getItem() instanceof ItemBlock && ((ItemBlock) event.getStack().getItem()).getBlock() instanceof ICustomTooltip)
 				recipe = ((ICustomTooltip) ((ItemBlock) event.getStack().getItem()).getBlock()).getTooltipRecipe(event.getStack());
-			else if (event.getStack().getItem() instanceof UniversalBucket && ModFluids.acid != null && 
-					((UniversalBucket)event.getStack().getItem()).getFluid(event.getStack()).getFluid() == ModFluids.acid) 
+			else if (event.getStack().getItem() instanceof UniversalBucket && ModFluids.ACID != null && 
+					((UniversalBucket)event.getStack().getItem()).getFluid(event.getStack()).getFluid() == ModFluids.ACID) 
 				recipe = ((ICustomTooltip) ModFluids.acidBlock).getTooltipRecipe(event.getStack());
 
 			if (recipe != null && recipe.length >= 9 && GuiScreen.isCtrlKeyDown()) {				
@@ -83,4 +95,5 @@ public class TooltipHelper {
 			}
 		}
 	}
+	
 }

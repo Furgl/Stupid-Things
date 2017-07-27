@@ -17,17 +17,16 @@ public class ItemRubber extends Item implements ICustomTooltip {
 	public ItemRubber() {
 		super();
 	}
-	
+
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
 		return null;
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.GRAY+"Used for crafting"}, new String[] {TextFormatting.GRAY+"Smelt Raw Rubber"});
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {TextFormatting.GRAY+"Used for crafting"}, new String[] {TextFormatting.GRAY+"Smelt Raw Rubber"});
 	}
 }

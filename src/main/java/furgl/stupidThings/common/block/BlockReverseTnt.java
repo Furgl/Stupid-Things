@@ -42,11 +42,10 @@ public class BlockReverseTnt extends BlockTNT implements ICustomTooltip {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.AQUA+"Pulls in nearby blocks and entities"}, new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {TextFormatting.AQUA+"Pulls in nearby blocks and entities"}, new String[0]);
 	}
-	
+
 	@Override
 	/**Copied from BlockTNT with EntityTNTPrimed replaced by EntityReverseTNTPrimed*/
 	public void onBlockDestroyedByExplosion(World worldIn, BlockPos pos, Explosion explosionIn) {

@@ -49,9 +49,8 @@ public class BlockHiddenLight extends BlockDirectional implements ICustomTooltip
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.YELLOW+"The easiest way to hide lighting", "", "Can be broken while shifting", "Other placed Hidden Lights can be seen while holding this"}, new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {TextFormatting.YELLOW+"The easiest way to hide lighting", "", "Can be broken while shifting", "Other placed Hidden Lights can be seen while holding this"}, new String[0]);
 	}
 
 	@Override

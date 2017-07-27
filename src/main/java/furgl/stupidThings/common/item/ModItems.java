@@ -9,10 +9,12 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
@@ -53,8 +55,8 @@ public class ModItems {
 	@Mod.EventBusSubscriber
 	public static class RegistrationHandler {
 
-		@SubscribeEvent
-		public static void registerItems(final RegistryEvent.Register<Item> event) {
+		@SubscribeEvent(priority=EventPriority.LOW)
+		public static void registerItems(final RegistryEvent.Register<Item> event) {			
 			register(event.getRegistry(), ITEM_CATALOG, "item_catalog", true, false, false);
 			register(event.getRegistry(), ANVIL_BACKPACK, "anvil_backpack", true, true, false);
 			register(event.getRegistry(), PAPER_BAG_HAT, "paper_bag_hat", true, true, false);
@@ -95,8 +97,13 @@ public class ModItems {
 				objModelItems.add(item);
 			item.setRegistryName(StupidThings.MODID, itemName);
 			item.setUnlocalizedName(item.getRegistryName().getResourcePath());
-			if (addToTab)
-				StupidThings.proxy.addToTab(item, StupidThings.tab, StupidThings.tab.orderedStacks);
+			if (addToTab) {
+				item.setCreativeTab(StupidThings.tab);
+				if (item instanceof ItemCatalog)
+					StupidThings.tab.orderedStacks.add(0, new ItemStack(item));
+				else
+					item.getSubItems(StupidThings.tab, StupidThings.tab.orderedStacks);
+			}
 			registry.register(item);
 		}
 

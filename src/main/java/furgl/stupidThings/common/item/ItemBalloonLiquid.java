@@ -18,12 +18,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemBalloonLiquid extends ItemBalloon {
 
 	private BlockLiquid liquid;
-	
+
 	private ItemBalloonLiquid(BlockLiquid liquid) {
 		super();
 		this.liquid = liquid;
 	}
-	
+
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
 		ItemStack deflatedBalloon = new ItemStack(ModItems.BALLOON_DEFLATED, 1, stack.getMetadata());
@@ -32,24 +32,23 @@ public class ItemBalloonLiquid extends ItemBalloon {
 				deflatedBalloon, liquidBucket, deflatedBalloon, 
 				deflatedBalloon, deflatedBalloon, deflatedBalloon};
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {COLORS[stack.getMetadata()]+"Right click to throw",
-							COLORS[stack.getMetadata()]+"Spawns "+liquid.getLocalizedName().toLowerCase()+" on impact"}, 
-					new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {COLORS[stack.getMetadata()]+"Right click to throw",
+						COLORS[stack.getMetadata()]+"Spawns "+liquid.getLocalizedName().toLowerCase()+" on impact"}, 
+				new String[0]);
 	}
-	
+
 	@Override
 	protected void throwBalloon(World world, EntityPlayer player, int meta) {
 		EntityBalloon balloon = new EntityBalloonLiquid(liquid, world, player, meta);
-        balloon.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 2F, 1.0F);
-        world.spawnEntity(balloon);
+		balloon.setHeadingFromThrower(player, player.rotationPitch, player.rotationYaw, 0.0F, 2F, 1.0F);
+		world.spawnEntity(balloon);
 	}
-	
+
 	public static class ItemBalloonWater extends ItemBalloonLiquid {
 		public ItemBalloonWater() {
 			super(Blocks.WATER);

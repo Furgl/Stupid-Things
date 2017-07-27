@@ -44,9 +44,8 @@ public class ItemCactusSword extends ItemSword implements ICustomTooltip {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.DARK_GREEN+"Prick your enemies (and yourself) to death!"}, new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {TextFormatting.DARK_GREEN+"Prick your enemies (and yourself) to death!"}, new String[0]);
 	}
 
 	@Override
@@ -56,16 +55,16 @@ public class ItemCactusSword extends ItemSword implements ICustomTooltip {
 				worldIn.playSound(null, entityIn.getPosition(), SoundEvents.ENCHANT_THORNS_HIT, SoundCategory.PLAYERS, 0.5f, 0.8f+worldIn.rand.nextFloat());
 		}
 	}
-	
+
 	@Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-        if (attacker.world instanceof WorldServer) {
+	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+		if (attacker.world instanceof WorldServer) {
 			((WorldServer)attacker.world).spawnParticle(EnumParticleTypes.CRIT_MAGIC, 
 					target.posX, target.posY + (double)target.height * 0.6D, target.posZ, 
 					10, 0.5d, 0.5d, 0.5d, 0, new int[] {});
 			attacker.world.playSound(null, target.getPosition(), SoundEvents.ENCHANT_THORNS_HIT, SoundCategory.PLAYERS, 0.9f, 2f);
-        }
+		}
 
 		return super.hitEntity(stack, target, attacker);
-    }
+	}
 }

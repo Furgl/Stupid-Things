@@ -13,7 +13,7 @@ public class SoundWorldsSmallestViolin extends MovingSound {
 	private EntityPlayer player;
 
 	public SoundWorldsSmallestViolin(EntityPlayer player) {
-		super(ModSoundEvents.WORLDS_SMALLESTVIOLIN, SoundCategory.PLAYERS);
+		super(ModSoundEvents.WORLDS_SMALLEST_VIOLIN, SoundCategory.PLAYERS);
 		this.player = player;
 		this.xPosF = (float) player.posX;
 		this.yPosF = (float) player.posY;

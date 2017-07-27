@@ -53,9 +53,8 @@ public class ItemUpsideDownGoggles extends ItemArmor implements ICustomTooltip {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.RED+"See the world upside down!"}, new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {TextFormatting.RED+"See the world upside down!"}, new String[0]);
 	}
 
 	@Override

@@ -25,25 +25,24 @@ public class ItemCatalog extends Item implements ICustomTooltip {
 		super();
 		this.setMaxStackSize(1);
 	}
-	
+
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
 		return new ItemStack[] {null, null, null,
 				new ItemStack(Blocks.DIRT), new ItemStack(Items.BOOK), null, 
 				null, null, null};
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.GOLD+"Shows all items in the mod"}, new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {TextFormatting.GOLD+"Shows all items in the mod"}, new String[0]);
 	}
-	
+
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
-        StupidThings.proxy.openCatalogGui();
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+		StupidThings.proxy.openCatalogGui();
 		return new ActionResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
-    }
+	}
 }

@@ -26,7 +26,7 @@ public class BlockRailExplosive extends BlockRailPowered implements ICustomToolt
 		this.setHardness(0.7F);
 		this.setSoundType(SoundType.METAL);
 	}
-	
+
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
 		return new ItemStack[] {null, null, null, 
@@ -37,21 +37,20 @@ public class BlockRailExplosive extends BlockRailPowered implements ICustomToolt
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.DARK_RED+"Explodes when a minecart passes",
-							TextFormatting.DARK_RED+"over while this is powered"}, new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {TextFormatting.DARK_RED+"Explodes when a minecart passes",
+						TextFormatting.DARK_RED+"over while this is powered"}, new String[0]);
 	}
-	
+
 	@Override
-    @SideOnly(Side.CLIENT)
-    public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
 		if (world.isRemote && world.getBlockState(pos).getBlock() == this && 
 				world.getBlockState(pos).getValue(BlockRailPowered.POWERED).booleanValue())
 			world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, 
 					pos.getX()+rand.nextDouble(), pos.getY(), pos.getZ()+rand.nextDouble(), 0, 0, 0, new int[0]);
-    }
-	
+	}
+
 	@Override
 	public void onMinecartPass(World world, EntityMinecart cart, BlockPos pos) {
 		if (!world.isRemote && world.getBlockState(pos).getBlock() == this && 
@@ -59,5 +58,5 @@ public class BlockRailExplosive extends BlockRailPowered implements ICustomToolt
 			world.isAirBlock(pos);
 			world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 4.0f, true);
 		}
-    }
+	}
 }

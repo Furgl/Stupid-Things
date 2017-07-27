@@ -3,7 +3,6 @@ package furgl.stupidThings.common.block;
 import java.util.List;
 import java.util.Random;
 
-import furgl.stupidThings.common.fluid.ModFluids;
 import furgl.stupidThings.util.ICustomTooltip;
 import furgl.stupidThings.util.TooltipHelper;
 import net.minecraft.block.BlockLiquid;
@@ -23,13 +22,9 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fluids.BlockFluidClassic;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.IFluidBlock;
-import net.minecraftforge.fluids.UniversalBucket;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -40,7 +35,6 @@ public class BlockFluidAcid extends BlockFluidClassic implements ICustomTooltip 
 
 	public BlockFluidAcid(Fluid fluid, Material material) {
 		super(fluid, material);
-		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@Override
@@ -53,20 +47,9 @@ public class BlockFluidAcid extends BlockFluidClassic implements ICustomTooltip 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.DARK_GREEN+""+TextFormatting.BOLD+"Warning: Extremely corrosive",
-							TextFormatting.GREEN+"Rapidly dissolves soft blocks on contact"}, new String[0]);
-	}
-
-	@SubscribeEvent(receiveCanceled=true)
-	public void addTooltip(ItemTooltipEvent event) {
-		if (event.getEntity().world.isRemote && event.getItemStack() != null && 
-				event.getItemStack().getItem() instanceof UniversalBucket && 
-				((UniversalBucket)event.getItemStack().getItem()).getFluid(event.getItemStack()).getFluid() == ModFluids.acid) 
-			TooltipHelper.addTooltipText(event.getToolTip(), 
-					new String[] {TextFormatting.DARK_GREEN+""+TextFormatting.BOLD+"Warning: Extremely corrosive",
-							TextFormatting.GREEN+"Rapidly dissolves soft blocks on contact"}, new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {TextFormatting.DARK_GREEN+""+TextFormatting.BOLD+"Warning: Extremely corrosive",
+						TextFormatting.GREEN+"Rapidly dissolves soft blocks on contact"}, new String[0]);
 	}
 
 	@Override

@@ -22,7 +22,7 @@ public class ItemInvisibleArmor extends ItemArmor implements ICustomTooltip {
 	public ItemInvisibleArmor(EntityEquipmentSlot slot) {
 		super(ArmorMaterial.IRON, 0, slot);
 	}
-	
+
 	@Override
 	public ItemStack[] getTooltipRecipe(ItemStack stack) {
 		ItemStack glass = new ItemStack(Blocks.GLASS);
@@ -46,13 +46,12 @@ public class ItemInvisibleArmor extends ItemArmor implements ICustomTooltip {
 				glass, armor, glass, 
 				glass, glass, glass};
 	}
-	
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.GRAY+"Let your enemies think you're naked"}, new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {TextFormatting.GRAY+"Let your enemies think you're naked"}, new String[0]);
 	}
 
 	@Override

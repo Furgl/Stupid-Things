@@ -44,13 +44,12 @@ public class ItemSmokeBomb extends Item implements ICustomTooltip {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {ItemBalloon.COLORS[stack.getMetadata()]+"Right click to throw", 
-							ItemBalloon.COLORS[stack.getMetadata()]+"Releases smoke to blind opponents"}, 
-					OreDictionary.getOres("itemRubber").isEmpty() ? null : new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {ItemBalloon.COLORS[stack.getMetadata()]+"Right click to throw", 
+						ItemBalloon.COLORS[stack.getMetadata()]+"Releases smoke to blind opponents"}, 
+				OreDictionary.getOres("itemRubber").isEmpty() ? null : new String[0]);
 	}
-	
+
 	@Override
 	public String getItemStackDisplayName(ItemStack stack) {
 		return ItemBalloon.NAMES[stack.getMetadata()]+" "+super.getItemStackDisplayName(stack);
@@ -58,13 +57,13 @@ public class ItemSmokeBomb extends Item implements ICustomTooltip {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-    public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
 		for (int i = 0; i < 16; ++i)
 			subItems.add(new ItemStack(this, 1, i));
 	}
 
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		if (!player.capabilities.isCreativeMode)
 			player.getHeldItem(hand).shrink(1);
 

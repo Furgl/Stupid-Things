@@ -31,16 +31,16 @@ public class ItemWorldsSmallestViolin extends Item implements ICustomTooltip {
 	public ItemWorldsSmallestViolin() {
 		super();
 		this.setMaxStackSize(1);
-        this.addPropertyOverride(new ResourceLocation("playing"), new IItemPropertyGetter() {
-            @SideOnly(Side.CLIENT)
-            public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
-                ItemStack itemstack = entityIn == null ? null : entityIn.getActiveItemStack();
-            	if (entityIn == null || itemstack == null || itemstack.getItem() != ModItems.WORLDS_SMALLEST_VIOLIN || itemstack != stack) 
-                    return 0.0F;
-                else 
-                    return (MathHelper.sin(entityIn.getItemInUseCount()/7.5f)+1f)/2f+0.1f;
-            }
-        });
+		this.addPropertyOverride(new ResourceLocation("playing"), new IItemPropertyGetter() {
+			@SideOnly(Side.CLIENT)
+			public float apply(ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
+				ItemStack itemstack = entityIn == null ? null : entityIn.getActiveItemStack();
+				if (entityIn == null || itemstack == null || itemstack.getItem() != ModItems.WORLDS_SMALLEST_VIOLIN || itemstack != stack) 
+					return 0.0F;
+				else 
+					return (MathHelper.sin(entityIn.getItemInUseCount()/7.5f)+1f)/2f+0.1f;
+			}
+		});
 	}
 
 	@Override
@@ -57,9 +57,8 @@ public class ItemWorldsSmallestViolin extends Item implements ICustomTooltip {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.GOLD+"Let me play you a sad song on the world's smallest violin", "", "(Spongebob reference)"}, new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {TextFormatting.GOLD+"Let me play you a sad song on the world's smallest violin", "", "(Spongebob reference)"}, new String[0]);
 	}
 
 	@Override

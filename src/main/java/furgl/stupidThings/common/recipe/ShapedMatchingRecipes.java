@@ -5,16 +5,17 @@ import javax.annotation.Nullable;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapedRecipes;
+import net.minecraft.util.NonNullList;
 
-public class ShapedMatchingRecipe extends ShapedRecipes 
+public class ShapedMatchingRecipes extends ShapedRecipes
 {
-	//the ItemStack that you get when you craft the recipe
 	private ItemStack recipeOutput;
 
-	public ShapedMatchingRecipe(int width, int height, ItemStack[] input, ItemStack output) {
-		super(width, height, input, output);
-		this.recipeOutput = output;
+	public ShapedMatchingRecipes(String group, int width, int height, NonNullList<Ingredient> ingredients, ItemStack result) {
+		super(group, width, height, ingredients, result);
+		this.recipeOutput = result;
 	}
 
 	@Override
@@ -31,4 +32,5 @@ public class ShapedMatchingRecipe extends ShapedRecipes
 			}
 		return result;
 	}
+
 }

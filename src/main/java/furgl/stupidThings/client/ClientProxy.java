@@ -23,19 +23,13 @@ import furgl.stupidThings.common.entity.EntityBalloonLiquid;
 import furgl.stupidThings.common.entity.EntityBlockBomb;
 import furgl.stupidThings.common.entity.EntityReverseTntPrimed;
 import furgl.stupidThings.common.entity.EntitySmokeBomb;
-import furgl.stupidThings.common.fluid.ModFluids;
 import furgl.stupidThings.common.item.ItemCatalog;
 import furgl.stupidThings.common.item.ModItems;
 import furgl.stupidThings.common.sound.SoundWorldsSmallestViolin;
 import furgl.stupidThings.util.TooltipHelper;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.renderer.ItemMeshDefinition;
-import net.minecraft.client.renderer.block.model.ModelResourceLocation;
-import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -46,10 +40,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.TextureStitchEvent;
-import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -70,7 +62,6 @@ public class ClientProxy extends CommonProxy
 		StupidThings.util = TooltipHelper.INSTANCE;
 		OBJLoader.INSTANCE.addDomain(StupidThings.MODID);
 		registerItemObjModels();
-		registerFluidModels();
 		registerEntityRenders();
 	}
 
@@ -99,7 +90,7 @@ public class ClientProxy extends CommonProxy
 		Item[] coloredItems = new Item[] {ModItems.BALLOON, ModItems.BALLOON_DEFLATED, ModItems.BALLOON_WATER, ModItems.BALLOON_LAVA, ModItems.SMOKE_BOMB};
 
 		for (Item item : coloredItems) {
-			if (item != null) {			
+			if (item.getRegistryName() != null) {			
 				for (int i=1; i<16; i++) 
 					ModItems.registerRender(item, i);
 
@@ -119,26 +110,6 @@ public class ClientProxy extends CommonProxy
 		RenderingRegistry.registerEntityRenderingHandler(EntityBalloonLiquid.class, RenderBalloonLiquid::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntitySmokeBomb.class, RenderSmokeBomb::new);
 		RenderingRegistry.registerEntityRenderingHandler(EntityBlockBomb.class, RenderBlockBomb::new);
-	}
-
-	private static void registerFluidModels() {
-		for (IFluidBlock fluidBlock : ModFluids.allFluidBlocks) {
-			Item item = Item.getItemFromBlock((Block) fluidBlock);
-
-			final ModelResourceLocation modelLocation = new ModelResourceLocation(StupidThings.MODID+":acid", "fluid");
-
-			ModelLoader.setCustomMeshDefinition(item, new ItemMeshDefinition() {
-				public ModelResourceLocation getModelLocation(ItemStack stack) {
-					return modelLocation;
-				}
-			});
-
-			ModelLoader.setCustomStateMapper((Block) fluidBlock, new StateMapperBase() {
-				protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-					return modelLocation;
-				}
-			});
-		}
 	}
 
 	@Override
@@ -178,11 +149,11 @@ public class ClientProxy extends CommonProxy
 	/**Add item (and sub-items in clientproxy) to creative tab*/
 	@Override
 	public void addToTab(Item item, CreativeTabs tab, NonNullList<ItemStack> stacks) {
+		item.setCreativeTab(tab);
 		if (item instanceof ItemCatalog)
 			stacks.add(0, new ItemStack(item));
 		else
 			item.getSubItems(tab, stacks);
-		item.setCreativeTab(StupidThings.tab);
 	}
 
 	@Override

@@ -40,9 +40,8 @@ public class ItemPropellerHat extends ItemArmor implements ICustomTooltip {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.YELLOW+"Faster ascension and slower descension when jumping"}, new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {TextFormatting.YELLOW+"Faster ascension and slower descension when jumping"}, new String[0]);
 	}
 
 	@Override
@@ -50,14 +49,14 @@ public class ItemPropellerHat extends ItemArmor implements ICustomTooltip {
 		if (world.isRemote && player instanceof EntityPlayerSP &&
 				((EntityPlayerSP) player).movementInput.jump &&
 				player.motionY < 0.38f) {
-				if (player.motionY > 0)
-					player.motionY *= 1.25f;
-				else
-					player.motionY *= 0.85f;
-				world.playSound(player, player.getPosition(), SoundEvents.BLOCK_GRASS_STEP, SoundCategory.PLAYERS, (float) Math.abs(player.motionY > 0 ? player.motionY : player.motionY / 5f), 1.5f);
+			if (player.motionY > 0)
+				player.motionY *= 1.25f;
+			else
+				player.motionY *= 0.85f;
+			world.playSound(player, player.getPosition(), SoundEvents.BLOCK_GRASS_STEP, SoundCategory.PLAYERS, (float) Math.abs(player.motionY > 0 ? player.motionY : player.motionY / 5f), 1.5f);
 		}
 		player.fallDistance = 0;
-		
+
 	}
 
 	@Override

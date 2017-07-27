@@ -1,22 +1,20 @@
 package furgl.stupidThings.common.recipe;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import javax.annotation.Nullable;
 
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.util.NonNullList;
 
-public class ShapelessMatchingRecipe extends ShapelessRecipes 
+public class ShapelessMatchingRecipes extends ShapelessRecipes
 {
-	/** Is the ItemStack that you get when you craft the recipe. */
 	private ItemStack recipeOutput;
 
-	public ShapelessMatchingRecipe(ItemStack output, ItemStack... inputList) {
-		super(output, new ArrayList<ItemStack>(Arrays.asList(inputList)));
+	public ShapelessMatchingRecipes(String group, ItemStack output, NonNullList<Ingredient> recipeItems) {
+		super(group, output, recipeItems);
 		this.recipeOutput = output;
 	}
 
@@ -34,4 +32,5 @@ public class ShapelessMatchingRecipe extends ShapelessRecipes
 			}
 		return result;
 	}
+
 }

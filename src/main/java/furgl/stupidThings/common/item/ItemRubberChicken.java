@@ -43,9 +43,8 @@ public class ItemRubberChicken extends Item implements ICustomTooltip {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.GOLD+"Squeak"}, new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {TextFormatting.GOLD+"Squeak"}, new String[0]);
 	}
 
 	@Override
@@ -54,11 +53,11 @@ public class ItemRubberChicken extends Item implements ICustomTooltip {
 				player.world.rand.nextFloat()+0.5f, player.world.rand.nextFloat()*0.5f+0.75f);
 		return true;
 	}
-	
+
 	@Override
-    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		player.world.playSound(player, player.getPosition(), ModSoundEvents.RUBBER_CHICKEN, SoundCategory.PLAYERS, 
 				player.world.rand.nextFloat()+0.5f, player.world.rand.nextFloat()*0.5f+0.75f);
-        return new ActionResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
-    }
+		return new ActionResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+	}
 }

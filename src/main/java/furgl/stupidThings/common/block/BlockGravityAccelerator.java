@@ -50,9 +50,8 @@ public class BlockGravityAccelerator extends Block implements ICustomTooltip {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World world, List<String> tooltip, ITooltipFlag advanced) {
-		if (world.isRemote)
-			TooltipHelper.addTooltipText(tooltip, 
-					new String[] {TextFormatting.DARK_GRAY+"Increases gravity for nearby blocks and causes them to fall"}, new String[0]);
+		TooltipHelper.addTooltipText(tooltip, 
+				new String[] {TextFormatting.DARK_GRAY+"Increases gravity for nearby blocks and causes them to fall"}, new String[0]);
 	}
 
 	@Override
@@ -70,7 +69,7 @@ public class BlockGravityAccelerator extends Block implements ICustomTooltip {
 			for (BlockPos pos2 : positionsToCheck) {
 				IBlockState state2 = worldIn.getBlockState(pos2);
 				Block block = state2.getBlock();
-				
+
 				if (worldIn.isAirBlock(pos2.down()) && BlockFalling.canFallThrough(worldIn.getBlockState(pos2.down())) && pos2.getY() >= 0 &&
 						!worldIn.isAirBlock(pos2) && !pos2.equals(pos) && block.getBlockHardness(state2, worldIn, pos2) > 0) {
 					if (rand.nextInt(3) == 0) {
