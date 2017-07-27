@@ -26,8 +26,7 @@ public class ItemCactusSword extends ItemSword implements ICustomTooltip {
 
 	public ItemCactusSword() {
 		super(MATERIAL);
-		if (MATERIAL.getRepairItemStack() == null)
-			MATERIAL.setRepairItem(new ItemStack(Blocks.CACTUS));
+		MATERIAL.setRepairItem(new ItemStack(Blocks.CACTUS));
 	}
 
 	@Override
@@ -53,16 +52,16 @@ public class ItemCactusSword extends ItemSword implements ICustomTooltip {
 				worldIn.playSound(null, entityIn.getPosition(), SoundEvents.ENCHANT_THORNS_HIT, SoundCategory.PLAYERS, 0.5f, 0.8f+worldIn.rand.nextFloat());
 		}
 	}
-	
+
 	@Override
-    public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-        if (attacker.worldObj instanceof WorldServer) {
+	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+		if (attacker.worldObj instanceof WorldServer) {
 			((WorldServer)attacker.worldObj).spawnParticle(EnumParticleTypes.CRIT_MAGIC, 
 					target.posX, target.posY + (double)target.height * 0.6D, target.posZ, 
 					10, 0.5d, 0.5d, 0.5d, 0, new int[] {});
 			attacker.worldObj.playSound(null, target.getPosition(), SoundEvents.ENCHANT_THORNS_HIT, SoundCategory.PLAYERS, 0.9f, 2f);
-        }
+		}
 
 		return super.hitEntity(stack, target, attacker);
-    }
+	}
 }

@@ -8,7 +8,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.util.EntitySelectors;
-import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
@@ -112,17 +111,7 @@ public class EntityThrowable extends EntityLiving implements IProjectile {
 	}
 
 	@Override
-	protected SoundEvent getHurtSound() {
-		return null;
-	}
-
-	@Override
-	protected SoundEvent getDeathSound() {
-		return null;
-	}
-
-	@Override
-	protected SoundEvent getFallSound(int heightIn) {
-		return null;
-	}
+    public boolean isSilent() {
+        return true;
+    }
 }

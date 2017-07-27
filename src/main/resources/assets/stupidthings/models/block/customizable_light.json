@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "stupidthings:blocks/customizable_light"
+    }
+}

@@ -83,6 +83,6 @@ public class BlockHiddenLight extends BlockDirectional implements ICustomTooltip
 
 	@Override
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, World worldIn, BlockPos pos) {
-		return AABB;
+		return NULL_AABB;
 	}
 }

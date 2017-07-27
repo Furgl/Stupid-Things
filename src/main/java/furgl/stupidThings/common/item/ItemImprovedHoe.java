@@ -107,7 +107,7 @@ public class ItemImprovedHoe extends ItemHoe implements ICustomTooltip {
 			for (int x=-radius; x<=radius; x++)
 				for (int z=-radius; z<=radius; z++)
 					if (playerIn.canPlayerEdit(pos.add(x, 0, z).offset(facing), facing, stack))
-						ret = rightClickCrop(playerIn, worldIn, pos.add(x, 0, z)) || ret;
+						ret = rightClickCrop(playerIn, worldIn, pos.add(x, 0, z), stack) || ret;
 		}
 		else {
 			for (int x=-radius; x<=radius; x++)
@@ -148,10 +148,10 @@ public class ItemImprovedHoe extends ItemHoe implements ICustomTooltip {
 		return false;
 	}
 
-	private boolean rightClickCrop(EntityPlayer playerIn, World worldIn, BlockPos pos) {
+	private boolean rightClickCrop(EntityPlayer playerIn, World worldIn, BlockPos pos, ItemStack stack) {
 		if (worldIn.getBlockState(pos).getBlock() instanceof BlockCrops && !((BlockCrops) worldIn.getBlockState(pos).getBlock()).canGrow(worldIn, pos, worldIn.getBlockState(pos), false)) {
 			BlockCrops crop = (BlockCrops) worldIn.getBlockState(pos).getBlock();
-			crop.harvestBlock(worldIn, playerIn, pos, worldIn.getBlockState(pos), null, null);
+			crop.harvestBlock(worldIn, playerIn, pos, worldIn.getBlockState(pos), null, stack);
 			try {
 				Method method = crop.getClass().getDeclaredMethod("getSeed");
 				method.setAccessible(true);

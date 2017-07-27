@@ -26,6 +26,7 @@ public class ModBlocks {
 	public static Block petRock;
 	public static Block mineTurtle;
 	public static Block hiddenLight;
+	//public static Block customizableLight;
 
 	public static void preInit() {
 		allBlocks = new ArrayList<Block>();
@@ -37,7 +38,8 @@ public class ModBlocks {
 		gravityAccelerator = registerBlock(new BlockGravityAccelerator(), "gravity_accelerator", true, true, true);
 		petRock = registerBlock(new BlockPetRock(), "pet_rock", true, true, true);
 		mineTurtle = registerBlock(new BlockMineTurtle(), "mine_turtle", true, true, true);
-		hiddenLight = registerBlock(new BlockHiddenLight(), "hidden_light", true, true, true);
+		hiddenLight = registerBlock(new BlockHiddenLight(), "hidden_light", true, true, true); // TODO remove
+		//customizableLight = registerBlock(new BlockCustomizableLight(), "customizable_light", true, true, true);
 	}
 
 	public static void registerRenders() {

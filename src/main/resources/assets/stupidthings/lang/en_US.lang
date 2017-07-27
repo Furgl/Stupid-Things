@@ -27,7 +27,7 @@ item.improved_diamond_hoe.name=Improved Diamond Hoe
 item.firing_can.name=Firing Can
 item.cactus_sword.name=Cactus Sword
 item.worlds_smallest_violin.name=World's Smallest Violin
-item.block_bomb_launcher.name=Block Bomb Launcher
+item.block_bomb_launcher.name=Block Bomb Blaster
 
 tile.reverse_tnt.name=Reverse TNT
 tile.rail_explosive.name=Explosive Rail
@@ -38,6 +38,7 @@ tile.gravity_accelerator.name=Gravity Accelerator
 tile.pet_rock.name=Pet Rock
 tile.mine_turtle.name=Mine Turtle
 tile.hidden_light.name=Hidden Light
+tile.customizable_light.name=Customizable Light
 
 entity.stupidthings.reverseTntPrimed.name=Reverse TNT
 entity.stupidthings.balloon.name=Balloon
