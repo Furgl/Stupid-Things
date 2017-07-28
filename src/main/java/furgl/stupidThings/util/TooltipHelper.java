@@ -2,6 +2,7 @@ package furgl.stupidThings.util;
 
 import java.util.List;
 
+import furgl.stupidThings.client.gui.GuiDisplay;
 import furgl.stupidThings.common.StupidThings;
 import furgl.stupidThings.common.fluid.ModFluids;
 import net.minecraft.client.Minecraft;
@@ -17,7 +18,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.client.config.GuiUtils;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -33,7 +33,7 @@ public class TooltipHelper {
 		MinecraftForge.EVENT_BUS.register(this);
 	}
 
-	@SubscribeEvent(priority=EventPriority.HIGHEST)
+	@SubscribeEvent
 	public void addTooltip(ItemTooltipEvent event) {
 		if (event.getItemStack() != null && 
 				event.getItemStack().getItem() instanceof UniversalBucket && 
@@ -47,12 +47,12 @@ public class TooltipHelper {
 	 * displays prompt to hold keys for more info/recipe if shiftText/ctrlText are not null*/
 	@SideOnly(Side.CLIENT)
 	public static void addTooltipText(List<String> tooltip, String[] shiftText, String[] ctrlText) {
-		if (GuiScreen.isShiftKeyDown())
+		if (GuiScreen.isShiftKeyDown() || GuiDisplay.display_gui)
 			for (String string : shiftText == null ? new String[0] : shiftText)
 				tooltip.add(string);
 		else if (shiftText != null)
 			tooltip.add(TextFormatting.AQUA+""+TextFormatting.ITALIC+"SHIFT "+TextFormatting.DARK_GRAY+""+TextFormatting.ITALIC+"for info");
-		if (GuiScreen.isCtrlKeyDown()) {
+		if (GuiScreen.isCtrlKeyDown() || GuiDisplay.display_gui) {
 			if (GuiScreen.isShiftKeyDown() && ctrlText != null && ctrlText.length > 0)
 				tooltip.add("");
 			for (String string : ctrlText == null ? new String[0] : ctrlText) 

@@ -1,5 +1,6 @@
 package furgl.stupidThings.client;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.google.common.collect.Maps;
@@ -47,6 +48,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import scala.actors.threadpool.Arrays;
 
 public class ClientProxy extends CommonProxy
 {
@@ -55,6 +57,7 @@ public class ClientProxy extends CommonProxy
 	private static final ModelBiped MODEL_UPSIDE_DOWN_GOGGLES = new ModelUpsideDownGoggles();
 	// used for models that are unique per entity
 	private HashMap<EntityLivingBase, ModelBiped> modelMap = Maps.newHashMap();
+	public static final ArrayList<Item> COLORED_ITEMS = new ArrayList<Item>(Arrays.asList(new Item[] {ModItems.BALLOON, ModItems.BALLOON_DEFLATED, ModItems.BALLOON_WATER, ModItems.BALLOON_LAVA, ModItems.SMOKE_BOMB}));
 
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
@@ -87,9 +90,7 @@ public class ClientProxy extends CommonProxy
 			if (!ModItems.objModelItems.contains(item))
 				ModItems.registerRender(item, 0);
 
-		Item[] coloredItems = new Item[] {ModItems.BALLOON, ModItems.BALLOON_DEFLATED, ModItems.BALLOON_WATER, ModItems.BALLOON_LAVA, ModItems.SMOKE_BOMB};
-
-		for (Item item : coloredItems) {
+		for (Item item : COLORED_ITEMS) {
 			if (item.getRegistryName() != null) {			
 				for (int i=1; i<16; i++) 
 					ModItems.registerRender(item, i);
