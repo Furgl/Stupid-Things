@@ -58,8 +58,9 @@ public class ItemSmokeBomb extends Item implements ICustomTooltip {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> subItems) {
-		for (int i = 0; i < 16; ++i)
-			subItems.add(new ItemStack(this, 1, i));
+		if (this.isInCreativeTab(tab))
+			for (int i = 0; i < 16; ++i)
+				subItems.add(new ItemStack(this, 1, i));
 	}
 
 	@Override
