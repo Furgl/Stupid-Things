@@ -1,6 +1,7 @@
 package furgl.stupidThings.client;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import com.google.common.collect.Maps;
@@ -48,7 +49,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import scala.actors.threadpool.Arrays;
 
 public class ClientProxy extends CommonProxy
 {
