@@ -54,10 +54,12 @@ public class EntityBlockBomb extends EntityThrowable {
 		super.writeEntityToNBT(nbt);
 
 		// write items to nbt
-		NBTTagList list = new NBTTagList();
-		for (ItemStack stack : items)
-			list.appendTag(stack.writeToNBT(new NBTTagCompound()));
-		nbt.setTag("items", list);
+		if (this.items != null) {
+			NBTTagList list = new NBTTagList();
+			for (ItemStack stack : items)
+				list.appendTag(stack.writeToNBT(new NBTTagCompound()));
+			nbt.setTag("items", list);
+		}
 	}
 
 	@Override
