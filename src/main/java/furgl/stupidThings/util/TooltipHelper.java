@@ -60,6 +60,7 @@ public class TooltipHelper {
 			else if (event.getStack().getItem() instanceof ItemBlock && ((ItemBlock) event.getStack().getItem()).getBlock() instanceof ICustomTooltip)
 				recipe = ((ICustomTooltip) ((ItemBlock) event.getStack().getItem()).getBlock()).getTooltipRecipe(event.getStack());
 			else if (event.getStack().getItem() instanceof UniversalBucket && ModFluids.acid != null && 
+					((UniversalBucket)event.getStack().getItem()).getFluid(event.getStack()) != null &&
 					((UniversalBucket)event.getStack().getItem()).getFluid(event.getStack()).getFluid() == ModFluids.acid) 
 				recipe = ((ICustomTooltip) ModFluids.acidBlock).getTooltipRecipe(event.getStack());
 
