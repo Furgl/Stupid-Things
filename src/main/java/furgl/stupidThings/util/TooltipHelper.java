@@ -37,6 +37,7 @@ public class TooltipHelper {
 	public void addTooltip(ItemTooltipEvent event) {
 		if (event.getItemStack() != null && 
 				event.getItemStack().getItem() instanceof UniversalBucket && 
+				((UniversalBucket)event.getItemStack().getItem()).getFluid(event.getItemStack()) != null &&
 				((UniversalBucket)event.getItemStack().getItem()).getFluid(event.getItemStack()).getFluid() == ModFluids.ACID) 
 			TooltipHelper.addTooltipText(event.getToolTip(), 
 					new String[] {TextFormatting.DARK_GREEN+""+TextFormatting.BOLD+"Warning: Extremely corrosive",

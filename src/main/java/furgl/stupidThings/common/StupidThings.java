@@ -19,11 +19,11 @@ import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid = StupidThings.MODID, version = StupidThings.VERSION, name = StupidThings.MODNAME, guiFactory = "furgl.stupidThings.client.gui.config.StupidThingsGuiFactory", updateJSON = "https://raw.githubusercontent.com/Furgl/Stupid-Things/1.11.2/update.json")
+@Mod(modid = StupidThings.MODID, version = StupidThings.VERSION, name = StupidThings.MODNAME, guiFactory = "furgl.stupidThings.client.gui.config.StupidThingsGuiFactory", updateJSON = "https://raw.githubusercontent.com/Furgl/Global-Mod-Info/master/Stupid_Things/update.json", acceptedMinecraftVersions="[1.12,1.13)")
 public class StupidThings {
 	public static final String MODNAME = "Stupid Things"; 
 	public static final String MODID = "stupidthings";
-	public static final String VERSION = "1.1.4";
+	public static final String VERSION = "1.1.5";
 	public static StupidThingsCreativeTab tab = new StupidThingsCreativeTab("tabStupidThings");
 	@SidedProxy(clientSide = "furgl.stupidThings.client.ClientProxy", serverSide = "furgl.stupidThings.common.CommonProxy")
 	public static CommonProxy proxy;
