@@ -19,6 +19,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.ReflectionHelper;
 
+@SuppressWarnings("deprecation")
 public class EntityBalloon extends EntityThrowable {
 
 	private static final DataParameter<Integer> COLOR = EntityDataManager.<Integer>createKey(EntityBalloon.class, DataSerializers.VARINT);
@@ -87,9 +88,9 @@ public class EntityBalloon extends EntityThrowable {
 	protected void updateLeashedState() {
 		super.updateLeashedState();
 
-		if (this.getLeashed() && this.getLeashedToEntity() != null && this.getLeashedToEntity().world == this.world) {
-			Entity entity = this.getLeashedToEntity();
-			float f = this.getDistanceToEntity(entity);
+		if (this.getLeashed() && this.getLeashHolder() != null && this.getLeashHolder().world == this.world) {
+			Entity entity = this.getLeashHolder();
+			float f = this.getDistance(entity);
 
 			if (f > 2.0F)
 				this.getNavigator().tryMoveToEntityLiving(entity, 1.0D);
@@ -102,19 +103,19 @@ public class EntityBalloon extends EntityThrowable {
 				this.motionY += d1 * Math.abs(d1) * 0.03D;
 				this.motionZ += d2 * Math.abs(d2) * 0.4D;
 
-				if (this.getLeashedToEntity() != null && this.posY > this.getLeashedToEntity().posY+3 &&
-						!(this.getLeashedToEntity() instanceof EntityPlayer && ((EntityPlayer)this.getLeashedToEntity()).capabilities.isFlying)) {
-					if (this.getLeashedToEntity().isSneaking() && this.getLeashedToEntity().motionY < 0d && !this.getLeashedToEntity().onGround) 
-						this.getLeashedToEntity().motionY += 0.01d;
-					else if (!this.getLeashedToEntity().isSneaking())
-						this.getLeashedToEntity().motionY += 0.08d;
-					this.getLeashedToEntity().fallDistance = 0;
+				if (this.getLeashHolder() != null && this.posY > this.getLeashHolder().posY+3 &&
+						!(this.getLeashHolder() instanceof EntityPlayer && ((EntityPlayer)this.getLeashHolder()).capabilities.isFlying)) {
+					if (this.getLeashHolder().isSneaking() && this.getLeashHolder().motionY < 0d && !this.getLeashHolder().onGround) 
+						this.getLeashHolder().motionY += 0.01d;
+					else if (!this.getLeashHolder().isSneaking())
+						this.getLeashHolder().motionY += 0.08d;
+					this.getLeashHolder().fallDistance = 0;
 
 					// reset floatingTickCount so player isn't kicked for flying
 					try {
-						if (this.getLeashedToEntity() instanceof EntityPlayerMP) { 
+						if (this.getLeashHolder() instanceof EntityPlayerMP) { 
 							ReflectionHelper.setPrivateValue(NetHandlerPlayServer.class, 
-									((EntityPlayerMP) this.getLeashedToEntity()).connection, 0, 
+									((EntityPlayerMP) this.getLeashHolder()).connection, 0, 
 									"field_147365_f", "floatingTickCount");
 						}
 					}

@@ -89,7 +89,7 @@ public class ItemImprovedHoe extends ItemHoe implements ICustomTooltip {
 							worldIn.getBlockState(pos.add(x, 0, z)).getBlock() instanceof BlockCrops && 
 							!((BlockCrops) worldIn.getBlockState(pos.add(x, 0, z)).getBlock()).canGrow(worldIn, pos.add(x, 0, z), worldIn.getBlockState(pos.add(x, 0, z)), false)) {
 						BlockCrops crop = (BlockCrops) worldIn.getBlockState(pos.add(x, 0, z)).getBlock();
-						crop.harvestBlock(worldIn, (EntityPlayer) entityLiving, pos.add(x, 0, z), worldIn.getBlockState(pos.add(x, 0, z)), (TileEntity)null, null);
+						crop.harvestBlock(worldIn, (EntityPlayer) entityLiving, pos.add(x, 0, z), worldIn.getBlockState(pos.add(x, 0, z)), (TileEntity)null, stack);
 						worldIn.setBlockToAir(pos.add(x, 0, z));
 						worldIn.scheduleBlockUpdate(pos.add(x, 0, z), worldIn.getBlockState(pos.add(x, 0, z)).getBlock(), 0, 1);
 					}

@@ -48,7 +48,7 @@ public class BlockReverseTnt extends BlockTNT implements ICustomTooltip {
 
 	@Override
 	/**Copied from BlockTNT with EntityTNTPrimed replaced by EntityReverseTNTPrimed*/
-	public void onBlockDestroyedByExplosion(World worldIn, BlockPos pos, Explosion explosionIn) {
+	public void onExplosionDestroy(World worldIn, BlockPos pos, Explosion explosionIn) {
 		if (!worldIn.isRemote) {
 			EntityTNTPrimed entitytntprimed = new EntityReverseTntPrimed(worldIn, (double)((float)pos.getX() + 0.5F), (double)pos.getY(), (double)((float)pos.getZ() + 0.5F), explosionIn.getExplosivePlacedBy());
 			entitytntprimed.setFuse((short)(worldIn.rand.nextInt(entitytntprimed.getFuse() / 4) + entitytntprimed.getFuse() / 8));

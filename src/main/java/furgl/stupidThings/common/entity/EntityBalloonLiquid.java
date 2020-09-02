@@ -49,7 +49,7 @@ public class EntityBalloonLiquid extends EntityBalloon {
 	}
 
 	@Override
-	public void setLeashedToEntity(Entity entityIn, boolean sendAttachNotification) { }
+	public void setLeashHolder(Entity entityIn, boolean sendAttachNotification) { }
 
 	@Override
 	public void onUpdate() {
@@ -131,7 +131,7 @@ public class EntityBalloonLiquid extends EntityBalloon {
 		}
 
 		//pop if hitting block
-		if (this.onGround || this.isCollidedHorizontally) 
+		if (this.onGround || this.collidedHorizontally) 
 			this.attackEntityFrom(DamageSource.GENERIC, 1);
 	}
 

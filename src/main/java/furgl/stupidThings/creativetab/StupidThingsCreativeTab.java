@@ -16,7 +16,7 @@ public class StupidThingsCreativeTab extends CreativeTabs
 	}
 
 	@Override
-	public ItemStack getTabIconItem() {
+	public ItemStack createIcon() {
 		return new ItemStack(ModItems.ITEM_CATALOG);
 	}
 
@@ -26,4 +26,5 @@ public class StupidThingsCreativeTab extends CreativeTabs
 		list.clear();
 		list.addAll(orderedStacks);
 	}
+	
 }

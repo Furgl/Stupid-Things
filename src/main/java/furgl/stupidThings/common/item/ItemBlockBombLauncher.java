@@ -64,7 +64,7 @@ public class ItemBlockBombLauncher extends Item implements ICustomTooltip {
 		else if (!worldIn.isRemote)
 			if (stack.hasTagCompound() && stack.getTagCompound().hasKey("items")) {
 				NBTTagList list = stack.getTagCompound().getTagList("items", 10);
-				if (list != null && !list.hasNoTags()) {
+				if (list != null && !list.isEmpty()) {
 					ArrayList<ItemStack> items = new ArrayList<ItemStack>();
 					int count = 0;
 					for (int i=list.tagCount(); i>=0; --i) {

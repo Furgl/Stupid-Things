@@ -83,7 +83,7 @@ public class EntityThrowable extends EntityLiving implements IProjectile {
 		float f = -MathHelper.sin(rotationYawIn * 0.017453292F) * MathHelper.cos(rotationPitchIn * 0.017453292F);
 		float f1 = -MathHelper.sin((rotationPitchIn + pitchOffset) * 0.017453292F);
 		float f2 = MathHelper.cos(rotationYawIn * 0.017453292F) * MathHelper.cos(rotationPitchIn * 0.017453292F);
-		this.setThrowableHeading((double)f, (double)f1, (double)f2, velocity, inaccuracy);
+		this.shoot((double)f, (double)f1, (double)f2, velocity, inaccuracy);
 		this.motionX += entityThrower.motionX;
 		this.motionZ += entityThrower.motionZ;
 
@@ -92,7 +92,7 @@ public class EntityThrowable extends EntityLiving implements IProjectile {
 	}
 
 	@Override
-	public void setThrowableHeading(double x, double y, double z, float velocity, float inaccuracy) {
+	public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
 		float f = MathHelper.sqrt(x * x + y * y + z * z);
 		x = x / (double)f;
 		y = y / (double)f;

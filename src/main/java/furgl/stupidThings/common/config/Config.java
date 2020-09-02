@@ -2,6 +2,8 @@ package furgl.stupidThings.common.config;
 
 import java.io.File;
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import furgl.stupidThings.common.StupidThings;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -25,6 +27,10 @@ public class Config {
 	
 	/**Check in config for this name to see if it's enabled - also populates config*/
 	public static boolean isNameEnabled(String name) {
+		// clean up name to be user-friendly
+		name = name.replace("_", " ");
+		name = WordUtils.capitalize(name);
+		// create prop
 		Property prop = config.get(Configuration.CATEGORY_GENERAL, name, true, "Should this be enabled?");
 		prop.setRequiresMcRestart(true);
 		config.save();

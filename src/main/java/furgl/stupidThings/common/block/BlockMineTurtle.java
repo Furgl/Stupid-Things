@@ -54,8 +54,8 @@ public class BlockMineTurtle extends BlockDirectional implements ICustomTooltip 
 	@Override
 	public void onEntityWalk(World worldIn, BlockPos pos, Entity entityIn) {
 		if (!worldIn.isRemote && !activeTurtles.containsKey(pos)) {
-			activeTurtles.put(pos, 50);
-			worldIn.playSound(null, pos, ModSoundEvents.MINE_TURTLE, SoundCategory.BLOCKS, 1.0F, 0.9F+worldIn.rand.nextFloat()/2f);
+			activeTurtles.put(pos, 30);
+			worldIn.playSound(null, pos, ModSoundEvents.MINE_TURTLE, SoundCategory.BLOCKS, 1.0F, 1.05F+worldIn.rand.nextFloat()/3f);
 		}
 	}
 
@@ -122,7 +122,7 @@ public class BlockMineTurtle extends BlockDirectional implements ICustomTooltip 
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		EnumFacing enumfacing = EnumFacing.getFront(meta);
+		EnumFacing enumfacing = EnumFacing.byIndex(meta);
 
 		if (enumfacing.getAxis() == EnumFacing.Axis.Y)
 			enumfacing = EnumFacing.NORTH;

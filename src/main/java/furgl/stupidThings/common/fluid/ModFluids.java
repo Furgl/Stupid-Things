@@ -15,7 +15,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -29,7 +28,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@SuppressWarnings("deprecation")
 public class ModFluids {
 
 	public static ArrayList<Fluid> allFluids = new ArrayList<Fluid>();
@@ -46,7 +44,7 @@ public class ModFluids {
 		public static void registerBlocks(final RegistryEvent.Register<Block> event) {
 			final IForgeRegistry<Block> registry = event.getRegistry();
 
-			if (!Config.isNameEnabled(I18n.translateToLocal("tile.acid.name")))
+			if (!Config.isNameEnabled("acid"))
 				return;
 			
 			ACID.setDensity(100).setViscosity(1000);
@@ -54,7 +52,7 @@ public class ModFluids {
 			final Block block = (Block) acidBlock;
 			allFluidBlocks.add((IFluidBlock) block);
 			block.setRegistryName(StupidThings.MODID, "acid");
-			block.setUnlocalizedName(block.getRegistryName().getResourcePath());
+			block.setTranslationKey(block.getRegistryName().getPath());
 			registry.register(block);
 		}
 
@@ -106,7 +104,7 @@ public class ModFluids {
 
 	private static Fluid registerFluid(Fluid fluid, String unlocalizedName, boolean checkIfDisabled) {
 		fluid.setUnlocalizedName(unlocalizedName);
-		if (checkIfDisabled && !Config.isNameEnabled(I18n.translateToLocal("fluid."+unlocalizedName).replace("White ", "")))
+		if (checkIfDisabled && !Config.isNameEnabled(unlocalizedName))
 			return null;
 		FluidRegistry.registerFluid(fluid);
 		allFluids.add(fluid);

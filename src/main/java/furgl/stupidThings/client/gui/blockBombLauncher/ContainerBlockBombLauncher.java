@@ -37,7 +37,7 @@ public class ContainerBlockBombLauncher extends Container {
 			if (launcherInv.launcher.hasTagCompound()) {
 				NBTTagCompound nbt = launcherInv.launcher.getTagCompound();
 				NBTTagList list = nbt.getTagList("items", 10);
-				if (list != null && !list.hasNoTags()) 
+				if (list != null && !list.isEmpty()) 
 					for (int i=0; i<launcherInv.getSizeInventory(); ++i)
 						if (list.get(i) instanceof NBTTagCompound)
 							launcherInv.setInventorySlotContents(i, new ItemStack((NBTTagCompound) list.get(i)));
@@ -56,7 +56,7 @@ public class ContainerBlockBombLauncher extends Container {
 			for (int i=0; i<launcherInv.getSizeInventory(); ++i)
 				if (launcherInv.getStackInSlot(i) != null)
 					list.appendTag(launcherInv.getStackInSlot(i).writeToNBT(new NBTTagCompound()));
-			if (!list.hasNoTags()) {
+			if (!list.isEmpty()) {
 				nbt.setTag("items", list);
 				launcherInv.launcher.setTagCompound(nbt);
 			}

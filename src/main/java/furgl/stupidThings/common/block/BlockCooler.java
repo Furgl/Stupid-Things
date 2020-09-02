@@ -77,7 +77,7 @@ public class BlockCooler extends Block implements ICustomTooltip {
 						if (worldIn instanceof WorldServer) {
 							worldIn.playSound(null, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
 									SoundCategory.BLOCKS, rand.nextFloat(), rand.nextFloat()+1.3f);
-							((WorldServer)worldIn).spawnParticle(EnumParticleTypes.SNOW_SHOVEL, pos2.getX()+0.5d, pos2.getY()+1.5d, pos2.getZ()+0.5d, 4, 0.4d, 0.4d, 0.4d, 0, new int[0]);
+							((WorldServer)worldIn).spawnParticle(EnumParticleTypes.SNOW_SHOVEL, pos2.getX()+0.5d, pos2.getY()+2d, pos2.getZ()+0.5d, 4, 0.4d, 0.4d, 0.4d, 0, new int[0]);
 						}
 					}
 					else 
@@ -90,7 +90,7 @@ public class BlockCooler extends Block implements ICustomTooltip {
 						if (worldIn instanceof WorldServer) {
 							worldIn.playSound(null, pos, SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, 
 									SoundCategory.BLOCKS, rand.nextFloat(), rand.nextFloat()+1.3f);
-							((WorldServer)worldIn).spawnParticle(EnumParticleTypes.SNOW_SHOVEL, pos2.getX()+0.5d, pos2.getY()+0.5d, pos2.getZ()+0.5d, 4, 0.4d, 0.4d, 0.4d, 0, new int[0]);
+							((WorldServer)worldIn).spawnParticle(EnumParticleTypes.SNOW_SHOVEL, pos2.getX()+0.5d, pos2.getY()+1.5d, pos2.getZ()+0.5d, 4, 0.4d, 0.4d, 0.4d, 0.02d, new int[0]);
 						}
 					}
 					else

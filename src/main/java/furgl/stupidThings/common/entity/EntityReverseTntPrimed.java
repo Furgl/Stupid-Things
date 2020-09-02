@@ -246,14 +246,14 @@ public class EntityReverseTntPrimed extends EntityTNTPrimed {
 						for (int y=-radius; y<=radius; y++)
 							for (int x=-radius+Math.abs(y); x<=radius-Math.abs(y); x++)
 								for (int z=-radius+Math.abs(y); z<=radius-Math.abs(y); z++)
-									if (!(z == radius && x == radius) && this.worldObj.isAirBlock(new BlockPos(this.position.addVector(x, y, z)))) 
+									if (!(z == radius && x == radius) && this.worldObj.isAirBlock(new BlockPos(this.position.add(x, y, z)))) 
 										for (; movedBlocks<this.affectedBlockPositions.size(); movedBlocks++) 
 											if (this.worldObj.getBlockState(this.affectedBlockPositions.get(movedBlocks)).getMaterial() != Material.AIR) {
 												IBlockState state = this.worldObj.getBlockState(this.affectedBlockPositions.get(movedBlocks));
 												this.worldObj.setBlockToAir(this.affectedBlockPositions.get(movedBlocks));
-												this.worldObj.setBlockState(new BlockPos(this.position.addVector(x, y, z)), state);
+												this.worldObj.setBlockState(new BlockPos(this.position.add(x, y, z)), state);
 												if (state.getBlock() instanceof BlockTNT)
-													state.getBlock().onBlockExploded(worldObj, new BlockPos(this.position.addVector(x, y, z)), this);
+													state.getBlock().onBlockExploded(worldObj, new BlockPos(this.position.add(x, y, z)), this);
 												movedBlocks++;
 												break;
 											}

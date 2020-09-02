@@ -77,7 +77,7 @@ public class ModRecipes {
 			}
 			for (EnumDyeColor color : EnumDyeColor.values()) {
 				List<ItemStack> dyes = OreDictionary.getOres("dye"+
-						color.getUnlocalizedName().substring(0, 1).toUpperCase()+color.getUnlocalizedName().substring(1));
+						color.getName().substring(0, 1).toUpperCase()+color.getName().substring(1));
 				if (color.equals(EnumDyeColor.SILVER))
 					dyes = OreDictionary.getOres("dyeLightGray");
 				for (ItemStack dye : dyes) {

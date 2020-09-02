@@ -93,9 +93,9 @@ public class BlockGravityAccelerator extends Block implements ICustomTooltip {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random rand) {
-		world.spawnParticle(EnumParticleTypes.SUSPENDED, 
-				pos.getX()+rand.nextDouble(), pos.getY()+0.5d, pos.getZ()+rand.nextDouble(), 
-				(rand.nextDouble()-0.5d)/3d, (rand.nextDouble()-0.5d)/3d, (rand.nextDouble()-0.5d)/3d, new int[0]);
+		world.spawnParticle(EnumParticleTypes.SUSPENDED_DEPTH, 
+				pos.getX()+rand.nextDouble()*1.8d, pos.getY()+rand.nextDouble()*1.8d, pos.getZ()+rand.nextDouble()*1.8d, 
+				0, 0, 0, new int[0]);
 		if (rand.nextInt(5) == 0)
 			for (int i=0; i<3; i++)
 				world.playSound(Minecraft.getMinecraft().player, pos, SoundEvents.ENTITY_ELDER_GUARDIAN_AMBIENT, 

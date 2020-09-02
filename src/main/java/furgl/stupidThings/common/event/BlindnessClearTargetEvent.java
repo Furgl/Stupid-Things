@@ -14,7 +14,7 @@ public class BlindnessClearTargetEvent {
 				event.getEntityLiving().getActivePotionEffect(MobEffects.BLINDNESS).getDuration() > 0 &&
 				event.getEntityLiving().isNonBoss() &&
 				((EntityLiving)event.getEntity()).getAttackTarget() != null)
-			((EntityLiving)event.getEntity()).setAttackTarget(null);// TODO exclude bosses
+			((EntityLiving)event.getEntity()).setAttackTarget(null);
 	}
 	
 }

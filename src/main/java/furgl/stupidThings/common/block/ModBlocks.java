@@ -9,14 +9,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 
-@SuppressWarnings("deprecation")
 public class ModBlocks {
 
 	public static ArrayList<Block> allBlocks = new ArrayList<Block>();
@@ -48,12 +46,12 @@ public class ModBlocks {
 		}
 
 		private static void register(IForgeRegistry<Block> registry, Block block, String blockName, boolean addToTab, boolean checkIfDisabled) {
-			if (checkIfDisabled && !Config.isNameEnabled(I18n.translateToLocal("tile."+blockName+".name").replace("White ", "")))
+			if (checkIfDisabled && !Config.isNameEnabled(blockName)) 
 				return;
 
 			allBlocks.add(block);
 			block.setRegistryName(StupidThings.MODID, blockName);
-			block.setUnlocalizedName(block.getRegistryName().getResourcePath());
+			block.setTranslationKey(block.getRegistryName().getPath()); 
 			registry.register(block);
 			if (addToTab) {
 				itemBlocksToAddToTab.add(new ItemBlock(block));
@@ -77,7 +75,7 @@ public class ModBlocks {
 	public static void registerRenders() {
 		for (Block block : allBlocks)
 			Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(block), 0, 
-					new ModelResourceLocation(StupidThings.MODID + ":" + block.getUnlocalizedName().substring(5), "inventory"));	
+					new ModelResourceLocation(StupidThings.MODID + ":" + block.getRegistryName().getPath(), "inventory"));	
 	}
 
 }

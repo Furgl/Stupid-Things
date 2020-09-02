@@ -31,7 +31,7 @@ public class RenderBalloon extends RenderLiving<EntityBalloon> {
 		y -= 1.1d;
 		z -= 0.3d;
 		
-		Entity entity = entityLivingIn.getLeashedToEntity();
+		Entity entity = entityLivingIn.getLeashHolder();
         if (entity != null && !entity.isDead) {
             y = y - (1.6D - (double)entityLivingIn.height) * 0.5D;
             Tessellator tessellator = Tessellator.getInstance();

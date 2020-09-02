@@ -10,7 +10,6 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -18,7 +17,6 @@ import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@SuppressWarnings("deprecation")
 public class ModItems {
 	public static ArrayList<Item> allItems = new ArrayList<Item>();
 	public static ArrayList<Item> objModelItems = new ArrayList<Item>();
@@ -89,14 +87,14 @@ public class ModItems {
 		}
 
 		private static void register(IForgeRegistry<Item> registry, Item item, String itemName, boolean addToTab, boolean checkIfDisabled, boolean objModel) {
-			if (checkIfDisabled && !Config.isNameEnabled(I18n.translateToLocal("item."+(itemName.equalsIgnoreCase("rubber_raw") ? "rubber" : itemName)+".name").replace("White ", "")))
+			if (checkIfDisabled && !Config.isNameEnabled(itemName))
 				return;
 
 			allItems.add(item);
 			if (objModel)
 				objModelItems.add(item);
 			item.setRegistryName(StupidThings.MODID, itemName);
-			item.setUnlocalizedName(item.getRegistryName().getResourcePath());
+			item.setTranslationKey(item.getRegistryName().getPath()); 
 			if (addToTab) {
 				item.setCreativeTab(StupidThings.tab);
 				if (item instanceof ItemCatalog)
@@ -110,12 +108,12 @@ public class ModItems {
 	}
 
 	public static void registerObjRender(Item item, int meta) {
-		ModelLoader.setCustomModelResourceLocation(item, meta, 
-				new ModelResourceLocation(StupidThings.MODID+":" + item.getUnlocalizedName().substring(5), "inventory"));
+		ModelLoader.setCustomModelResourceLocation(item, meta,
+				new ModelResourceLocation(StupidThings.MODID+":" + item.getRegistryName().getPath(), "inventory"));
 	}
 
 	public static void registerRender(Item item, int meta) {
-		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, meta, 
-				new ModelResourceLocation(StupidThings.MODID+":" + item.getUnlocalizedName().substring(5), "inventory"));
+		Minecraft.getMinecraft().getRenderItem().getItemModelMesher().register(item, meta,
+				new ModelResourceLocation(StupidThings.MODID+":" + item.getRegistryName().getPath(), "inventory"));
 	}
 }

@@ -68,14 +68,15 @@ public class EntityBlockBomb extends EntityThrowable {
 
 		// read items from nbt
 		NBTTagList list = nbt.getTagList("items", 10);
-		if (list != null && !list.hasNoTags()) {
+		if (list != null && !list.isEmpty()) {
 			items = new ItemStack[list.tagCount()];
 			for (int i=0; i<list.tagCount(); ++i)
 				if (list.get(i) instanceof NBTTagCompound)
 					items[i] = new ItemStack((NBTTagCompound) list.get(i));
 		}
 
-		this.state = ((ItemBlock)items[0].getItem()).getBlock().getStateForPlacement(world, BlockPos.ORIGIN, EnumFacing.UP, 0, 0, 0, items[0].getMetadata(), thrower, EnumHand.MAIN_HAND);
+		if (items.length > 0)
+			this.state = ((ItemBlock)items[0].getItem()).getBlock().getStateForPlacement(world, BlockPos.ORIGIN, EnumFacing.UP, 0, 0, 0, items[0].getMetadata(), thrower, EnumHand.MAIN_HAND);
 		this.dataManager.set(STATE, Optional.of(state));
 	}
 
@@ -109,7 +110,7 @@ public class EntityBlockBomb extends EntityThrowable {
 		}
 
 		// spawn blocks on collision
-		if (this.onGround || this.isCollidedHorizontally) {
+		if (this.onGround || this.collidedHorizontally) {
 			// explosion for particles/sound
 			Explosion explosion = new Explosion(world, this, posX, posY, posZ, 1, true, true);
 			explosion.doExplosionB(true);

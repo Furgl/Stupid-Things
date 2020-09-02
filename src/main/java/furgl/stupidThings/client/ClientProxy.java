@@ -97,7 +97,7 @@ public class ClientProxy extends CommonProxy
 
 				Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
 					@Override
-					public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+					public int colorMultiplier(ItemStack stack, int tintIndex) {
 						return tintIndex > 0 ? -1 : MapColor.getBlockColor(EnumDyeColor.byMetadata(stack.getMetadata())).colorValue;
 					}
 				}, item);

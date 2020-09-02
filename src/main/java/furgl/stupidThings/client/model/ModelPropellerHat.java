@@ -57,8 +57,11 @@ public class ModelPropellerHat extends ModelBiped {
 	public void render(Entity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
 		if (entityIn instanceof EntityArmorStand) 
 			netHeadYaw = 0;
-		// FIXME double propeller when rotating
-		float motion = (float) (Math.abs(entityIn.motionX)*1.5f + Math.abs(entityIn.motionY + (entityIn.motionY == 0 || !entityIn.onGround ? 0.01f : 0.07f))*5f + Math.abs(entityIn.motionZ)*1.5f);
+		// no idea how to fix 'double propeller' when rotating
+		double x = Math.abs(entityIn.posX-entityIn.lastTickPosX);
+		double y = Math.abs(entityIn.posY-entityIn.lastTickPosY);
+		double z = Math.abs(entityIn.posZ-entityIn.lastTickPosZ);
+		float motion = (float) (x*1.5f + Math.abs(y + (y == 0 || !entityIn.onGround ? 0.01f : 0.07f))*5f + z*1.5f);
 		this.propeller.rotateAngleY += motion / 6f;
 		
 		super.render(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
